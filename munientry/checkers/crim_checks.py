@@ -1,3 +1,4 @@
+# flake8: noqa: WPS110, WPS214
 """Checks for Criminal Traffic Dialogs."""
 from typing import Optional
 
@@ -6,10 +7,10 @@ from PyQt6.QtWidgets import QComboBox, QLabel
 from munientry.checkers import check_messages as cm
 from munientry.checkers.base_checks import (
     BaseChecks,
-    JailWarningCheck,
-    RequiredCheck,
-    RequiredConditionCheck,
-    WarningCheck,
+    jail_warning_check,
+    required_check,
+    required_condition_check,
+    warning_check,
 )
 from munientry.settings.pyqt_constants import NO_BUTTON_RESPONSE, YES_BUTTON_RESPONSE
 from munientry.widgets.message_boxes import TwoChoiceQuestionBox
@@ -28,17 +29,17 @@ class CrimBaseChecks(BaseChecks):
 
     conditions_list: list = []
 
-    @RequiredCheck(cm.PLEA_PAST_TITLE, cm.PLEA_PAST_MSG)
+    @required_check(cm.PLEA_PAST_TITLE, cm.PLEA_PAST_MSG)
     def check_plea_date(self) -> bool:
         """Returns False (Fails check) if plea date is not set in the past."""
         return self.dialog.plea_date.date() < self.today
 
-    @RequiredCheck(cm.LEAP_PAST_TITLE, cm.LEAP_PAST_MSG)
+    @required_check(cm.LEAP_PAST_TITLE, cm.LEAP_PAST_MSG)
     def check_leap_plea_date(self) -> bool:
         """Returns False (Fails check) if LEAP plea date is not set in the past."""
         return self.dialog.leap_plea_date.date() < self.today
 
-    @RequiredCheck(cm.DIVERSION_SET_TITLE, cm.DIVERSION_SET_MSG)
+    @required_check(cm.DIVERSION_SET_TITLE, cm.DIVERSION_SET_MSG)
     def check_if_diversion_program_selected(self) -> bool:
         """Returns False (Fails check) if no diversion radio button is checked."""
         diversion_radio_btns = [
@@ -48,6 +49,7 @@ class CrimBaseChecks(BaseChecks):
         ]
         return any(btn.isChecked() for btn in diversion_radio_btns)
 
+    @required_condition_check
     def check_additional_conditions_ordered(self) -> str:
         """Hard stops if an additional condition checkbox is checked, but certain data is None.
 
@@ -61,18 +63,9 @@ class CrimBaseChecks(BaseChecks):
             condition_model, primary_condition, condition_name = self._get_condition_info(condition)
             if condition_model.ordered in {False, None}:
                 continue
-            check_status = self.check_primary_condition(primary_condition, condition_name)
-            if check_status is False:
-                return False
+            if primary_condition in {None, BLANK}:
+                return False, [condition_name]
         return True
-
-    @RequiredConditionCheck
-    def check_primary_condition(self, primary_condition, condition_name) -> bool:
-        """Returns False (Fails) if the primary condition is set to None or Empty/Blank.
-
-        The parameter condition_name is passed because it is used by the decorator.
-        """
-        return primary_condition not in {None, BLANK}
 
     def _get_condition_info(self, condition_item: tuple[str, str, str]) -> tuple[object, str, str]:
         """The CheckList class for certain classes has conditions_list tuples that are returned.
@@ -89,7 +82,7 @@ class CrimBaseChecks(BaseChecks):
 class DefenseCounselChecks(CrimBaseChecks):
     """Class containing checks for defense counsel."""
 
-    @WarningCheck(cm.DEF_COUNSEL_TITLE, cm.DEF_COUNSEL_MSG)
+    @warning_check(cm.DEF_COUNSEL_TITLE, cm.DEF_COUNSEL_MSG)
     def check_defense_counsel(self, msg_response: int = None) -> bool:
         """Returns False (Fails) with choice to set defense counsel waived if no counsel set."""
         if self.dialog.defense_counsel_waived_checkBox.isChecked():
@@ -103,7 +96,7 @@ class DefenseCounselChecks(CrimBaseChecks):
 class InsuranceChecks(DefenseCounselChecks):
     """Class containing checks for Insurance."""
 
-    @WarningCheck(cm.INSURANCE_TITLE, cm.INSURANCE_MSG)
+    @warning_check(cm.INSURANCE_TITLE, cm.INSURANCE_MSG)
     def check_insurance(self, msg_response: int = None) -> bool:
         """Returns False (Fails) if insurance in Traffic cases not shown in file or in court."""
         if msg_response is not None:
@@ -125,26 +118,26 @@ class InsuranceChecks(DefenseCounselChecks):
 class BondChecks(DefenseCounselChecks):
     """Class that checks dialog to make sure the appropriate bond information is entered."""
 
-    @RequiredCheck(cm.BOND_REQUIRED_TITLE, cm.BOND_REQUIRED_MSG)
+    @required_check(cm.BOND_REQUIRED_TITLE, cm.BOND_REQUIRED_MSG)
     def check_if_no_bond_amount(self) -> bool:
         """Returns False (Fails) when bond type requires a bond amount but no bond set."""
         if self.dialog.bond_type_box.currentText() in NO_BOND_AMOUNT_TYPES:
             return True
         return self.dialog.bond_amount_box.currentText() != NONE
 
-    @RequiredCheck(cm.BOND_AMOUNT_TITLE, cm.BOND_AMOUNT_MSG)
+    @required_check(cm.BOND_AMOUNT_TITLE, cm.BOND_AMOUNT_MSG)
     def check_if_improper_bond_type(self) -> bool:
         """Returns False (Fails) if bond amount set, but bond type is no bond amount type."""
         if self.dialog.bond_type_box.currentText() not in NO_BOND_AMOUNT_TYPES:
             return True
         return self.dialog.bond_amount_box.currentText() == NONE
 
-    @RequiredCheck(cm.BOND_MODIFICATION_TITLE, cm.BOND_MODIFICATION_MSG)
+    @required_check(cm.BOND_MODIFICATION_TITLE, cm.BOND_MODIFICATION_MSG)
     def check_if_no_bond_modification_decision(self) -> bool:
         """Returns False (Fails) if bond modification decision is not set."""
         return self.dialog.bond_modification_decision_box.currentText() != BLANK
 
-    @RequiredCheck(cm.DV_BOND_TITLE, cm.DV_BOND_MSG)
+    @required_check(cm.DV_BOND_TITLE, cm.DV_BOND_MSG)
     def check_domestic_violence_bond_condition(self) -> bool:
         """Returns False (Fails) if either vacate residence or surrender weapons is not set.
 
@@ -185,7 +178,7 @@ class ChargeGridChecks(InsuranceChecks):
             return True
         return plea == DISMISSED
 
-    @RequiredCheck(cm.MISSING_PLEA_TITLE, cm.MISSING_PLEA_MSG)
+    @required_check(cm.MISSING_PLEA_TITLE, cm.MISSING_PLEA_MSG)
     def check_if_no_plea_entered(self) -> str:
         """Stops the create entry process for any charge without a plea.
 
@@ -203,7 +196,7 @@ class ChargeGridChecks(InsuranceChecks):
             col += 1
         return True
 
-    @RequiredCheck(cm.MISSING_FINDING_TITLE, cm.MISSING_FINDING_MSG)
+    @required_check(cm.MISSING_FINDING_TITLE, cm.MISSING_FINDING_MSG)
     def check_if_no_finding_entered(self) -> bool:
         """Stops the create entry process for any charge without a finding.
 
@@ -232,7 +225,7 @@ class JailTimeChecks(ChargeGridChecks):
         self.jail_credit = self.model.jail_terms.days_in_jail
         super().__init__(dialog)
 
-    @RequiredCheck(cm.EXCESS_JAIL_SUSP_TITLE, cm.EXCESS_JAIL_SUSP_MSG)
+    @required_check(cm.EXCESS_JAIL_SUSP_TITLE, cm.EXCESS_JAIL_SUSP_MSG)
     def check_if_jail_suspended_more_than_imposed(self) -> str:
         """Returns False (Fails check) if jail days suspended are greater than jail days imposed."""
         return (
@@ -240,7 +233,7 @@ class JailTimeChecks(ChargeGridChecks):
             [self.jail_days_suspended, self.jail_days_imposed],
         )
 
-    @JailWarningCheck(cm.ADD_JAIL_TITLE, cm.ADD_JAIL_MSG)
+    @jail_warning_check(cm.ADD_JAIL_TITLE, cm.ADD_JAIL_MSG)
     def check_if_jail_reporting_required(self, msg_response: int = None) -> bool:
         """Checks to see if the jails days imposed is greater than jail days suspended and credit.
 
@@ -275,7 +268,7 @@ class JailTimeChecks(ChargeGridChecks):
             return True
         return False
 
-    @WarningCheck(cm.JAIL_SET_NO_JAIL_TITLE, cm.JAIL_SET_NO_JAIL_MSG)
+    @warning_check(cm.JAIL_SET_NO_JAIL_TITLE, cm.JAIL_SET_NO_JAIL_MSG)
     def check_if_jail_equals_suspended_and_imposed(self, msg_response: int = None) -> bool:
         """Returns False (Check fails) if set to report to jail but no jail days left to serve."""
         if msg_response is not None:
@@ -284,7 +277,7 @@ class JailTimeChecks(ChargeGridChecks):
             return self.jail_days_imposed != (self.jail_days_suspended + self.jail_credit)
         return True
 
-    @WarningCheck(cm.DEF_IN_JAIL_TITLE, cm.DEF_IN_JAIL_MSG)
+    @warning_check(cm.DEF_IN_JAIL_TITLE, cm.DEF_IN_JAIL_MSG)
     def check_if_in_jail_and_reporting_set(self, msg_response: int = None) -> bool:
         """Returns False (Check fails) if defendant in jail but reporting to jail terms are set."""
         if msg_response is not None:
@@ -301,14 +294,14 @@ class JailTimeChecks(ChargeGridChecks):
             return True
         return msg_response == YES_BUTTON_RESPONSE
 
-    @RequiredCheck(cm.JAIL_DAYS_REQUIRED_TITLE, cm.JAIL_DAYS_REQUIRED_MSG)
+    @required_check(cm.JAIL_DAYS_REQUIRED_TITLE, cm.JAIL_DAYS_REQUIRED_MSG)
     def check_if_days_in_jail_blank_but_in_jail(self) -> bool:
         """Returns False (Fails check) if Defendant is in jail, but days in jail is blank."""
         if self.dialog.in_jail_box.currentText() == YES:
             return self.dialog.jail_time_credit_box.text() != BLANK
         return True
 
-    @RequiredCheck(cm.EXCESS_JAIL_CREDIT_TITLE, cm.EXCESS_JAIL_CREDIT_MSG)
+    @required_check(cm.EXCESS_JAIL_CREDIT_TITLE, cm.EXCESS_JAIL_CREDIT_MSG)
     def check_if_jail_credit_more_than_imposed(self) -> bool:
         """Returns False (Fails check) if more jail time credit is given than jail time imposed."""
         if self.dialog.jail_time_credit_apply_box.currentText() == 'Sentence':
@@ -318,7 +311,7 @@ class JailTimeChecks(ChargeGridChecks):
             )
         return True
 
-    @WarningCheck(cm.SET_JAIL_STATUS_TITLE, cm.SET_JAIL_STATUS_MSG)
+    @warning_check(cm.SET_JAIL_STATUS_TITLE, cm.SET_JAIL_STATUS_MSG)
     def check_if_in_jail_blank_but_has_jail_days(self, msg_response: int = None) -> bool:
         """Returns False (Fails check) if jail time credit is set but no indication if in jail."""
         if msg_response is not None:

@@ -1,16 +1,22 @@
 """Base module for all checks."""
 from functools import wraps
-from typing import Any, Generator, Callable
+from typing import Any, Callable, Generator
 
 from loguru import logger
 from PyQt6.QtCore import QDate
 
 from munientry.checkers.check_messages import ADD_CONDITIONS_MSG, ADD_CONDITIONS_TITLE
-from munientry.widgets.message_boxes import FAIL, PASS, JailWarningBox, RequiredBox, WarningBox
+from munientry.widgets.message_boxes import (
+    FAIL,
+    PASS,
+    JailWarningBox,
+    RequiredBox,
+    WarningBox,
+)
 
 
-def WarningCheck(title: str, message: str) -> Callable:
-    """Wraps a check and if check fails it presents user with a Warning Box with Yes/No choice"""
+def warning_check(title: str, message: str) -> Callable:
+    """Wraps a check and if check fails it presents user with a Warning Box with Yes/No choice."""
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -24,8 +30,8 @@ def WarningCheck(title: str, message: str) -> Callable:
     return decorator
 
 
-def JailWarningCheck(title: str, message: str) -> Callable:
-    """Wraps a check and if check fails presents user with Warning Box with Yes/No/Cancel choice"""
+def jail_warning_check(title: str, message: str) -> Callable:
+    """Wraps a check and if check fails presents user with Warning Box with Yes/No/Cancel choice."""
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -35,7 +41,7 @@ def JailWarningCheck(title: str, message: str) -> Callable:
             else:
                 status = func_result
                 msg_insert = None
-            if status == False:
+            if status is False:
                 if msg_insert is not None:
                     formatted_msg = message.format(*msg_insert)
                 else:
@@ -48,7 +54,7 @@ def JailWarningCheck(title: str, message: str) -> Callable:
     return decorator
 
 
-def RequiredCheck(title: str, message: str) -> Callable:
+def required_check(title: str, message: str) -> Callable:
     """Wraps a check and hard stops the check with message to user with reason for stop.
 
     Decorator allows for a tuple in the form (check_status, message_to_be_inserted) to be passed
@@ -64,7 +70,7 @@ def RequiredCheck(title: str, message: str) -> Callable:
             else:
                 status = func_result
                 msg_insert = None
-            if status == False:
+            if status is False:
                 if msg_insert is not None:
                     formatted_msg = message.format(*msg_insert)
                 else:
@@ -75,18 +81,27 @@ def RequiredCheck(title: str, message: str) -> Callable:
     return decorator
 
 
-def RequiredConditionCheck(func):
+def required_condition_check(func):
     """Wraps a check and hard stops the user with a detailed message for the hard stop."""
     @wraps(func)
     def wrapper(*args, **kwargs) -> bool:
-        self, primary_condition, condition_name = args[:3]
-        title = ADD_CONDITIONS_TITLE
-        message = ADD_CONDITIONS_MSG.format(condition_name)
         func_result = func(*args, **kwargs)
-        if func_result == False:
-            RequiredBox(message, title).exec()
-        return func_result
+        if isinstance(func_result, tuple):
+            status, condition_name = func_result
+            condition_name = condition_name[0]
+        else:
+            status = func_result
+            condition_name = None
+        message = ADD_CONDITIONS_MSG.format(condition_name)
+        if status is False:
+            RequiredBox(message, ADD_CONDITIONS_TITLE).exec()
+        return status
     return wrapper
+
+
+def log_failed_checks(check_name: str) -> None:
+    """Logs failed checks with warning."""
+    logger.warning(f'{check_name} FAILED')
 
 
 class BaseChecks(object):
@@ -110,15 +125,11 @@ class BaseChecks(object):
         """
         check_results = self.run_checks()
         for check_name, check_result in check_results:
-            if check_result in (False, FAIL):
-                self.log_failed_checks(check_name)
+            if check_result in {False, FAIL}:
+                log_failed_checks(check_name)
                 return FAIL
         return PASS
 
     def run_checks(self) -> Generator[tuple[str, Any], None, None]:
         """Returns a list of results of PASS or FAIL for each check in the check_list."""
         return ((check_method, getattr(self, check_method)()) for check_method in self.check_list)
-
-    def log_failed_checks(self, check_name: str) -> None:
-        """Logs failed checks with warning."""
-        logger.warning(f'{check_name} FAILED')

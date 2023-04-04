@@ -1,3 +1,4 @@
+# flake8: noqa: N400
 """Message constants for dialog check lists."""
 
 TRIAL_FUTURE_TITLE = 'Must Set Trial Date in Future'
@@ -63,7 +64,7 @@ BOND_MODIFICATION_MSG = """A decision on the bond modification motion was not se
 Please choose an option from the Decision on Bond box."""
 
 DV_BOND_TITLE = 'Domestic Violence Bond Condition Not Set'
-DV_BOND_MSG = """The Special Condition Domestic Violence Restrictions is checked, but the details 
+DV_BOND_MSG = """The Special Condition Domestic Violence Restrictions is checked, but the details \
 of the Domestic Violence Restrictions have not been selected.
 
 Click the Add Conditions button to add details, or uncheck the Domestic Violence Restrictions box \
