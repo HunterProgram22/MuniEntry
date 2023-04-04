@@ -1,22 +1,27 @@
 """Base module for all checks."""
 from functools import wraps
-from typing import Any, Callable, Generator
+from typing import Callable, Generator
 
 from loguru import logger
 from PyQt6.QtCore import QDate
 
 from munientry.checkers.check_messages import ADD_CONDITIONS_MSG, ADD_CONDITIONS_TITLE
-from munientry.widgets.message_boxes import (
-    FAIL,
-    PASS,
-    JailWarningBox,
-    RequiredBox,
-    WarningBox,
-)
+from munientry.widgets.message_boxes import JailWarningBox, RequiredBox, WarningBox
 
 
 def warning_check(title: str, message: str) -> Callable:
-    """Wraps a check and if check fails it presents user with a Warning Box with Yes/No choice."""
+    """Wraps a check function and displays a warning message if the check fails.
+
+    The Warning Box allows a user to modify the data by responding with Yes or No and based on the
+    response the data is updated and teh check is run again.
+
+    Args:
+        title (str): The title of the warning message box.
+        message (str): The message to display in the warning message box.
+
+    Returns:
+        Callable: A decorator that wraps a check function.
+    """
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -31,7 +36,21 @@ def warning_check(title: str, message: str) -> Callable:
 
 
 def jail_warning_check(title: str, message: str) -> Callable:
-    """Wraps a check and if check fails presents user with Warning Box with Yes/No/Cancel choice."""
+    """Wraps a check function and displays a warning message if the check fails.
+
+    The Jail Warning Box allows a user to modify the data by responding with Yes or No and based on
+    the response the data is updated and teh check is run again.
+
+    The decorator also accepts a tuple with the second item in the tuple being a list of message
+    variables.
+
+    Args:
+        title (str): The title of the warning message box.
+        message (str): The message to display in the warning message box.
+
+    Returns:
+        Callable: A decorator that wraps a check function.
+    """
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -55,11 +74,16 @@ def jail_warning_check(title: str, message: str) -> Callable:
 
 
 def required_check(title: str, message: str) -> Callable:
-    """Wraps a check and hard stops the check with message to user with reason for stop.
+    """Wraps a check function and displays a message that stops user from proceeding if check fails.
 
-    Decorator allows for a tuple in the form (check_status, message_to_be_inserted) to be passed
-    instead of just the status of the check for checks that required the RequiredBox message to
-    provide more detailed information.
+    Args:
+        title (str): The title of the message box.
+        message (str): The message to display in the message box. Use '{}' to indicate where to
+            insert additional information if a tuple is returned by the wrapped function.
+
+    Returns:
+        Callable: A decorator that wraps a check function. The wrapped function returns the status
+            of the original check function.
     """
     def decorator(func: Callable) -> Callable:
         @wraps(func)
@@ -114,22 +138,20 @@ class BaseChecks(object):
         self.today = QDate.currentDate()
         self.check_status = self.perform_check_list()
 
-    def perform_check_list(self) -> str:
+    def perform_check_list(self) -> bool:
         """Loops through a list of checks and logs checks that fail.
 
         The method is called prior to the entry creation process for a dialog. If any of the checks
-        fail it will show a message and either abort the entry creation process by returning FAIL or
-        show a message that allows the user to correct the failed check.
-
-        TODO: check result in (True, FAIL) should be temporary for refactor only.
+        fail it will show a message and either abort the entry creation process returning False or
+        show a message that allows the user to correct the failed check and return True.
         """
         check_results = self.run_checks()
         for check_name, check_result in check_results:
-            if check_result in {False, FAIL}:
+            if check_result is False:
                 log_failed_checks(check_name)
-                return FAIL
-        return PASS
+                return False
+        return True
 
-    def run_checks(self) -> Generator[tuple[str, Any], None, None]:
-        """Returns a list of results of PASS or FAIL for each check in the check_list."""
+    def run_checks(self) -> Generator[tuple[str, bool], None, None]:
+        """Returns a list of bool (True or False ) results for each check in the check_list."""
         return ((check_method, getattr(self, check_method)()) for check_method in self.check_list)
