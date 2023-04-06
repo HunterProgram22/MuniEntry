@@ -154,5 +154,5 @@ class BaseChecks(object):
         return True
 
     def run_checks(self) -> Generator[tuple[str, bool], None, None]:
-        """Returns a list of bool (True or False) results for each check in the check_list."""
+        """Returns a Generator of bool (True or False) results for each check in the check_list."""
         return ((check_method, getattr(self, check_method)()) for check_method in self.check_list)
