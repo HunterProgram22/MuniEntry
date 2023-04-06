@@ -79,7 +79,7 @@ class CaseSearchHandler(QObject):
         def_first_name = case_data.defendant.first_name
         def_last_name = case_data.defendant.last_name
         case_number = case_data.case_number
-        case_name = f'State of Ohio v. {def_first_name} v. {def_last_name}'
+        case_name = f'State of Ohio v. {def_first_name} {def_last_name}'
         case_charges = ', '.join(str(charge[0]) for charge in case_data.charges_list)
         return (case_number, case_name, case_charges)
 
