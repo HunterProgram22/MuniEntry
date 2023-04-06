@@ -1,4 +1,5 @@
 """A module containing common variables used throughout the application."""
+from loguru import logger
 import socket
 from enum import Enum
 from types import MappingProxyType
@@ -30,7 +31,8 @@ def get_host() -> str:
     If there is no key and value for the socket in the config file it sets the host to the
     socket name.
     """
-    socket_dict = dict(config.items('sockets'))
+    config = load_config()
+    socket_dict = config['sockets']
     key = socket.gethostname()
     return socket_dict.get(key, key)
 
