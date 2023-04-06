@@ -78,8 +78,9 @@ def required_check(title: str, message: str) -> Callable:
 
     Args:
         title (str): The title of the message box.
-        message (str): The message to display in the message box. Use '{}' to indicate where to
-            insert additional information if a tuple is returned by the wrapped function.
+        message (str): The message to display in the message box. Use '{number_position}' to
+            indicate where to insert additional information if a tuple is returned by the wrapped
+            function.
 
     Returns:
         Callable: A decorator that wraps a check function. The wrapped function returns the status
@@ -153,5 +154,5 @@ class BaseChecks(object):
         return True
 
     def run_checks(self) -> Generator[tuple[str, bool], None, None]:
-        """Returns a list of bool (True or False ) results for each check in the check_list."""
+        """Returns a list of bool (True or False) results for each check in the check_list."""
         return ((check_method, getattr(self, check_method)()) for check_method in self.check_list)
