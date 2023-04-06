@@ -5,7 +5,7 @@ from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_special_bond_conditions_dialog import (
     AddSpecialBondConditionsDialog,
 )
-from munientry.checkers.bond_checkers import NoPleaBondDialogInfoChecker
+from munientry.checkers.crim_checks import BondChecks
 from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     NoPleaBondEntryCaseInformation,
@@ -79,12 +79,31 @@ class NoPleaBondDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
+class NoPleaBondCheckList(BondChecks):
+    """Check list for No Plea Bond Dialog."""
+
+    check_list = [
+        'check_defense_counsel',
+        'check_if_no_bond_amount',
+        'check_if_improper_bond_type',
+        'check_additional_conditions_ordered',
+        'check_domestic_violence_bond_condition',
+    ]
+    conditions_list = [
+        ('admin_license_suspension', 'disposition', 'Admin License Suspension'),
+        ('vehicle_seizure', 'vehicle_make_model', 'Vehicle Seizure'),
+        ('no_contact', 'name', 'No Contact'),
+        ('custodial_supervision', 'supervisor', 'Custodial Supervision'),
+        ('other_conditions', 'terms', 'Other Conditions'),
+    ]
+
+
 class NoPleaBondDialog(crim.CrimTrafficDialogBuilder, Ui_NoPleaBondDialog):
     """Dialog builder class for 'Appear on Warrant (No Plea) / Bond' Entry."""
 
     _case_information_model = NoPleaBondEntryCaseInformation
     _case_loader = CrimCmsNoChargeLoader
-    _info_checker = NoPleaBondDialogInfoChecker
+    _info_checker = NoPleaBondCheckList
     _model_updater = NoPleaBondDialogUpdater
     _signal_connector = NoPleaBondDialogSignalConnector
     _slots = NoPleaBondDialogSlotFunctions
@@ -112,7 +131,3 @@ class NoPleaBondDialog(crim.CrimTrafficDialogBuilder, Ui_NoPleaBondDialog):
             ('vehicle_seizure_checkBox', self.entry_case_information.vehicle_seizure),
         ]
         self.entry_case_information.bond_conditions = BondConditions()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

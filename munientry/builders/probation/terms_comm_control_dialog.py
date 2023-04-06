@@ -1,7 +1,7 @@
 """Builder module for the Terms of Community Control Entry Dialog."""
 from munientry.builders.probation import base_probation_builders as prob
 from munientry.loaders.cms_case_loaders import ProbationCrimCmsLoader
-from munientry.checkers.probation_checks import ProbationDialogInfoChecker
+from munientry.checkers.probation_checks import ProbationBaseChecks
 from munientry.models.case_information.probation_case_information import TermsCommControlEntryCaseInformation
 from munientry.updaters.probation_updaters import ProbationModelUpdater
 from munientry.views.terms_comm_control_dialog_ui import Ui_TermsCommControlDialog
@@ -35,12 +35,18 @@ class TermsCommControlDialogSignalConnector(prob.ProbationSignalConnector):
             checkbox.toggled.connect(self.dialog.functions.show_hide_checkbox_connected_fields)
 
 
+class TermsCommControlCheckList(ProbationBaseChecks):
+    """Check list for Terms of Community Control."""
+
+    check_list = []
+
+
 class TermsCommControlDialog(prob.ProbationDialogBuilder, Ui_TermsCommControlDialog):
     """Dialog builder class for TermsCommControl Entry."""
 
     _case_information_model = TermsCommControlEntryCaseInformation
     _case_loader = ProbationCrimCmsLoader
-    _info_checker = ProbationDialogInfoChecker
+    _info_checker = TermsCommControlCheckList
     _model_updater = ProbationModelUpdater
     _signal_connector = TermsCommControlDialogSignalConnector
     _slots = TermsCommControlDialogSlotFunctions

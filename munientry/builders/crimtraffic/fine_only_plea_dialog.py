@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_conditions_dialog import AddConditionsDialog
-from munientry.checkers.no_jail_sentencing_checkers import FineOnlyDialogInfoChecker
+from munientry.checkers.crim_checks import InsuranceChecks, ChargeGridChecks
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     FineOnlyEntryCaseInformation,
@@ -53,12 +53,30 @@ class FineOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
+class FineOnlyCheckList(ChargeGridChecks, InsuranceChecks):
+    """Check list for Fine Only Dialog."""
+
+    check_list = [
+        'check_defense_counsel',
+        'check_if_no_plea_entered',
+        'check_if_no_finding_entered',
+        'check_insurance',
+        'check_additional_conditions_ordered',
+    ]
+    conditions_list = [
+        ('license_suspension', 'license_type', 'License Suspension'),
+        ('community_service', 'hours_of_service', 'Community Service'),
+        ('other_conditions', 'terms', 'Other Conditions'),
+    ]
+
+
+
 class FineOnlyPleaDialog(crim.CrimTrafficDialogBuilder, Ui_FineOnlyPleaDialog):
     """Dialog builder class for 'Fine Only' dialog."""
 
     _case_information_model = FineOnlyEntryCaseInformation
     _case_loader = CmsFraLoader
-    _info_checker = FineOnlyDialogInfoChecker
+    _info_checker = FineOnlyCheckList
     _model_updater = FineOnlyDialogUpdater
     _signal_connector = FineOnlyDialogSignalConnector
     _slots = FineOnlyDialogSlotFunctions
@@ -73,6 +91,3 @@ class FineOnlyPleaDialog(crim.CrimTrafficDialogBuilder, Ui_FineOnlyPleaDialog):
         ]
         self.functions.set_fines_credit_for_jail_field()  # Hides credit_for_jail field on load
 
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

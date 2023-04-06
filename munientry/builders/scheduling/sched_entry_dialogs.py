@@ -14,7 +14,7 @@ from munientry.settings.business_constants import (
     SPEEDY_TRIAL_TIME_DICT,
 )
 from munientry.builders.scheduling import base_scheduling_builders as sched
-from munientry.checkers.base_checks import SchedulingChecker
+from munientry.checkers.scheduling_checks import SchedulingChecks
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.updaters.scheduling_updaters import (
@@ -250,23 +250,21 @@ class SchedulingEntryModelUpdater(SchedulingModelUpdater):
         return 'Unknown'
 
 
-class SchedulingEntryDialogInfoChecker(SchedulingChecker):
-    """Class with checks for the General Notice Hearing Info Checker."""
+class SchedulingEntryCheckList(SchedulingChecks):
+    """Class with checks for the Scheduling Entry Dialogs."""
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_if_trial_date_is_today',
-        ]
-        self.check_status = self.perform_check_list()
+    check_list = [
+        'check_final_pretrial_date',
+        'check_trial_date',
+    ]
 
 
 class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDialog):
-    """The builder class for the Scheduling Entry Dialog."""
+    """The builder class for the Scheduling Entry."""
 
     _case_information_model = SchedulingCaseInformation
     _case_loader = SchedulingCrimCmsLoader
-    _info_checker = SchedulingEntryDialogInfoChecker
+    _info_checker = SchedulingEntryCheckList
     _model_updater = SchedulingEntryModelUpdater
     _signal_connector = SchedulingEntryDialogSignalConnector
     _slots = SchedulingEntryDialogSlotFunctions

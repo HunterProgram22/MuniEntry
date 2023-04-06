@@ -214,13 +214,6 @@ class DismissedCheckbox(QCheckBox):
                 logger.warning(error_three)
 
 
-# DataValidator Widgets
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
-
-
 class WorkflowRadioButtonWidget(QWidget):
     """A Widget with two radio buttons for approving or rejecting a decision."""
 

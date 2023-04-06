@@ -390,16 +390,20 @@ class Diversion:
     restitution_ordered: bool = False
     pay_restitution_to: str = None
     pay_restitution_amount: str = None
+    other_conditions_ordered: bool = False
+    other_conditions_text: str = None
     terms_list = [
-        ("marijuana_diversion", "marijuana_diversion_radioButton"),
-        ("theft_diversion", "theft_diversion_radioButton"),
-        ("other_diversion", "other_diversion_radioButton"),
-        ("jail_imposed", "diversion_jail_imposed_checkBox"),
-        ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
-        ("diversion_jail_report_date", "diversion_jail_report_date_box"),
-        ("restitution_ordered", "pay_restitution_checkBox"),
-        ("pay_restitution_to", "pay_restitution_to_box"),
-        ("pay_restitution_amount", "pay_restitution_amount_box"),
+        ('marijuana_diversion', 'marijuana_diversion_radio_btn'),
+        ('theft_diversion', 'theft_diversion_radio_btn'),
+        ('other_diversion', 'other_diversion_radio_btn'),
+        ('jail_imposed', 'diversion_jail_imposed_check_box'),
+        ('diversion_fine_pay_date', 'diversion_fine_pay_date'),
+        ('diversion_jail_report_date', 'diversion_jail_report_date'),
+        ('restitution_ordered', 'pay_restitution_check_box'),
+        ('pay_restitution_to', 'pay_restitution_to_line'),
+        ('pay_restitution_amount', 'pay_restitution_amount_line'),
+        ('other_conditions_ordered', 'other_conditions_check_box'),
+        ('other_conditions_text', 'other_conditions_text'),
     ]
 
     def get_program_name(self):

@@ -2,7 +2,7 @@
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.checkers.bond_checkers import ProbationViolationBondDialogInfoChecker
+from munientry.checkers.crim_checks import BondChecks
 from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     ProbationViolationEntryCaseInformation,
@@ -48,12 +48,22 @@ class ProbationViolationBondDialogSignalConnector(crim.CrimTrafficSignalConnecto
         self.dialog.bond_type_box.currentTextChanged.connect(self.dialog.functions.set_if_no_bond)
 
 
+class ProbationViolationBondCheckList(BondChecks):
+    """Check list for Probation Violation Bond Dialog."""
+
+    check_list = [
+        'check_defense_counsel',
+        'check_if_no_bond_amount',
+        'check_if_improper_bond_type',
+    ]
+
+
 class ProbationViolationBondDialog(crim.CrimTrafficDialogBuilder, Ui_ProbationViolationBondDialog):
     """Dialog builder class for 'Prelim. Probation Violation / Bond' Entry."""
 
     _case_information_model = ProbationViolationEntryCaseInformation
     _case_loader = CrimCmsNoChargeLoader
-    _info_checker = ProbationViolationBondDialogInfoChecker
+    _info_checker = ProbationViolationBondCheckList
     _model_updater = ProbationViolationBondDialogUpdater
     _signal_connector = ProbationViolationBondDialogSignalConnector
     _slots = ProbationViolationBondDialogSlotFunctions
@@ -63,7 +73,3 @@ class ProbationViolationBondDialog(crim.CrimTrafficDialogBuilder, Ui_ProbationVi
     def additional_setup(self):
         self.entry_case_information.bond_conditions = ProbationViolationBondConditions()
         self.functions.hide_bond_conditions()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

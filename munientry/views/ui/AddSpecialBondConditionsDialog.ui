@@ -212,6 +212,9 @@ font-weight: bold;</string>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
+               <property name="editable">
+                <bool>false</bool>
+               </property>
                <item>
                 <property name="text">
                  <string>No</string>
@@ -247,6 +250,9 @@ font-weight: bold;</string>
              </item>
              <item row="2" column="1">
               <widget class="NoScrollComboBox" name="admin_license_suspension_disposition_box">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -819,11 +825,6 @@ background-color: rgb(255, 255, 255);</string>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ConditionCheckbox</class>
-   <extends>QCheckBox</extends>
-   <header>munientry.widgets.custom_widgets</header>
-  </customwidget>
-  <customwidget>
    <class>NoScrollDateEdit</class>
    <extends>QDateEdit</extends>
    <header>munientry.widgets.custom_widgets</header>
@@ -832,6 +833,11 @@ background-color: rgb(255, 255, 255);</string>
    <class>NoScrollComboBox</class>
    <extends>QComboBox</extends>
    <header>munientry.widgets.combo_boxes</header>
+  </customwidget>
+  <customwidget>
+   <class>ConditionCheckbox</class>
+   <extends>QCheckBox</extends>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
  </customwidgets>
  <tabstops>

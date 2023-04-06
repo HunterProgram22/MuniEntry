@@ -61,7 +61,7 @@ class BaseEntryCreator(object):
         logger.info(f'Entry Created: {self.docname}')
         startfile(f'{self.save_path}{self.docname}')
 
-    def update_info_and_perform_checks(self):
+    def update_info_and_perform_checks(self) -> str:
         """This method performs an update then calls to the main_entry_dialog's InfoChecker class.
 
         The InfoChecker check_status will return as 'Fail' if any of the checks are hard stops -
@@ -72,7 +72,7 @@ class BaseEntryCreator(object):
         """
         self.dialog.update_entry_case_information()
         self.dialog.perform_info_checks()
-        if self.dialog.dialog_checks.check_status == 'Fail':
+        if self.dialog.dialog_checks.check_status is False:
             return 'Fail'
         self.dialog.update_entry_case_information()
         return 'Pass'

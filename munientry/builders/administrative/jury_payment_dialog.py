@@ -4,7 +4,7 @@ from num2words import num2words
 from PyQt6.QtCore import QDate
 
 from munientry.builders.administrative import base_admin_builders as admin
-from munientry.checkers.base_checks import BaseChecker
+from munientry.checkers.base_checks import BaseChecks
 from munientry.entrycreators.entry_creator import JuryPaymentEntryCreator
 from munientry.loaders.cms_case_loaders import CrimCmsLoader
 from munientry.models.jury_models import JuryPaymentInformation
@@ -69,7 +69,7 @@ class JuryPaymentSignalConnector(admin.AdminSignalConnector):
         self.dialog.trial_length_box.currentTextChanged.connect(self.dialog.functions.set_seated_jurors)
 
 
-class JuryPaymentInfoChecker(BaseChecker):
+class JuryPaymentInfoChecks(BaseChecks):
     """Class with checks for the Jury Payment Dialog."""
 
     def __init__(self, dialog) -> None:
@@ -124,7 +124,7 @@ class JuryPaymentDialog(admin.AdminDialogBuilder, Ui_JurorPaymentDialog):
 
     _case_information_model = JuryPaymentInformation
     _case_loader = CrimCmsLoader
-    _info_checker = JuryPaymentInfoChecker
+    _info_checker = JuryPaymentInfoChecks
     _model_updater = JuryPaymentCaseInformationUpdater
     _signal_connector = JuryPaymentSignalConnector
     _slots = JuryPaymentSlotFunctions

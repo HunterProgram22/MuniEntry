@@ -1,6 +1,6 @@
 """Builder module for the Plea Only - Future Sentencing Dialog."""
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.checkers.plea_only_checkers import PleaOnlyDialogInfoChecker
+from munientry.checkers.crim_checks import ChargeGridChecks
 from munientry.loaders.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import PleaOnlyEntryCaseInformation
 from munientry.updaters.grid_case_updaters import PleaOnlyDialogUpdater
@@ -46,12 +46,22 @@ class PleaOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
+class PleaOnlyCheckList(ChargeGridChecks):
+    """Check list for Plea Only Dialog."""
+
+    check_list = [
+        'check_defense_counsel',
+        'check_if_no_plea_entered',
+        'check_if_no_finding_entered',
+    ]
+
+
 class PleaOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_PleaOnlyDialog):
     """Dialog builder class for 'Plea Only - Future Sentencing' dialog."""
 
     _case_information_model = PleaOnlyEntryCaseInformation
     _case_loader = CmsChargeLoader
-    _info_checker = PleaOnlyDialogInfoChecker
+    _info_checker = PleaOnlyCheckList
     _model_updater = PleaOnlyDialogUpdater
     _signal_connector = PleaOnlyDialogSignalConnector
     _slots = PleaOnlyDialogSlotFunctions

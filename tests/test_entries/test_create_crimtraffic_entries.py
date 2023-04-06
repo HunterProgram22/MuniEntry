@@ -397,23 +397,16 @@ def test_create_trial_sentencing_entry(monkeypatch, qtbot, main_window):
 
 
 def test_create_diversion_entry(monkeypatch, main_window):
-    """Tests the creation of a Diversion entry.
-
-    TODO: Bug here - not all conditions showing up in entry.
-    Commented out other_conditions_checkBox and textEdit are conditions that won't
-    populate correctly.
-    """
+    """Tests the creation of a Diversion entry."""
     entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.DiversionButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'div_test')
-    mouse_click(dialog.marijuana_diversion_radioButton)
-    mouse_click(dialog.diversion_jail_imposed_checkBox)
-    mouse_click(dialog.pay_restitution_checkBox)
-    enter_data(dialog.pay_restitution_to_box, 'Justin Kudela')
-    enter_data(dialog.pay_restitution_amount_box, '$5,000')
-    # mouse_click(dialog.other_conditions_checkBox)
-    # enter_data(dialog.other_conditions_textEdit, 'Be good or else!')
+    mouse_click(dialog.marijuana_diversion_radio_btn)
+    mouse_click(dialog.diversion_jail_imposed_check_box)
+    mouse_click(dialog.pay_restitution_check_box)
+    enter_data(dialog.pay_restitution_to_line, 'Justin Kudela')
+    enter_data(dialog.pay_restitution_amount_line, '$5,000')
     mouse_click(dialog.guilty_all_Button)
     enter_data(dialog.fra_in_court_box, 'Yes')
     mouse_click(dialog.create_entry_Button)

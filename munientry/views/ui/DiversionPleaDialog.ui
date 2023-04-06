@@ -186,7 +186,7 @@ font-weight: bold;</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_8" rowstretch="1,1,1,1,1,0,0,0,0,0,0">
           <item row="1" column="3">
-           <widget class="NoScrollDateEdit" name="diversion_fine_pay_date_box">
+           <widget class="NoScrollDateEdit" name="diversion_fine_pay_date">
             <property name="styleSheet">
              <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -197,7 +197,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QRadioButton" name="theft_diversion_radioButton">
+           <widget class="QRadioButton" name="theft_diversion_radio_btn">
             <property name="text">
              <string>Theft Diversion Program</string>
             </property>
@@ -214,14 +214,14 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="10" column="2" colspan="2">
-           <widget class="QTextEdit" name="other_conditions_textEdit">
+           <widget class="QTextEdit" name="other_conditions_text">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
           <item row="10" column="0">
-           <widget class="QCheckBox" name="other_conditions_checkBox">
+           <widget class="QCheckBox" name="other_conditions_check_box">
             <property name="text">
              <string>Add Other Conditions</string>
             </property>
@@ -235,7 +235,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QRadioButton" name="other_diversion_radioButton">
+           <widget class="QRadioButton" name="other_diversion_radio_btn">
             <property name="text">
              <string>Other Diversion Program</string>
             </property>
@@ -272,7 +272,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="4" column="3">
-           <widget class="NoScrollDateEdit" name="diversion_jail_report_date_box">
+           <widget class="NoScrollDateEdit" name="diversion_jail_report_date">
             <property name="styleSheet">
              <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -290,14 +290,14 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="8" column="0">
-           <widget class="QCheckBox" name="pay_restitution_checkBox">
+           <widget class="QCheckBox" name="pay_restitution_check_box">
             <property name="text">
              <string>Restitution Ordered</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QRadioButton" name="marijuana_diversion_radioButton">
+           <widget class="QRadioButton" name="marijuana_diversion_radio_btn">
             <property name="text">
              <string>Marijuana Diversion Program</string>
             </property>
@@ -324,21 +324,21 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="3" column="2">
-           <widget class="QCheckBox" name="diversion_jail_imposed_checkBox">
+           <widget class="QCheckBox" name="diversion_jail_imposed_check_box">
             <property name="text">
              <string>Jail Time Imposed</string>
             </property>
            </widget>
           </item>
           <item row="8" column="3">
-           <widget class="QLineEdit" name="pay_restitution_to_box">
+           <widget class="QLineEdit" name="pay_restitution_to_line">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
           <item row="9" column="3">
-           <widget class="QLineEdit" name="pay_restitution_amount_box">
+           <widget class="QLineEdit" name="pay_restitution_amount_line">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>

@@ -4,9 +4,8 @@ from loguru import logger
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.crimtraffic.leap_plea_dialog import (
     LeapAdmissionPleaDialogSlotFunctions,
-    LeapAdmissionPleaDialogViewModifier,
+    LeapAdmissionPleaDialogViewModifier, LeapAdmissionPleaCheckList,
 )
-from munientry.checkers.plea_only_checkers import LeapAdmissionPleaDialogInfoChecker
 from munientry.loaders.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import (
     LeapAdmissionEntryCaseInformation,
@@ -34,7 +33,7 @@ class LeapPleaValidDialog(crim.CrimTrafficDialogBuilder, Ui_LeapPleaValidDialog)
 
     _case_information_model = LeapAdmissionEntryCaseInformation
     _case_loader = CmsChargeLoader
-    _info_checker = LeapAdmissionPleaDialogInfoChecker
+    _info_checker = LeapAdmissionPleaCheckList
     _model_updater = LeapAdmissionPleaDialogUpdater
     _signal_connector = LeapAdmissionPleaValidDialogSignalConnector
     _slots = LeapAdmissionPleaDialogSlotFunctions

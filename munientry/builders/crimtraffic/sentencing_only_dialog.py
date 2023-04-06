@@ -6,7 +6,7 @@ from munientry.builders.secondary.add_community_control_dialog import (
     AddCommunityControlDialog,
 )
 from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
-from munientry.checkers.jail_charge_grid_checkers import SentencingOnlyDialogInfoChecker
+from munientry.checkers.crim_checks import JailTimeChecks
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     SentencingOnlyEntryCaseInformation,
@@ -75,12 +75,39 @@ class SentencingOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
+class SentencingOnlyCheckList(JailTimeChecks):
+    """Check list for Sentencing Only Checks, same as JailCCPlea, but plea check is different."""
+
+    check_list = [
+        'check_defense_counsel',
+        'check_plea_date',
+        'check_if_no_finding_entered',
+        'check_insurance',
+        'check_additional_conditions_ordered',
+        'check_if_jail_suspended_more_than_imposed',
+        'check_if_days_in_jail_blank_but_in_jail',
+        'check_if_in_jail_blank_but_has_jail_days',
+        'check_if_apply_jail_credit_blank_but_in_jail',
+        'check_if_jail_reporting_required',
+        'check_if_jail_equals_suspended_and_imposed',
+        'check_if_jail_credit_more_than_imposed',
+        'check_if_in_jail_and_reporting_set',
+    ]
+    conditions_list = [
+        ('license_suspension', 'license_type', 'License Suspension'),
+        ('community_service', 'hours_of_service', 'Community Service'),
+        ('other_conditions', 'terms', 'Other Conditions'),
+        ('community_control', 'term_of_control', 'Community Control'),
+        ('impoundment', 'vehicle_make_model', 'Immobilize/Impound'),
+    ]
+
+
 class SentencingOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_SentencingOnlyDialog):
     """Dialog builder class for 'Sentencing Only - Already Plead' dialog."""
 
     _case_information_model = SentencingOnlyEntryCaseInformation
     _case_loader = CmsFraLoader
-    _info_checker = SentencingOnlyDialogInfoChecker
+    _info_checker = SentencingOnlyCheckList
     _model_updater = SentencingOnlyDialogUpdater
     _signal_connector = SentencingOnlyDialogSignalConnector
     _slots = SentencingOnlyDialogSlotFunctions
@@ -99,7 +126,3 @@ class SentencingOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_SentencingOnlyDialo
             ('impoundment_checkBox', self.entry_case_information.impoundment),
             ('victim_notification_checkBox', self.entry_case_information.victim_notification),
         ]
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
