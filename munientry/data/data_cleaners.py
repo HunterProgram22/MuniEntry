@@ -42,6 +42,10 @@ OFFENSE_CLEAN_DICT = MappingProxyType({
     'AND': 'and',
 })
 
+DEFENSE_COUNSEL_CLEAN_DICT = ({
+    'III': 'III',
+})
+
 
 def clean_last_name(last_name: str) -> str:
     """Removes spaces between hyphenated last names."""
@@ -54,6 +58,14 @@ def clean_offense_name(offense: str) -> str:
     clean_words = [OFFENSE_CLEAN_DICT.get(word, word.capitalize()) for word in words]
     clean_offense = ' '.join(clean_words)
     return clean_offense.rstrip(' ')
+
+
+def clean_defense_counsel_name(def_counsel_name: str) -> str:
+    """Sanitizes defense counsel names loaded from external databases."""
+    words = def_counsel_name.split()
+    clean_words = [DEFENSE_COUNSEL_CLEAN_DICT.get(word, word.capitalize()) for word in words]
+    clean_name = ' '.join(clean_words)
+    return clean_name.rstrip(' ')
 
 
 def clean_statute_name(statute: str) -> str:

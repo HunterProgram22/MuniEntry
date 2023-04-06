@@ -8,7 +8,7 @@ from PyQt6.QtSql import QSqlDatabase, QSqlQuery
 
 from munientry.settings.app_settings import DAILY_CASE_LIST_STORED_PROCS
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.data.data_cleaners import clean_last_name, clean_offense_name, clean_statute_name
+from munientry.data.data_cleaners import clean_defense_counsel_name, clean_last_name, clean_offense_name, clean_statute_name
 from munientry.models.cms_models import CriminalCmsCaseInformation
 from munientry.models.privileges_models import DrivingPrivilegesInformation
 from munientry.sqlserver.crim_sql_server_queries import (
@@ -134,7 +134,7 @@ class CrimCaseData(object):
             self.case.defendant.last_name = query_data.value('DefLastName').title()
             self.case.defendant.first_name = query_data.value('DefFirstName').title()
             self.case.fra_in_file = query_data.value('FraInFile')
-            self.case.defense_counsel = query_data.value('DefenseCounsel').title()
+            self.case.defense_counsel = clean_defense_counsel_name(query_data.value('DefenseCounsel'))
             self.case.defense_counsel_type = query_data.value('PubDef')
             self.case.violation_date = query_data.value('ViolationDate')
 
