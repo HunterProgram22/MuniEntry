@@ -4,38 +4,38 @@
 def general_case_search_query(case_number: str) -> str:
     return f"""
     SELECT DISTINCT
-    sc.SubCaseNumber,
-    cm.CaseNumber,
-    sc.Id AS SubCaseID,
-	sc.ChargeDescription AS Charge,
-	v.Id AS ViolationID,
-    v.SectionCode AS Statute,
-	d.DegreeCode,
-	cp.FirstName AS DefFirstName,
-    cp.LastName AS DefLastName,
-	vd.IsMoving AS MovingBool,
-	sc.ViolationDate,
-	vd.EndDate,
-	cm.InsuranceStatus AS FraInFile,
-    CONCAT(att.FirstName, ' ', att.LastName) AS DefenseCounsel,
-    IIF (sc.AttorneyTypeID = '476', 1, 0) AS PubDef
+        sc.SubCaseNumber,
+        cm.CaseNumber,
+        sc.Id AS SubCaseID,
+        sc.ChargeDescription AS Charge,
+        v.Id AS ViolationID,
+        v.SectionCode AS Statute,
+        d.DegreeCode,
+        cp.FirstName AS DefFirstName,
+        cp.LastName AS DefLastName,
+        vd.IsMoving AS MovingBool,
+        sc.ViolationDate,
+        vd.EndDate,
+        cm.InsuranceStatus AS FraInFile,
+        CONCAT(att.FirstName, ' ', att.LastName) AS DefenseCounsel,
+        IIF (sc.AttorneyTypeID = '476', 1, 0) AS PubDef
 
-    FROM [AuthorityCourt].[dbo].[CaseMaster] cm
-	JOIN [AuthorityCourt].[dbo].[SubCase] sc
-    ON cm.Id = sc.CaseMasterID
-	JOIN [AuthorityCourt].[dbo].[Violation] v
-    ON sc.ViolationId = v.Id
-	JOIN [AuthorityCourt].[dbo].[ViolationDetail] vd
-    ON v.Id = vd.ViolationID
-	JOIN [AuthorityCourt].[dbo].[Degree] d
-    ON vd.DegreeID = d.Id
-	JOIN [AuthorityCourt].[dbo].[CasePerson] cp
-    ON cp.CaseMasterID = cm.Id
-	LEFT JOIN [AuthorityCourt].[dbo].[Attorney] att
-    ON sc.AttorneyID = att.Id
+    FROM 
+        [AuthorityCourt].[dbo].[CaseMaster] cm
+        JOIN [AuthorityCourt].[dbo].[SubCase] sc ON cm.Id = sc.CaseMasterID
+        JOIN [AuthorityCourt].[dbo].[Violation] v ON sc.ViolationId = v.Id
+        JOIN [AuthorityCourt].[dbo].[ViolationDetail] vd ON v.Id = vd.ViolationID
+        JOIN [AuthorityCourt].[dbo].[Degree] d ON vd.DegreeID = d.Id
+        JOIN [AuthorityCourt].[dbo].[CasePerson] cp ON cp.CaseMasterID = cm.Id
+        LEFT JOIN [AuthorityCourt].[dbo].[Attorney] att ON sc.AttorneyID = att.Id
 
-	WHERE cm.CaseNumber = '{case_number}' AND sc.IsDeleted = '0' and (vd.EndDate is NULL OR vd.EndDate >= sc.ViolationDate)	 	 
-	ORDER BY SubCaseNumber 
+	WHERE 
+	    cm.CaseNumber = '{case_number}' 
+	    AND sc.IsDeleted = '0' 
+	    AND cp.PersonTypeID = '1'
+	    AND (vd.EndDate is NULL OR vd.EndDate >= sc.ViolationDate)	 	 
+	ORDER BY 
+	    sc.SubCaseNumber 
     """
 
 
