@@ -5,11 +5,10 @@
 Functions:
     clean_last_name(last_name) -> str
     clean_offense_name(offense) -> str
+    clean_defense_counsel_name(def_counsel_name) -> str
     clean_statute_name(statute) -> str
 """
 from types import MappingProxyType
-
-from loguru import logger
 
 OFFENSE_CLEAN_DICT = MappingProxyType({
     'UCM': '',
@@ -42,7 +41,7 @@ OFFENSE_CLEAN_DICT = MappingProxyType({
     'AND': 'and',
 })
 
-DEFENSE_COUNSEL_CLEAN_DICT = ({
+DEFENSE_COUNSEL_CLEAN_DICT = MappingProxyType({
     'III': 'III',
 })
 
