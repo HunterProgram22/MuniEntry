@@ -23,6 +23,7 @@ Functions:
 """
 import socket
 from functools import partialmethod
+from types import MappingProxyType
 from typing import Union
 
 from loguru import logger
@@ -50,11 +51,11 @@ HOME_DB_SERVER = r'ROOBERRYPRIME\SQLEXPRESS'
 HOME_PC_SOCKET = 'RooberryPrime'
 TEST_COMPUTER_SOCKETS = ('Muni10', 'RooberryPrime')
 
-DATABASE_WARNINGS_SETTINGS = {
+DATABASE_WARNINGS_SETTINGS = MappingProxyType({
     CRIM_TRAFFIC_DB_CONN: True,
     CIVIL_DB_CONN: True,
     MUNIENTRY_DB_CONN: True,
-}
+})
 # End Database Constants
 
 
@@ -85,7 +86,7 @@ def set_server_and_database(connection_name: str) -> tuple:
     if socket.gethostname() == HOME_PC_SOCKET:
         server = HOME_DB_SERVER
 
-    logger.info(f'Database for {connection_name} set to {database} on server {server}.')
+    logger.info(f'Database set to {database} on server {server}.')
     return (server, database)
 
 
