@@ -139,7 +139,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.crim_case_data_requested.emit(case_number)
 
     def crim_show_docket_case_search(self) -> None:
-        case_number = self.get_case_number()
+        case_number = self.get_case_number('criminal')
         self.crim_case_docket_requested.emit(case_number)
 
     def crim_show_docket_case_list(self) -> None:
