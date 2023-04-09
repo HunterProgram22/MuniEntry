@@ -103,7 +103,7 @@ def test_set_crim_display_data(case_search_handler):
     case_data.case_number = "123"
     case_data.charges_list = [("Charge 1",), ("Charge 2",)]
     display_data = case_search_handler.set_crim_display_data(case_data)
-    assert display_data == ("123", "State of Ohio v. John v. Doe", "Charge 1, Charge 2")
+    assert display_data == ("123", "State of Ohio v. John Doe", "Charge 1, Charge 2")
 
 
 def test_set_civil_display_data(case_search_handler):

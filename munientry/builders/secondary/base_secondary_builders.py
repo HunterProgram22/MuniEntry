@@ -94,6 +94,7 @@ class SecondaryViewModifier(base.BaseDialogViewModifier):
             if model_data not in {'', False, None}:
                 LogTransfer.log_view_update(model_class, model_attribute, model_data)
 
+
 class SecondarySlotFunctions(base.BaseDialogSlotFunctions):
     """Base set of functions for Secondary Dialogs."""
 

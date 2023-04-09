@@ -41,9 +41,6 @@ def jail_warning_check(title: str, message: str) -> Callable:
     The Jail Warning Box allows a user to modify the data by responding with Yes or No and based on
     the response the data is updated and teh check is run again.
 
-    The decorator also accepts a tuple with the second item in the tuple being a list of message
-    variables.
-
     Args:
         title (str): The title of the warning message box.
         message (str): The message to display in the warning message box.
@@ -55,11 +52,7 @@ def jail_warning_check(title: str, message: str) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
             func_result = func(*args, **kwargs)
-            if isinstance(func_result, tuple):
-                status, msg_insert = func_result
-            else:
-                status = func_result
-                msg_insert = None
+            status, msg_insert = func_result
             if status is False:
                 if msg_insert is not None:
                     formatted_msg = message.format(*msg_insert)
@@ -77,8 +70,10 @@ def required_check(title: str, message: str) -> Callable:
     """Wraps a check function and displays a message that stops user from proceeding if check fails.
 
     Args:
-        title (str): The title of the message box.
-        message (str): The message to display in the message box. Use '{number_position}' to
+        title (str):
+            The title of the message box.
+        message (str):
+            The message to display in the message box. Use '{number_position}' to
             indicate where to insert additional information if a tuple is returned by the wrapped
             function.
 
@@ -111,12 +106,8 @@ def required_condition_check(func):
     @wraps(func)
     def wrapper(*args, **kwargs) -> bool:
         func_result = func(*args, **kwargs)
-        if isinstance(func_result, tuple):
-            status, condition_name = func_result
-            condition_name = condition_name[0]
-        else:
-            status = func_result
-            condition_name = None
+        status, condition_name = func_result
+        condition_name = condition_name[0]
         message = ADD_CONDITIONS_MSG.format(condition_name)
         if status is False:
             RequiredBox(message, ADD_CONDITIONS_TITLE).exec()

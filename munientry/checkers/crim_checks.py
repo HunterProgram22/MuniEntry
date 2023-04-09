@@ -1,6 +1,6 @@
 # flake8: noqa: WPS110, WPS214
 """Checks for Criminal Traffic Dialogs."""
-from typing import Optional
+from typing import Any, Optional
 
 from PyQt6.QtWidgets import QComboBox, QLabel
 
@@ -12,6 +12,7 @@ from munientry.checkers.base_checks import (
     required_condition_check,
     warning_check,
 )
+from munientry.models.conditions_models import ConditionsModel
 from munientry.settings.pyqt_constants import NO_BUTTON_RESPONSE, YES_BUTTON_RESPONSE
 from munientry.widgets.message_boxes import TwoChoiceQuestionBox
 
@@ -50,7 +51,7 @@ class CrimBaseChecks(BaseChecks):
         return any(btn.isChecked() for btn in diversion_radio_btns)
 
     @required_condition_check
-    def check_additional_conditions_ordered(self) -> str:
+    def check_additional_conditions_ordered(self) -> tuple[bool, list[str]]:
         """Hard stops if an additional condition checkbox is checked, but certain data is None.
 
         This checks to see if the primary condition of an additional condition is set to something
@@ -65,9 +66,12 @@ class CrimBaseChecks(BaseChecks):
                 continue
             if primary_condition in {None, BLANK}:
                 return False, [condition_name]
-        return True
+        return True, [condition_name]
 
-    def _get_condition_info(self, condition_item: tuple[str, str, str]) -> tuple[object, str, str]:
+    def _get_condition_info(
+        self,
+        condition_item: tuple[str, str, str]
+    ) -> tuple[ConditionsModel, str, str]:
         """The CheckList class for certain classes has conditions_list tuples that are returned.
 
         The tuple that is returned contains a string model name, the primary condition that is set
@@ -179,7 +183,7 @@ class ChargeGridChecks(InsuranceChecks):
         return plea == DISMISSED
 
     @required_check(cm.MISSING_PLEA_TITLE, cm.MISSING_PLEA_MSG)
-    def check_if_no_plea_entered(self) -> str:
+    def check_if_no_plea_entered(self) -> tuple[bool, list[Optional[str]]]:
         """Stops the create entry process for any charge without a plea.
 
         The column (col) starts at 1 to skip the label column (col 0) of the charge grid.
@@ -194,10 +198,10 @@ class ChargeGridChecks(InsuranceChecks):
                 offense = self.get_widget_text(self.grid.row_offense, col)
                 return False, [offense]
             col += 1
-        return True
+        return True, []
 
     @required_check(cm.MISSING_FINDING_TITLE, cm.MISSING_FINDING_MSG)
-    def check_if_no_finding_entered(self) -> bool:
+    def check_if_no_finding_entered(self) -> tuple[bool, list[Optional[str]]]:
         """Stops the create entry process for any charge without a finding.
 
         The column (col) starts at 1 to skip the label column (col 0) of the charge grid.
@@ -212,7 +216,7 @@ class ChargeGridChecks(InsuranceChecks):
                 offense = self.get_widget_text(self.grid.row_offense, col)
                 return False, [offense]
             col += 1
-        return True
+        return True, []
 
 
 class JailTimeChecks(ChargeGridChecks):
@@ -226,7 +230,7 @@ class JailTimeChecks(ChargeGridChecks):
         super().__init__(dialog)
 
     @required_check(cm.EXCESS_JAIL_SUSP_TITLE, cm.EXCESS_JAIL_SUSP_MSG)
-    def check_if_jail_suspended_more_than_imposed(self) -> str:
+    def check_if_jail_suspended_more_than_imposed(self) -> tuple[bool, list[Any]]:
         """Returns False (Fails check) if jail days suspended are greater than jail days imposed."""
         return (
             self.jail_days_suspended <= self.jail_days_imposed,
@@ -234,7 +238,7 @@ class JailTimeChecks(ChargeGridChecks):
         )
 
     @jail_warning_check(cm.ADD_JAIL_TITLE, cm.ADD_JAIL_MSG)
-    def check_if_jail_reporting_required(self, msg_response: int = None) -> bool:
+    def check_if_jail_reporting_required(self, msg_response: int = None) -> tuple[bool, list[Any]]:
         """Checks to see if the jails days imposed is greater than jail days suspended and credit.
 
         If jails days imposed exceed suspended days and credit days triggers ask users if they
@@ -246,10 +250,10 @@ class JailTimeChecks(ChargeGridChecks):
         if msg_response is not None:
             return self.add_jail_report_terms(msg_response)
         if self.skip_jail_check():
-            return True
+            return True, []
         if self.jail_days_imposed > (self.jail_days_suspended + self.jail_credit):
             return False, [self.jail_days_imposed, self.jail_days_suspended, self.jail_credit]
-        return True
+        return True, []
 
     def skip_jail_check(self) -> bool:
         if self.model.community_control.driver_intervention_program is True:
@@ -258,15 +262,14 @@ class JailTimeChecks(ChargeGridChecks):
             return True
         return self.model.jail_terms.currently_in_jail == YES
 
-    def add_jail_report_terms(self, msg_response: int) -> bool:
+    def add_jail_report_terms(self, msg_response: int) -> tuple[bool, list[Any]]:
         """Asks user if Jail Reporting needs to be set and sets reporting if answer is Yes."""
-        if msg_response == NO_BUTTON_RESPONSE:
-            return True
         if msg_response == YES_BUTTON_RESPONSE:
             self.dialog.jail_checkBox.setChecked(True)
             self.dialog.functions.start_add_jail_report_dialog()
-            return True
-        return False
+            return True, []
+        else:
+            return True, []
 
     @warning_check(cm.JAIL_SET_NO_JAIL_TITLE, cm.JAIL_SET_NO_JAIL_MSG)
     def check_if_jail_equals_suspended_and_imposed(self, msg_response: int = None) -> bool:
@@ -302,14 +305,14 @@ class JailTimeChecks(ChargeGridChecks):
         return True
 
     @required_check(cm.EXCESS_JAIL_CREDIT_TITLE, cm.EXCESS_JAIL_CREDIT_MSG)
-    def check_if_jail_credit_more_than_imposed(self) -> bool:
+    def check_if_jail_credit_more_than_imposed(self) -> tuple[bool, list[Any]]:
         """Returns False (Fails check) if more jail time credit is given than jail time imposed."""
         if self.dialog.jail_time_credit_apply_box.currentText() == 'Sentence':
             return (
                 self.jail_credit <= self.jail_days_imposed,
                 [self.jail_credit, self.jail_days_imposed],
             )
-        return True
+        return True, []
 
     @warning_check(cm.SET_JAIL_STATUS_TITLE, cm.SET_JAIL_STATUS_MSG)
     def check_if_in_jail_blank_but_has_jail_days(self, msg_response: int = None) -> bool:

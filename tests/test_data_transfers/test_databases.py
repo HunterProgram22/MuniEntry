@@ -55,7 +55,7 @@ def test_get_case_data_works(crim_sql_retriever):
     assert case.defendant.last_name == 'Rosero Pacheco'
     assert case.defendant.first_name == 'Pablo'
     assert case.fra_in_file == 'U'
-    assert case.defense_counsel == ' '
+    assert case.defense_counsel == ''
     assert case.defense_counsel_type == 0
     assert len(case.charges_list) == 4
     assert case.charges_list[0][0] == 'OVI Alcohol / Drugs 1st'
@@ -68,7 +68,7 @@ def test_get_case_data_special_character(crim_sql_special_character):
     assert case.defendant.last_name == "O'Metz"
     assert case.defendant.first_name == 'Sara'
     assert case.fra_in_file == 'N'
-    assert case.defense_counsel == ' '
+    assert case.defense_counsel == ''
     assert case.defense_counsel_type == 0
     assert len(case.charges_list) == 2
     assert case.charges_list[0][0] == 'Driving Under FRA Suspension / Cancel / Judgment'
