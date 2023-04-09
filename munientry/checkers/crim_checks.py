@@ -32,17 +32,17 @@ class CrimBaseChecks(BaseChecks):
 
     @required_check(cm.PLEA_PAST_TITLE, cm.PLEA_PAST_MSG)
     def check_plea_date(self) -> bool:
-        """Returns False (Fails check) if plea date is not set in the past."""
+        """Returns False (Fails) if plea date is not set in the past."""
         return self.dialog.plea_date.date() < self.today
 
     @required_check(cm.LEAP_PAST_TITLE, cm.LEAP_PAST_MSG)
     def check_leap_plea_date(self) -> bool:
-        """Returns False (Fails check) if LEAP plea date is not set in the past."""
+        """Returns False (Fails) if LEAP plea date is not set in the past."""
         return self.dialog.leap_plea_date.date() < self.today
 
     @required_check(cm.DIVERSION_SET_TITLE, cm.DIVERSION_SET_MSG)
     def check_if_diversion_program_selected(self) -> bool:
-        """Returns False (Fails check) if no diversion radio button is checked."""
+        """Returns False (Fails) if no diversion radio button is checked."""
         diversion_radio_btns = [
             self.dialog.marijuana_diversion_radio_btn,
             self.dialog.theft_diversion_radio_btn,
@@ -231,7 +231,7 @@ class JailTimeChecks(ChargeGridChecks):
 
     @required_check(cm.EXCESS_JAIL_SUSP_TITLE, cm.EXCESS_JAIL_SUSP_MSG)
     def check_if_jail_suspended_more_than_imposed(self) -> tuple[bool, list[Any]]:
-        """Returns False (Fails check) if jail days suspended are greater than jail days imposed."""
+        """Returns False (Fails) if jail days suspended are greater than jail days imposed."""
         return (
             self.jail_days_suspended <= self.jail_days_imposed,
             [self.jail_days_suspended, self.jail_days_imposed],
@@ -299,14 +299,14 @@ class JailTimeChecks(ChargeGridChecks):
 
     @required_check(cm.JAIL_DAYS_REQUIRED_TITLE, cm.JAIL_DAYS_REQUIRED_MSG)
     def check_if_days_in_jail_blank_but_in_jail(self) -> bool:
-        """Returns False (Fails check) if Defendant is in jail, but days in jail is blank."""
+        """Returns False (Fails) if Defendant is in jail, but days in jail is blank."""
         if self.dialog.in_jail_box.currentText() == YES:
             return self.dialog.jail_time_credit_box.text() != BLANK
         return True
 
     @required_check(cm.EXCESS_JAIL_CREDIT_TITLE, cm.EXCESS_JAIL_CREDIT_MSG)
     def check_if_jail_credit_more_than_imposed(self) -> tuple[bool, list[Any]]:
-        """Returns False (Fails check) if more jail time credit is given than jail time imposed."""
+        """Returns False (Fails) if more jail time credit is given than jail time imposed."""
         if self.dialog.jail_time_credit_apply_box.currentText() == 'Sentence':
             return (
                 self.jail_credit <= self.jail_days_imposed,
@@ -316,7 +316,7 @@ class JailTimeChecks(ChargeGridChecks):
 
     @warning_check(cm.SET_JAIL_STATUS_TITLE, cm.SET_JAIL_STATUS_MSG)
     def check_if_in_jail_blank_but_has_jail_days(self, msg_response: int = None) -> bool:
-        """Returns False (Fails check) if jail time credit is set but no indication if in jail."""
+        """Returns False (Fails) if jail time credit is set but no indication if in jail."""
         if msg_response is not None:
             return self.set_in_jail_box(msg_response)
         if self.dialog.jail_time_credit_box.text() != BLANK:
