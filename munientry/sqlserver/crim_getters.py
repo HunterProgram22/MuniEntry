@@ -4,7 +4,7 @@ from __future__ import annotations
 from loguru import logger
 from PyQt6.QtSql import QSqlDatabase, QSqlQuery
 
-from munientry.data.connections import database_connection
+from munientry.data.connections import CRIM_DB_CONN, database_connection
 from munientry.data.data_cleaners import (
     clean_defense_counsel_name,
     clean_last_name,
@@ -22,7 +22,6 @@ from munientry.sqlserver.crim_sql_server_queries import (
 )
 from munientry.widgets.message_boxes import InfoBox
 
-CRIM_DB_CONN = 'con_authority_court'
 CASE_NUMBER = 'CaseNumber'
 
 
@@ -124,7 +123,9 @@ class CrimCaseData(object):
             self.case.defendant.last_name = query_data.value('DefLastName').title()
             self.case.defendant.first_name = query_data.value('DefFirstName').title()
             self.case.fra_in_file = query_data.value('FraInFile')
-            self.case.defense_counsel = clean_defense_counsel_name(query_data.value('DefenseCounsel'))
+            self.case.defense_counsel = clean_defense_counsel_name(
+                query_data.value('DefenseCounsel'),
+            )
             self.case.defense_counsel_type = query_data.value('PubDef')
             self.case.violation_date = query_data.value('ViolationDate')
 

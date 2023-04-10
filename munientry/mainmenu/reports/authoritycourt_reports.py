@@ -3,10 +3,11 @@ from collections import namedtuple
 
 from loguru import logger
 from PyQt6.QtCore import Qt
-from PyQt6.QtSql import QSqlQuery
+from PyQt6.QtSql import QSqlDatabase, QSqlQuery
 from PyQt6.QtWidgets import QInputDialog, QMainWindow, QTableWidgetItem
 
-from munientry.data.connections import close_db_connection, open_db_connection
+from munientry.data.connections import CRIM_DB_CONN, database_connection
+# from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.data_cleaners import clean_offense_name
 from munientry.mainmenu.reports.comments import get_comment_writer
 from munientry.mainmenu.reports.report_constants import EVENT_IDS
@@ -56,7 +57,12 @@ def user_input_get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[s
     )
 
 
-def get_event_report_data(query_string: str, event: str) -> list[tuple[str]]:
+@database_connection(CRIM_DB_CONN)
+def get_event_report_data(
+        query_string: str,
+        event: str,
+        db_connection: QSqlDatabase
+) -> list[tuple[str]]:
     """Queries the AuthorityCourtDB and loads case events for a specific date.
 
     Args:
@@ -67,8 +73,8 @@ def get_event_report_data(query_string: str, event: str) -> list[tuple[str]]:
     Returns:
         list: A list of tuples containing the data queried from the AuthorityCourtDB.
     """
-    db_conn = open_db_connection('con_authority_court')
-    query = QSqlQuery(db_conn)
+    # db_conn = open_db_connection('con_authority_court')
+    query = QSqlQuery(db_connection)
     query.prepare(query_string)
     query.exec()
     data_list = []
@@ -85,7 +91,7 @@ def get_event_report_data(query_string: str, event: str) -> list[tuple[str]]:
                 comment_field,
             ),
         )
-    close_db_connection(db_conn)
+    # close_db_connection(db_conn)
     return data_list
 
 
