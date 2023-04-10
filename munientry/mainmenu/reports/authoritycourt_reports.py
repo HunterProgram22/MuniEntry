@@ -1,10 +1,11 @@
 """Module for AuthorityCourt report mainmenu processes."""
 from collections import namedtuple
+from typing import Any, TYPE_CHECKING
 
 from loguru import logger
 from PyQt6.QtCore import Qt
 from PyQt6.QtSql import QSqlDatabase, QSqlQuery
-from PyQt6.QtWidgets import QInputDialog, QMainWindow, QTableWidgetItem
+from PyQt6.QtWidgets import QInputDialog, QTableWidgetItem
 
 from munientry.data.connections import CRIM_DB_CONN, database_connection
 from munientry.data.data_cleaners import clean_offense_name
@@ -13,16 +14,19 @@ from munientry.mainmenu.reports.report_constants import EVENT_IDS
 from munientry.sqlserver.crim_sql_server_queries import event_type_report_query
 from munientry.widgets.table_widgets import TableReportWindow
 
+if TYPE_CHECKING:
+    from munientry.mainwindow.main_window import MainWindow
+
 EVENT_REPORT_HEADERS = (
     'Time', 'Case Number', 'Defendant Name', 'Primary Charge', 'Attorney', 'Comments',
 )
 
 
-def run_event_type_report(mainwindow: 'QMainWindow', event: str) -> None:
+def run_event_type_report(mainwindow: 'MainWindow', event: str) -> None:
     """Menu function that generates a report of specific types of events.
 
     Args:
-        mainwindow (QMainWindow): The main window of the application.
+        mainwindow (MainWindow): The main window of the application.
 
         event (str): A string that identifies the event type for the generated report.
     """
@@ -35,11 +39,11 @@ def run_event_type_report(mainwindow: 'QMainWindow', event: str) -> None:
         show_event_report(mainwindow, event, report_date, data_list)
 
 
-def user_input_get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[str, bool]:
+def user_input_get_report_date(mainwindow: 'MainWindow', event: str) -> tuple[str, bool]:
     """Opens an input dialog to query user for date of report.
 
     Args:
-        mainwindow (QMainWindow): The main window of the application.
+        mainwindow (MainWindow): The main window of the application.
 
         event (str): A string that identifies the event type for the generated report.
 
@@ -62,8 +66,8 @@ def user_input_get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[s
 def get_event_report_data(
     query_string: str,
     event: str,
-    db_connection: QSqlDatabase = None,
-) -> list[tuple[str]]:
+    db_connection: str = CRIM_DB_CONN,
+) -> list[tuple[Any, str, str, str, str, str]]:
     """Queries the AuthorityCourtDB and loads case events for a specific date.
 
     Args:
@@ -95,12 +99,12 @@ def get_event_report_data(
 
 
 def show_event_report(
-    mainwindow: 'QMainWindow', event: str, report_date: str, data_list: list,
+    mainwindow: 'MainWindow', event: str, report_date: str, data_list: list,
 ) -> None:
     """Shows a sortable table loaded with the data for the generated report.
 
     Args:
-        mainwindow (QMainWindow): The main window of the application.
+        mainwindow (MainWindow): The main window of the application.
 
         event (str): A string that identifies the event type for the generated report.
 

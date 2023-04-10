@@ -54,7 +54,7 @@ def execute_insert_query(query: QSqlQuery, event: se.Event) -> None:
 
 
 @database_connection(MUNIENTRY_DB_CONN)
-def save_scheduling_data(case_data: Dict[str, Any], db_connection: QSqlDatabase) -> None:
+def save_scheduling_data(case_data: Dict[str, Any], db_connection: str) -> None:
     """Extracts data from case data and inserts into the MuniEntryDB.
 
     The event_class call to EVENT_CLASS_DICT sets a base Event object as the default value if the
