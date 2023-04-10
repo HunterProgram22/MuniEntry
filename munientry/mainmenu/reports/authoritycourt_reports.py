@@ -62,7 +62,7 @@ def user_input_get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[s
 def get_event_report_data(
     query_string: str,
     event: str,
-    db_connection: QSqlDatabase,
+    db_connection: QSqlDatabase = None,
 ) -> list[tuple[str]]:
     """Queries the AuthorityCourtDB and loads case events for a specific date.
 
