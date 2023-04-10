@@ -21,8 +21,10 @@ Functions:
 
     establish_database_connections() -> None
 """
+from __future__ import annotations
+
 import socket
-from functools import partialmethod
+from functools import partialmethod, wraps
 from types import MappingProxyType
 from typing import Union
 
@@ -215,6 +217,19 @@ def remove_db_connection(connection_name: str) -> None:
     """
     QSqlDatabase.removeDatabase(connection_name)
     logger.database(f'{connection_name} database connection removed.')
+
+
+def database_connection(db_connection_string):
+    """Decorator for opening a db connection, calling the function, then closing db connection."""
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            db_connection_obj = open_db_connection(db_connection_string)
+            query_results = func(*args, db_connection=db_connection_obj, **kwargs)
+            close_db_connection(db_connection_obj)
+            return query_results
+        return wrapper
+    return decorator
 
 
 def establish_database_connections():

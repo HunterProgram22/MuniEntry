@@ -1,16 +1,19 @@
 """Module for packaging data from SQL Server database for use in application."""
 from __future__ import annotations
 
-from functools import wraps
-
 from loguru import logger
 from PyQt6.QtSql import QSqlDatabase, QSqlQuery
 
-from munientry.settings.app_settings import DAILY_CASE_LIST_STORED_PROCS
-from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.data.data_cleaners import clean_defense_counsel_name, clean_last_name, clean_offense_name, clean_statute_name
+from munientry.data.connections import database_connection
+from munientry.data.data_cleaners import (
+    clean_defense_counsel_name,
+    clean_last_name,
+    clean_offense_name,
+    clean_statute_name,
+)
 from munientry.models.cms_models import CriminalCmsCaseInformation
 from munientry.models.privileges_models import DrivingPrivilegesInformation
+from munientry.settings.app_settings import DAILY_CASE_LIST_STORED_PROCS
 from munientry.sqlserver.crim_sql_server_queries import (
     daily_case_list_query,
     driving_case_search_query,
@@ -26,19 +29,6 @@ CASE_NUMBER = 'CaseNumber'
 def log_crim_case_query(case_number: str) -> None:
     """Logs when a case number query to the Criminal Traffic database is made."""
     logger.info(f'Querying Authority Court for: {case_number}')
-
-
-def database_connection(db_connection_string):
-    """Decorator for opening a db connection, calling the function, then closing db connection."""
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            db_connection_obj = open_db_connection(db_connection_string)
-            query_results = func(*args, db_connection=db_connection_obj, **kwargs)
-            close_db_connection(db_connection_obj)
-            return query_results
-        return wrapper
-    return decorator
 
 
 def get_daily_case_list(table_name: str) -> list[str]:
