@@ -21,11 +21,11 @@ class ArraignmentComments(object):
         event = query.value('EventID')
         judge = query.value('JudgeID')
         match (event, judge):
-            case (27, 0) | (28, 0):
+            case (27, 0) | (28, 0) | (27, 67):
                 return 'Arraignment'
-            case (77, 0):
+            case (77, 0) | (77, 67):
                 return 'Arraignment - Previously Continued'
-            case (361, 0):
+            case (361, 0) | (361, 67):
                 return 'Arraignment - Reset due to FTA or Other Reason'
             case _:
                 return 'Unclassified Possible Data Error in Case'
