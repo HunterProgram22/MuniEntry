@@ -1,25 +1,44 @@
+"""Module for generating the comments for various reports."""
+from abc import ABC, abstractmethod
 
 
-def get_comment_writer(event):
-    if event == 'Arraignments':
-        return ArraignmentComments()
-    elif event == 'Final Pretrials':
-        return FinalPretrialComments()
-    elif event == 'Pleas':
-        return PleaComments()
-    elif event == 'Trials To Court':
-        return TrialToCourtComments()
-    elif event == 'Jury Trials':
-        return JuryTrialComments()
-    else:
-        return GeneralComents()
+def get_comment_writer(event: str) -> object:
+    """Returns an instance of a comment writer object based on the given event.
+
+    Args:
+        event (str): The name of the event for which to get the comment writer.
+
+    Returns:
+        An instance of a comment writer object corresponding to the given event. If the event does
+        not match any of the defined events, a GeneralComments object is returned.
+    """
+    comment_writer = {
+        'Arraignments': ArraignmentComments,
+        'Final Pretrials': FinalPretrialComments,
+        'Pleas': PleaComments,
+        'Trials To Court': TrialToCourtComments,
+        'Jury Trials': JuryTrialComments
+    }
+    return comment_writer.get(event, GeneralComments)()
 
 
-class ArraignmentComments(object):
+class BaseComment(ABC):
+    """Abstract base class for generating comments for the comment field in reports."""
 
     def get_comment(self, query) -> str:
         event = query.value('EventID')
         judge = query.value('JudgeID')
+        return self.match_event_judge(event, judge)
+
+    @abstractmethod
+    def match_event_judge(self, event: int, judge: int) -> str:
+        pass
+
+
+class ArraignmentComments(BaseComment):
+    """Comments specific for Arraignments report."""
+
+    def match_event_judge(self, event: int, judge: int) -> str:
         match (event, judge):
             case (27, 0) | (28, 0) | (27, 67):
                 return 'Arraignment'
@@ -31,11 +50,10 @@ class ArraignmentComments(object):
                 return 'Unclassified Possible Data Error in Case'
 
 
-class FinalPretrialComments(object):
+class FinalPretrialComments(BaseComment):
+    """Comments specific for Final Pretrials report."""
 
-    def get_comment(self, query) -> str:
-        event = query.value('EventID')
-        judge = query.value('JudgeID')
+    def match_event_judge(self, event: int, judge: int) -> str:
         match (event, judge):
             case (160, 42):  # Final pretrial for Judge H listed in Courtroom A
                 return 'Possible Data Issue - Judge Hemmeter assigned, FPT in CMI is set for Courtroom A'
@@ -55,11 +73,10 @@ class FinalPretrialComments(object):
                 return 'Unclassified Possible Data Error in Case'
 
 
-class PleaComments(object):
+class PleaComments(BaseComment):
+    """Comments specific for Pleas report."""
 
-    def get_comment(self, query) -> str:
-        event = query.value('EventID')
-        judge = query.value('JudgeID')
+    def match_event_judge(self, event: int, judge: int) -> str:
         match (event, judge):
             case (292, 31):  # Plea for Judge Rohrer listed in Courtroom A
                 return 'Courtroom A'
@@ -77,11 +94,10 @@ class PleaComments(object):
                 return 'Unclassified Possible Data Error in Case'
 
 
-class TrialToCourtComments(object):
+class TrialToCourtComments(BaseComment):
+    """Comments specific for Trials to Court report."""
 
-    def get_comment(self, query) -> str:
-        event = query.value('EventID')
-        judge = query.value('JudgeID')
+    def match_event_judge(self, event: int, judge: int) -> str:
         match (event, judge):
             case (414, 31) | (414, 42):  # Trial to Court in C with Judge Assigned
                 return 'Courtroom C'
@@ -95,11 +111,10 @@ class TrialToCourtComments(object):
                 return 'Unclassified Possible Data Error in Case'
 
 
-class JuryTrialComments(object):
+class JuryTrialComments(BaseComment):
+    """Comments specific for Jury Trials report."""
 
-    def get_comment(self, query) -> str:
-        event = query.value('EventID')
-        judge = query.value('JudgeID')
+    def match_event_judge(self, event: int, judge: int) -> str:
         match (event, judge):
             case (201, 31):  # Judge Rohrer Assigned and Jury Trial in A
                 return 'Courtroom A'
@@ -113,11 +128,10 @@ class JuryTrialComments(object):
                 return 'Unclassified Possible Data Error in Case'
 
 
-class GeneralComments(object):
+class GeneralComments(BaseComment):
+    """Default comments for reports that do not have a specific comment writer object."""
 
-    def get_comment(self, query) -> str:
-        event = query.value('EventID')
-        judge = query.value('JudgeID')
+    def match_event_judge(self, event: int, judge: int) -> str:
         match (event, judge):
             case _:
                 return 'Unclassified Possible Data Error in Case'
