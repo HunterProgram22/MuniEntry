@@ -1,6 +1,4 @@
 """Module for generating the comments for various reports."""
-from abc import ABC, abstractmethod
-
 NO_MATCH = 'Unclassified Possible Data Error in Case'
 
 
@@ -24,7 +22,7 @@ def get_comment_writer(event: str) -> object:
     return comment_writer.get(event, GeneralComments)()
 
 
-class BaseComment(ABC):
+class BaseComment(object):
     """Abstract base class for generating comments for the comment field in reports."""
 
     no_judge = 0    # No Judge Assigned
@@ -36,9 +34,9 @@ class BaseComment(ABC):
         judge = query.value('JudgeID')
         return self.match_event_judge(event, judge)
 
-    @abstractmethod
     def match_event_judge(self, event: int, judge: int) -> str:
         """Abstract method for matching event and judge codes."""
+        raise NotImplementedError
 
 
 class ArraignmentComments(BaseComment):
