@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders import base_builders as base
 from munientry.sqllite import sql_lite_functions as sql_lite
-from munientry.data.connections import close_db_connection, open_db_connection
+from munientry.data.connections import close_db_connection, MUNIENTRY_DB_CONN, open_db_connection
 
 OFFENSE = 'offense'
 STATUTE = 'statute'
@@ -140,12 +140,11 @@ class ChargeDialogsSignalConnector(object):
 
 
 class ChargeDialogBuilder(base.BaseDialogBuilder):
-    """The Base Charge Dialog loads the statutes and offenses from the database."""
+    """The Base Charge Dialog loads the statutes and offenses from the MuniEntry database."""
 
     def __init__(self, main_dialog, parent=None) -> None:
         self.main_dialog = main_dialog
-        self.db_connection_string = 'con_munientry_db'
-        self.db_connection = open_db_connection(self.db_connection_string)
+        self.db_connection = open_db_connection(MUNIENTRY_DB_CONN)
         super().__init__(parent)
         if self.db_connection == 'NO_Connection':
             self.freeform_entry_checkBox.setChecked((True))

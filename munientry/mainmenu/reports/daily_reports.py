@@ -6,7 +6,7 @@ from loguru import logger
 from PyQt6.QtSql import QSqlQuery
 from PyQt6.QtWidgets import QInputDialog, QMainWindow, QTableWidgetItem
 
-from munientry.data.connections import close_db_connection, open_db_connection
+from munientry.data.connections import CRIM_DB_CONN, database_connection
 from munientry.sqlserver.crim_sql_server_queries import not_guilty_report_query
 from munientry.widgets.table_widgets import TableReportWindow
 
@@ -47,10 +47,10 @@ def user_input_get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[s
         )
 
 
-def get_not_guilty_report_data(query_string: str) -> list[tuple[str]]:
+@database_connection(CRIM_DB_CONN)
+def get_not_guilty_report_data(query_string: str, db_connection: str) -> list[tuple[str]]:
     """Queries the AuthorityCourtDB and loads Journal Entry docket events for a specific date."""
-    db_conn = open_db_connection('con_authority_court')
-    query = QSqlQuery(db_conn)
+    query = QSqlQuery(db_connection)
     query.prepare(query_string)
     query.exec()
     data_list = []
@@ -62,7 +62,6 @@ def get_not_guilty_report_data(query_string: str) -> list[tuple[str]]:
                 query.value('Remark'),
             ),
         )
-    close_db_connection(db_conn)
     return data_list
 
 

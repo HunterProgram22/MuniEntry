@@ -164,13 +164,13 @@ class DrivingInfoSQLServer(object):
     loading into the application.
     """
 
-    def __init__(self, case_number: str) -> None:
+    @database_connection(CRIM_DB_CONN)
+    def __init__(self, case_number: str, db_connection: str) -> None:
         self.case_number = case_number
         self.case = DrivingPrivilegesInformation()
-        self.query_case_data(CRIM_DB_CONN)
+        self.query_case_data(db_connection)
 
-    @database_connection(CRIM_DB_CONN)
-    def query_case_data(self, db_connection: str = CRIM_DB_CONN) -> None:
+    def query_case_data(self, db_connection: str) -> None:
         """Query database based on cms_case number to return the data to load for the dialog."""
         query_string = driving_case_search_query(self.case_number)
         query = QSqlQuery(db_connection)
