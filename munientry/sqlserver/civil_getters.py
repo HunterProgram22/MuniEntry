@@ -3,27 +3,25 @@ from loguru import logger
 from PyQt6.QtSql import QSqlQuery
 
 from munientry.models.cms_models import CivilCmsCaseInformation
-from munientry.data.connections import close_db_connection, open_db_connection
+from munientry.data.connections import CIVIL_DB_CONN, database_connection
 from munientry.sqlserver.civil_sql_server_queries import general_civil_case_query
 
 
 class CivilCaseData(object):
     """..."""
 
-    def __init__(self, case_number: str) -> None:
+    @database_connection(CIVIL_DB_CONN)
+    def __init__(self, case_number: str, db_connection: str) -> None:
         self.case_number = case_number
-        self.database_connection_name = 'con_authority_civil'
-        self.database = open_db_connection(self.database_connection_name)
         self.case = CivilCmsCaseInformation()
-        self.query_case_data()
+        self.query_case_data(db_connection)
         self.load_query_data_into_case()
         self.query.finish()
-        close_db_connection(self.database)
 
-    def query_case_data(self) -> None:
+    def query_case_data(self, db_connection: str) -> None:
         """Query database based on cms_case number to return the data to load for the dialog."""
         query_string = general_civil_case_query(self.case_number)
-        self.query = QSqlQuery(self.database)
+        self.query = QSqlQuery(db_connection)
         self.query.prepare(query_string)
         logger.info(f'Querying Authority Civil for: {self.case_number}')
         self.query.bindValue(self.case_number, self.case_number)

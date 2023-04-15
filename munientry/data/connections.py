@@ -39,11 +39,10 @@ DATABASE_LOG_LEVEL = 21
 
 MUNIENTRY_DB_CONN = 'con_munientry_db'
 MUNIENTRY_DB = 'MuniEntryDB.sqlite'
-TEST_MUNIENTRY_DB = 'TEST_MuniEntryDB.sqlite'
 
-CRIM_TRAFFIC_DB_CONN = 'con_authority_court'
-CRIM_TRAFFIC_DATABASE = 'AuthorityCourt'
-CRIM_TRAFFIC_DB_SERVER = r'CLERKCRTR\CMI'
+CRIM_DB_CONN = 'con_authority_court'
+CRIM_DATABASE = 'AuthorityCourt'
+CRIM_DB_SERVER = r'CLERKCRTR\CMI'
 
 CIVIL_DB_CONN = 'con_authority_civil'
 CIVIL_DATABASE = 'AuthorityCivil'
@@ -52,9 +51,10 @@ CIVIL_DB_SERVER = r'CLERKSQL\CMI'
 HOME_DB_SERVER = r'ROOBERRYPRIME\SQLEXPRESS'
 HOME_PC_SOCKET = 'RooberryPrime'
 TEST_COMPUTER_SOCKETS = ('Muni10', 'RooberryPrime')
+TEST_MUNIENTRY_DB = 'TEST_MuniEntryDB.sqlite'
 
 DATABASE_WARNINGS_SETTINGS = MappingProxyType({
-    CRIM_TRAFFIC_DB_CONN: True,
+    CRIM_DB_CONN: True,
     CIVIL_DB_CONN: True,
     MUNIENTRY_DB_CONN: True,
 })
@@ -76,9 +76,9 @@ def set_server_and_database(connection_name: str) -> tuple:
 
             database (str): The name of the database.
     """
-    if connection_name == CRIM_TRAFFIC_DB_CONN:
-        server = CRIM_TRAFFIC_DB_SERVER
-        database = CRIM_TRAFFIC_DATABASE
+    if connection_name == CRIM_DB_CONN:
+        server = CRIM_DB_SERVER
+        database = CRIM_DATABASE
 
     if connection_name == CIVIL_DB_CONN:
         server = CIVIL_DB_SERVER
@@ -239,8 +239,8 @@ def establish_database_connections():
     """
     logger.database('Establishing database connections.')
 
-    create_odbc_db_connection(CRIM_TRAFFIC_DB_CONN)
-    authority_court_db = open_db_connection(CRIM_TRAFFIC_DB_CONN)
+    create_odbc_db_connection(CRIM_DB_CONN)
+    authority_court_db = open_db_connection(CRIM_DB_CONN)
     close_db_connection(authority_court_db)
 
     create_odbc_db_connection(CIVIL_DB_CONN)

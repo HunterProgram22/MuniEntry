@@ -2,9 +2,9 @@ import types
 
 ### Authority Court Database Event Codes and Ids ###
 
-# Arraignment (ARR) - 27, Arraignment (ARRV) - 28
-# Continuance Arraignment (CONA) - 77, 474
-# Reset Case Arraignment (RSET) - 361
+# Arraignment (arr) - 27, Arraignment (arrv) - 28
+# Continuance Arraignment (cona) - 77, 474
+# Reset Case Arraignment (rest) - 361
 ARRAIGNMENT_EVENT_IDS = "('27', '28', '77', '361', '474')"
 
 # Final Pretrial A (FPTN2 - 160, 477) Final Pretrial B (FPT2NB - 161, 478)

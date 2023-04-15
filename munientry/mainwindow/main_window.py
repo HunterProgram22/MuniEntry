@@ -56,6 +56,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.case_search = CaseSearchHandler(self)
         self.case_lists = CaseListHandler(self.daily_case_lists)
         self.connect_signals_to_slots()
+        self.report_window = None
 
     def connect_daily_case_lists(self) -> None:
         self.arraignments_cases_box.setup_combo_box(

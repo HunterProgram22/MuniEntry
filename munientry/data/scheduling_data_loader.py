@@ -12,9 +12,9 @@ import types
 from typing import Any, Dict
 
 from loguru import logger
-from PyQt6.QtSql import QSqlQuery
+from PyQt6.QtSql import QSqlDatabase, QSqlQuery
 
-from munientry.data.connections import close_db_connection, open_db_connection
+from munientry.data.connections import database_connection, MUNIENTRY_DB_CONN
 from munientry.models import scheduling_events as se
 from munientry.sqllite.sql_lite_queries import insert_scheduling_data_query
 
@@ -53,7 +53,8 @@ def execute_insert_query(query: QSqlQuery, event: se.Event) -> None:
     )
 
 
-def save_scheduling_data(case_data: Dict[str, Any]) -> None:
+@database_connection(MUNIENTRY_DB_CONN)
+def save_scheduling_data(case_data: Dict[str, Any], db_connection: str) -> None:
     """Extracts data from case data and inserts into the MuniEntryDB.
 
     The event_class call to EVENT_CLASS_DICT sets a base Event object as the default value if the
@@ -64,16 +65,10 @@ def save_scheduling_data(case_data: Dict[str, Any]) -> None:
         case_data (object): A dataclass object model as a dict that contains case information.
     """
     logger.info(f'Scheduling data: {case_data}')
-    conn = open_db_connection('con_munientry_db')
-    query = QSqlQuery(conn)
+    query = QSqlQuery(db_connection)
     for date_field in EVENT_DATE_FIELDS:
         if case_data.get(date_field) is None:
             continue
         event_class = EVENT_CLASS_DICT.get(date_field, se.Event)
         event = event_class(case_data)
         execute_insert_query(query, event)
-    close_db_connection(conn)
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
