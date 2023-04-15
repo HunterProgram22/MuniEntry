@@ -67,7 +67,9 @@ class FinalPretrialComments(BaseComment):
     """Comments specific for Final Pretrials report."""
 
     fptn2 = 160         # (FPTN2) Final Pretrial Courtroom A
+    fptn2_i = 477       # (FPTN2) Final Pretrial Courtroom A - Interpreter
     fptn2b = 161        # (FPTN2B) Final Pretrial Courtroom B
+    fptn2b_i = 478      # (FPTN2B) Final Pretrial Courtroom B - Interpreter
     ptn = 334           # (PTN) Pretrial/ALS Appeal Courtroom A
     ptn2 = 335          # (PTN2) Pretrial/ALS Appeal Courtroom A
     ptn2b = 336         # (PTN2B) Pretrial/ALS Appeal Courtroom B
@@ -75,10 +77,12 @@ class FinalPretrialComments(BaseComment):
 
     def match_event_judge(self, event: int, judge: int) -> str:
         match (event, judge):
-            case (self.fptn2, self.judge_mth):
+            case (self.fptn2, self.judge_mth) | (self.fptn2_i, self.judge_mth):
                 comment = 'Data Issue: Judge Hemmeter assigned, FPT in CMI set for Courtroom A'
             case (self.fptn2b, self.judge_mth):
                 comment = 'Courtroom B'
+            case (self.fptn2b_i, self.judge_mth):
+                comment = 'Courtroom B - Interpreter'
             case (
                 (self.ptn, self.judge_mth) | (self.ptn2, self.judge_mth)
                 | (self.ptn2b, self.judge_mth) | (self.ptnb, self.judge_mth),
@@ -86,7 +90,9 @@ class FinalPretrialComments(BaseComment):
                 comment = 'Data Issue: Event in CMI is Pretrial/ALS - Check if should be FPTN2B'
             case (self.fptn2, self.judge_ker):
                 comment = 'Courtroom A'
-            case (self.fptn2b, self.judge_ker):
+            case (self.fptn2_i, self.judge_ker):
+                comment = 'Courtroom A - Interpter'
+            case (self.fptn2b, self.judge_ker) | (self.fptn2b_i, self.judge_ker):
                 comment = 'Data Issue: Judge Rohrer assigned, FPT in CMI is set for Courtroom B'
             case (
                 (self.ptn, self.judge_ker) | (self.ptn2, self.judge_ker)
@@ -104,17 +110,23 @@ class PleaComments(BaseComment):
     """Comments specific for Pleas report."""
 
     phn = 292       # (PHN) Plea Hearing in Courtroom A
+    phn_i = 486     # (PHN) Plea Hearing in Courtroom A - Interpteter
     phnb = 293      # (PHNB) Plea Hearing in Courtroom B
+    phnb_i = 487    # (PHNB) Plea Hearing in Courtroom B - Interpreter
     phnc = 294      # (PHNC) Plea Hearing in Courtroom C
 
     def match_event_judge(self, event: int, judge: int) -> str:
         match (event, judge):
             case (self.phn, self.judge_ker):
                 comment = 'Courtroom A'
+            case (self.phn_i, self.judge_ker):
+                comment = 'Courtroom A - Interpeter'
             case (self.phnb, self.judge_ker):
                 comment = 'Data Issue: Judge Rohrer Assigned, Plea in CMI is set for Courtroom B'
             case (self.phnb, self.judge_mth):
                 comment = 'Courtroom B'
+            case (self.phnb_i, self.judge_mth):
+                comment = 'Courtroom B - Intepreter'
             case (self.phn, self.judge_mth):
                 comment = 'Data Issue: Judge Hemmeter Assigned, Plea in CMI is set for Courtroom A'
             case (self.phnc, self.judge_mth) | (self.phnc, self.judge_ker):
@@ -130,19 +142,28 @@ class TrialToCourtComments(BaseComment):
     """Comments specific for Trials to Court report."""
 
     tcn = 412       # (TCN) Trial to Court in Courtroom A
+    tcn_i = 492     # (TCN) Trial to Court in Courtroom A - Interpreter
     tcnb = 413      # (TCNB) Trial to Court in Courtroom B
+    tcnb_i = 493    # (TCNB) Trial to Court in Courtroom B - Interpreter
     tcnc = 414      # (TCNC) Trial to Court in Courtroom C
+    tcnc_i = 494    # (TCNC) Trial to Court in Courtroom C - Interpreter
 
     def match_event_judge(self, event: int, judge: int) -> str:
         match (event, judge):
             case (self.tcnc, self.judge_ker) | (self.tcnc, self.judge_mth):
                 comment = 'Courtroom C'
-            case (self.tcnc, self.no_judge):
+            case (self.tcnc_i, self.judge_ker) | (self.tcnc_i, self.judge_mth):
+                comment = 'Courtroom C - Interpreter'
+            case (self.tcnc, self.no_judge) | (self.tcnc_i, self.no_judge):
                 comment = 'Trial to Court in C but No Judge Assigned'
             case (self.tcn, self.judge_ker):
                 comment = 'Courtroom A - Trial to Court with Judge Rohrer'
+            case (self.tcn_i, self.judge_ker):
+                comment = 'Courtroom A - Interpreter - Trial to Court with Judge Rohrer'
             case (self.tcnb, self.judge_mth):
                 comment = 'Courtroom B - Trial to Court with Judge Hemmeter'
+            case (self.tcnb_i, self.judge_mth):
+                comment = 'Courtroom B - Interpreter - Trial to Court with Judge Hemmeter'
             case _:
                 comment = NO_MATCH
         return comment
