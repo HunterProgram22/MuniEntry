@@ -117,9 +117,9 @@ class TrialToCourtDialogCaseInformationUpdater(SchedulingModelUpdater):
         self.model.judicial_officer = self.dialog.judicial_officer
 
     def set_scheduling_dates(self) -> None:
-        self.model.trial_to_court_date = self.dialog.trial_date.date().toString('MMMM dd, yyyy')
-        self.model.trial_to_court_time = self.dialog.trial_time_box.currentText()
-        self.model.hearing_location = self.dialog.hearing_location_box.currentText()
+        self.model.trial_to_court.date = self.dialog.trial_date.date().toString('MMMM dd, yyyy')
+        self.model.trial_to_court.time = self.dialog.trial_time_box.currentText()
+        self.model.trial_to_court.location = self.dialog.hearing_location_box.currentText()
 
 
 class TrialToCourtCheckList(SchedulingChecks):

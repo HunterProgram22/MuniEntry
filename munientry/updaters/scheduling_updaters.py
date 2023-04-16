@@ -10,6 +10,7 @@ class SchedulingModelUpdater(BaseDialogUpdater):
         self.update_model_with_case_information_frame_data()
 
     def update_model_with_case_information_frame_data(self):
+        """Set scheduling dates is called by subclass updater for dialog."""
         self.set_case_number_and_date()
         self.set_party_information()
         self.set_defense_counsel_information()

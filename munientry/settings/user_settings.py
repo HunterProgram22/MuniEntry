@@ -122,8 +122,7 @@ def load_user_settings(mainwindow) -> 'UserSettings':
     config = load_config()
     user_settings_config = config['user_settings']
     computer_config = config['sockets']
-    user_computer = computer_config.get(HOST_NAME, 'None')
-    logger.info(f'Loading on {user_computer}')
-    user_settings_key = user_settings_config.get(user_computer, 'GeneralUserSettings')
+    logger.info(f'Loading on {HOST_NAME}')
+    user_settings_key = user_settings_config.get(HOST_NAME, 'GeneralUserSettings')
     user_settings = USER_SETTINGS.get(user_settings_key, GeneralUserSettings)
     return user_settings(mainwindow)

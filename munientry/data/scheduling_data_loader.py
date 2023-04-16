@@ -45,8 +45,9 @@ def execute_insert_query(query: QSqlQuery, event: se.Event) -> None:
     """
     query.prepare(insert_scheduling_data_query(event))
     query_result = query.exec()
-    logger.database(f'Event insert result: {query_result}.')
-    logger.database(
+    loger.debug(query_result)
+    logger.info(f'Event insert result: {query_result}.')
+    logger.info(
         f'{event.case_number}: {event.event_name} - {event.event_date} -'
         + f' {event.event_time} - {event.event_location}: {event.def_last_name},'
         + f' {event.def_first_name}.',

@@ -226,16 +226,16 @@ class SchedulingEntryModelUpdater(SchedulingModelUpdater):
     """Class for updating Case Information for the Scheduling Entry Dialog."""
 
     def set_scheduling_dates(self):
-        self.model.jury_trial_date = self.dialog.trial_date.date().toString(ENTRY_DATE_FORMAT)
-        self.model.final_pretrial_date = self.dialog.final_pretrial_date.date().toString(
+        self.model.jury_trial.date = self.dialog.trial_date.date().toString(ENTRY_DATE_FORMAT)
+        self.model.final_pretrial.date = self.dialog.final_pretrial_date.date().toString(
             ENTRY_DATE_FORMAT,
         )
         if self.dialog.no_pretrial_radio_btn.isChecked():
-            self.model.pretrial_date = None
+            self.model.pretrial.date = None
         else:
-            self.model.pretrial_date = self.dialog.pretrial_date.date().toString(ENTRY_DATE_FORMAT)
-        self.model.final_pretrial_time = self.dialog.final_pretrial_time.currentText()
-        self.model.hearing_location = self.set_courtroom()
+            self.model.pretrial.date = self.dialog.pretrial_date.date().toString(ENTRY_DATE_FORMAT)
+        self.model.final_pretrial.time = self.dialog.final_pretrial_time.currentText()
+        self.model.hearing.location = self.set_courtroom()
 
     def set_courtroom(self) -> str:
         """Sets the hearing location for the case data.
