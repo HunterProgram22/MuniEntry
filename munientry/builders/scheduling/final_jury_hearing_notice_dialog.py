@@ -106,6 +106,7 @@ class FinalJuryNoticeHearingCaseInformationUpdater(SchedulingModelUpdater):
 
     def set_scheduling_dates(self) -> None:
         self.model.jury_trial.location = self.dialog.hearing_location_box.currentText()
+        self.model.final_pretrial.location = self.dialog.hearing_location_box.currentText()
         self.model.jury_trial.date = self.dialog.trial_date.date().toString('MMMM dd, yyyy')
         if self.dialog.jury_trial_only_no_radio_btn.isChecked():
             self.model.jury_trial_only = 'No'

@@ -19,19 +19,19 @@ from munientry.models import scheduling_events as se
 from munientry.sqllite.sql_lite_queries import insert_scheduling_data_query
 
 EVENT_CLASS_DICT = types.MappingProxyType({
-    'hearing_date': se.GeneralHearingEvent,
-    'pretrial_date': se.TelephonePretrialEvent,
-    'final_pretrial_date': se.FinalPretrialEvent,
-    'jury_trial_date': se.JuryTrialEvent,
-    'trial_to_court_date': se.TrialToCourtEvent,
+    'hearing': se.GeneralHearingEvent,
+    'pretrial': se.TelephonePretrialEvent,
+    'final_pretrial': se.FinalPretrialEvent,
+    'jury_trial': se.JuryTrialEvent,
+    'trial_to_court': se.TrialToCourtEvent,
 })
 
 EVENT_DATE_FIELDS = (
-    'hearing_date',
-    'jury_trial_date',
-    'trial_to_court_date',
-    'final_pretrial_date',
-    'pretrial_date',
+    'hearing',
+    'jury_trial',
+    'trial_to_court',
+    'final_pretrial',
+    'pretrial',
 )
 
 
@@ -45,7 +45,6 @@ def execute_insert_query(query: QSqlQuery, event: se.Event) -> None:
     """
     query.prepare(insert_scheduling_data_query(event))
     query_result = query.exec()
-    loger.debug(query_result)
     logger.info(f'Event insert result: {query_result}.')
     logger.info(
         f'{event.case_number}: {event.event_name} - {event.event_date} -'
@@ -67,9 +66,17 @@ def save_scheduling_data(case_data: Dict[str, Any], db_connection: str) -> None:
     """
     logger.info(f'Scheduling data: {case_data}')
     query = QSqlQuery(db_connection)
-    for date_field in EVENT_DATE_FIELDS:
-        if case_data.get(date_field) is None:
+    for case_event in EVENT_DATE_FIELDS:
+        case_event_dict = case_data.get(case_event)
+        event_date = case_event_dict.get('date')
+        if event_date is None:
             continue
-        event_class = EVENT_CLASS_DICT.get(date_field, se.Event)
-        event = event_class(case_data)
+        event_class = EVENT_CLASS_DICT.get(case_event, se.Event)
+
+        case_data_dict = {
+            'case_number': case_data['case_number'],
+            'defendant': case_data['defendant'],
+            'event': case_event_dict,
+        }
+        event = event_class(case_data_dict)
         execute_insert_query(query, event)
