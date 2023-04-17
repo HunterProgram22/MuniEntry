@@ -35,13 +35,11 @@ class Event(object):
         self.def_last_name = defendant.last_name
         self.def_first_name = defendant.first_name
 
-        self.event = self.case_data_dict.get('event')
+        self.event = self.case_data_dict.get('event_data')
         self.event_location = self.event.get('location')
         self.event_name = self.load_event_name(self.event_name_field)
-        # self.event_name = self.load_event_name(self.event_name_field)
         self.event_date = format_date_string(self.event.get('date'))
         self.event_time = self.event.get('time')
-        # self.event_time = self.load_event_time(self.event_time_field, self.event_name_field)
 
     def load_event_name(self, event_name_field: str) -> str:
         if event_name_field == 'hearing_type':
