@@ -21,9 +21,11 @@ class SchedulingCaseInformation:
     defendant: object = field(default_factory=Defendant)
     defense_counsel: str = None
     defense_counsel_type: str = None
-
     pretrial_scheduled: bool = True
     jury_trial_only: str = None
+    interpreter_required: bool = False
+    interpreter_language: str = None
+
     jury_trial: EventInfo = field(default_factory=lambda: EventInfo(time='8:15 AM'))
     trial_to_court: EventInfo = field(default_factory=EventInfo)
     pretrial: EventInfo = field(default_factory=lambda: EventInfo(time='3:00 PM'))

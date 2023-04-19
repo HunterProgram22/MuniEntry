@@ -423,10 +423,79 @@ background-color: rgb(255, 255, 255);</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
              <item row="0" column="0">
-              <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,0,0,0,0,0">
+              <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,0,0,0,0,0" columnstretch="1,1">
                <property name="verticalSpacing">
                 <number>24</number>
                </property>
+               <item row="5" column="1">
+                <widget class="NoScrollComboBox" name="hearing_location_box">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Courtroom A</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Courtroom B</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Courtroom C</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="NoScrollComboBox" name="hearing_type_box">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="editable">
+                  <bool>false</bool>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>Plea Hearing</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Motion to Suppress Hearing</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Oral Hearing</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Seal Record</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Motion Hearing</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="interpreter_check_box">
+                 <property name="text">
+                  <string>Interpreter Required</string>
+                 </property>
+                </widget>
+               </item>
                <item row="3" column="1">
                 <widget class="NoScrollDateEdit" name="hearing_date">
                  <property name="styleSheet">
@@ -435,6 +504,13 @@ background-color: rgb(255, 255, 255);</string>
                  </property>
                  <property name="calendarPopup">
                   <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_7">
+                 <property name="text">
+                  <string>Hearing Location:</string>
                  </property>
                 </widget>
                </item>
@@ -449,20 +525,6 @@ background-color: rgb(255, 255, 255);</string>
                 <widget class="QLabel" name="hearing_date_label">
                  <property name="text">
                   <string>Hearing Date:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_7">
-                 <property name="text">
-                  <string>Hearing Location:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="hearing_type_label">
-                 <property name="text">
-                  <string>Hearing Type:</string>
                  </property>
                 </widget>
                </item>
@@ -638,108 +700,18 @@ background-color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
-               <item row="5" column="1">
-                <widget class="NoScrollComboBox" name="hearing_location_box">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Courtroom A</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Courtroom B</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Courtroom C</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="NoScrollComboBox" name="hearing_type_box">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                 <property name="editable">
-                  <bool>false</bool>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string>Plea Hearing</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Motion to Suppress Hearing</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Oral Hearing</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Seal Record</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Motion Hearing</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QCheckBox" name="interpreter_check_box">
+               <item row="2" column="0">
+                <widget class="QLabel" name="hearing_type_label">
                  <property name="text">
-                  <string>Interpreter Required</string>
+                  <string>Hearing Type:</string>
                  </property>
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="NoScrollComboBox" name="langugage_box">
+                <widget class="QLineEdit" name="language_box">
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
-                 <property name="editable">
-                  <bool>true</bool>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Spanish</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Porteguese</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Nepali</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Vietnamese</string>
-                  </property>
-                 </item>
                 </widget>
                </item>
               </layout>
