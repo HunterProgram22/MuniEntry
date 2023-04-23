@@ -64,10 +64,10 @@ class GeneralNoticeOfHearingCaseInformationUpdater(SchedulingModelUpdater):
         self.model.judicial_officer = self.dialog.judicial_officer
 
     def set_scheduling_dates(self):
-        self.model.hearing_date = self.dialog.hearing_date.date().toString('MMMM dd, yyyy')
-        self.model.hearing_time = self.dialog.hearing_time_box.currentText()
-        self.model.hearing_type = self.dialog.hearing_type_box.currentText()
-        self.model.hearing_location = self.dialog.hearing_location_box.currentText()
+        self.model.hearing.date = self.dialog.hearing_date.date().toString('MMMM dd, yyyy')
+        self.model.hearing.time = self.dialog.hearing_time_box.currentText()
+        self.model.hearing.type = self.dialog.hearing_type_box.currentText()
+        self.model.hearing.location = self.dialog.hearing_location_box.currentText()
 
 
 class GeneralNoticeOfHearingCheckList(SchedulingChecks):

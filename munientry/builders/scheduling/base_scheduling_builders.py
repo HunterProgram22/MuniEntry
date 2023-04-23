@@ -17,6 +17,7 @@ class SchedulingDialogBuilder(base.BaseDialogBuilder):
         self.load_cms_data_to_view()
         case_number = cms_case.case_number
         logger.info(f'Loading {case_number} from {self.case_table}')
+        self.functions.enable_language_box()
         self.additional_setup()
 
     def additional_setup(self):
@@ -30,9 +31,22 @@ class SchedulingViewModifier(base.BaseDialogViewModifier):
 class SchedulingSignalConnector(base.BaseDialogSignalConnector):
     """Base Signal Connector for Scheduling Dialogs."""
 
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.dialog.interpreter_check_box.toggled.connect(self.dialog.functions.enable_language_box)
+
 
 class SchedulingSlotFunctions(base.BaseDialogSlotFunctions):
     """Additional functions for Scheduling Dialogs."""
 
     def create_entry_process(self) -> None:
         SchedulingEntryCreator(self.dialog).create_entry_process()
+
+    def enable_language_box(self):
+        if self.dialog.interpreter_check_box.isChecked():
+            self.dialog.language_box.show()
+            self.dialog.language_box.setEnabled(True)
+            self.dialog.language_box.setFocus()
+        else:
+            self.dialog.language_box.hide()
+            self.dialog.language_box.setEnabled(False)

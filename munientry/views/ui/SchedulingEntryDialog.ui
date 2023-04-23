@@ -180,8 +180,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1048</width>
-           <height>697</height>
+           <width>1027</width>
+           <height>700</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
@@ -521,7 +521,7 @@ background-color: rgb(255, 255, 255);</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout_5">
+            <layout class="QGridLayout" name="gridLayout_5" columnstretch="1,1">
              <item row="2" column="0">
               <widget class="QRadioButton" name="four_week_pretrial_radio_btn">
                <property name="text">
@@ -816,6 +816,23 @@ background-color: rgb(255, 255, 255);</string>
                  <string>4:15 PM</string>
                 </property>
                </item>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QCheckBox" name="interpreter_check_box">
+               <property name="text">
+                <string>Interpreter Required</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QLineEdit" name="language_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="placeholderText">
+                <string>Language Required</string>
+               </property>
               </widget>
              </item>
             </layout>

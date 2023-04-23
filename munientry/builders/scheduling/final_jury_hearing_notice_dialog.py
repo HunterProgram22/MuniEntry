@@ -105,18 +105,19 @@ class FinalJuryNoticeHearingCaseInformationUpdater(SchedulingModelUpdater):
         self.model.judicial_officer = self.dialog.judicial_officer
 
     def set_scheduling_dates(self) -> None:
-        self.model.hearing_location = self.dialog.hearing_location_box.currentText()
-        self.model.jury_trial_date = self.dialog.trial_date.date().toString('MMMM dd, yyyy')
+        self.model.jury_trial.location = self.dialog.hearing_location_box.currentText()
+        self.model.final_pretrial.location = self.dialog.hearing_location_box.currentText()
+        self.model.jury_trial.date = self.dialog.trial_date.date().toString('MMMM dd, yyyy')
         if self.dialog.jury_trial_only_no_radio_btn.isChecked():
             self.model.jury_trial_only = 'No'
-            self.model.final_pretrial_date = self.dialog.final_pretrial_date.date().toString(
+            self.model.final_pretrial.date = self.dialog.final_pretrial_date.date().toString(
                 'MMMM dd, yyyy',
             )
-            self.model.final_pretrial_time = self.dialog.final_pretrial_time_box.currentText()
+            self.model.final_pretrial.time = self.dialog.final_pretrial_time_box.currentText()
         elif self.dialog.jury_trial_only_yes_radio_btn.isChecked():
             self.model.jury_trial_only = 'Yes'
-            self.model.final_pretrial_date = None
-            self.model.final_pretrial_time = None
+            self.model.final_pretrial.date = None
+            self.model.final_pretrial.time = None
 
 
 class FinalJuryNoticeCheckList(SchedulingChecks):

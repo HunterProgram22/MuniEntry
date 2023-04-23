@@ -30,4 +30,4 @@ class SchedulingChecks(BaseChecks):
         if getattr(self.dialog, 'jury_trial_only_no_radio_btn', None) is not None:
             if self.dialog.jury_trial_only_no_radio_btn.isChecked():
                 return self.dialog.final_pretrial_date.date() > self.today
-        return self.dialog.final_pretrial_date.date() > self.today
+        return True
