@@ -1,5 +1,4 @@
 """Builder module for the Arraignment Continuance Dialog."""
-from loguru import logger
 from PyQt6.QtCore import QDate
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
@@ -21,18 +20,17 @@ class ArraignmentContinueDialogViewModifier(crim.CrimTrafficViewModifier):
 class ArraignmentContinueDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Arraignment Continuance Dialog."""
 
-    def update_arraignment_date(self):
+    def update_arraignment_date(self) -> None:
         cont_length = self.dialog.continuance_length_box.currentText()
-        ARRAIGNMENT_CONT_DICT = {
+        arraignment_time_dict = {
             '1 Week': 7,
             '2 Weeks': 14,
         }
-        days_to_add = ARRAIGNMENT_CONT_DICT.get(cont_length)
+        days_to_add = arraignment_time_dict.get(cont_length, 0)
         today = QDate.currentDate()
         self.dialog.new_arraignment_date_box.setDate(today.addDays(days_to_add))
 
-
-    def show_hide_length_date_boxes(self):
+    def show_hide_length_date_boxes(self) -> None:
         visibility_mapping = {
             'to arrange for an interpreter for defendant': False,
             'general continuance - denied untimely': False,
@@ -43,7 +41,7 @@ class ArraignmentContinueDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
             self.dialog.continuance_length_box,
             self.dialog.new_arraignment_date_box,
             self.dialog.new_arraignment_date_label,
-            self.dialog.continuance_label
+            self.dialog.continuance_label,
         ]
         for widget in widgets:
             widget.setVisible(should_show)
@@ -56,7 +54,7 @@ class ArraignmentContinueDialogSignalConnector(crim.CrimTrafficSignalConnector):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
         self.dialog.continuance_length_box.currentTextChanged.connect(
-           self.dialog.functions.update_arraignment_date,
+            self.dialog.functions.update_arraignment_date,
         )
         self.dialog.continuance_reason_box.currentTextChanged.connect(
             self.dialog.functions.show_hide_length_date_boxes,
@@ -83,7 +81,7 @@ class ArraignmentContinueDialog(crim.CrimTrafficDialogBuilder, Ui_ArraignmentCon
     _view_modifier = ArraignmentContinueDialogViewModifier
     dialog_name = 'Arraignment Continuance Entry'
 
-    def additional_setup(self):
+    def additional_setup(self) -> None:
         self.functions.update_arraignment_date()
         self.functions.show_hide_length_date_boxes()
         today = QDate.currentDate()
