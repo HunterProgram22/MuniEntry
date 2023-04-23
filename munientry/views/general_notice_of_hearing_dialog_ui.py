@@ -432,6 +432,7 @@ class Ui_GeneralNoticeOfHearingDialog(object):
         self.hearing_time_box.setItemText(28, _translate("GeneralNoticeOfHearingDialog", "4:15 PM"))
         self.label_5.setText(_translate("GeneralNoticeOfHearingDialog", "SCHEDULING INFORMATION"))
         self.hearing_type_label.setText(_translate("GeneralNoticeOfHearingDialog", "Hearing Type:"))
+        self.language_box.setPlaceholderText(_translate("GeneralNoticeOfHearingDialog", "Language Required"))
         self.label_10.setText(_translate("GeneralNoticeOfHearingDialog", "Old Hearing Date:"))
         self.label_13.setText(_translate("GeneralNoticeOfHearingDialog", "New Speedy Trial Date:"))
         self.speedy_trial_date_label.setText(_translate("GeneralNoticeOfHearingDialog", "Speedy Trial Date"))
