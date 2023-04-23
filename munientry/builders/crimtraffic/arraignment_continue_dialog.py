@@ -31,17 +31,22 @@ class ArraignmentContinueDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
         today = QDate.currentDate()
         self.dialog.new_arraignment_date_box.setDate(today.addDays(days_to_add))
 
+
     def show_hide_length_date_boxes(self):
-        if self.dialog.continuance_reason_box.currentText() == 'to arrange for an interpreter for defendant':
-            self.dialog.continuance_length_box.setHidden(True)
-            self.dialog.new_arraignment_date_box.setHidden(True)
-            self.dialog.arraignment_date_label.setHidden(True)
-            self.dialog.continuance_label.setHidden(True)
-        else:
-            self.dialog.continuance_length_box.setVisible(True)
-            self.dialog.new_arraignment_date_box.setVisible(True)
-            self.dialog.arraignment_date_label.setVisible(True)
-            self.dialog.continuance_label.setVisible(True)
+        visibility_mapping = {
+            'to arrange for an interpreter for defendant': False,
+            'general continuance - denied untimely': False,
+        }
+        current_text = self.dialog.continuance_reason_box.currentText()
+        should_show = visibility_mapping.get(current_text, True)
+        widgets = [
+            self.dialog.continuance_length_box,
+            self.dialog.new_arraignment_date_box,
+            self.dialog.new_arraignment_date_label,
+            self.dialog.continuance_label
+        ]
+        for widget in widgets:
+            widget.setVisible(should_show)
 
 
 class ArraignmentContinueDialogSignalConnector(crim.CrimTrafficSignalConnector):
@@ -81,3 +86,5 @@ class ArraignmentContinueDialog(crim.CrimTrafficDialogBuilder, Ui_ArraignmentCon
     def additional_setup(self):
         self.functions.update_arraignment_date()
         self.functions.show_hide_length_date_boxes()
+        today = QDate.currentDate()
+        self.current_arraignment_date_box.setDate(today)

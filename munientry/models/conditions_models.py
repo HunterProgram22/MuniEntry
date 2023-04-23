@@ -433,8 +433,10 @@ class BondModificationConditions(BondConditions):
 @dataclass
 class ContinuanceConditions:
     continuance_reason: str = None
+    current_arraignment_date: str = None
     new_arraignment_date: str = None
     terms_list = [
         ('continuance_reason', 'continuance_reason_box'),
+        ('current_arraignment_date', 'current_arraignment_date_box'),
         ('new_arraignment_date', 'new_arraignment_date_box'),
     ]
