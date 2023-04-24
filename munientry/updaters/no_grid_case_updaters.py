@@ -121,3 +121,14 @@ class CriminalSealingDialogUpdater(BaseDialogUpdater):
         self.model.fbi_number = self.dialog.fbi_number_line_edit.text()
         self.model.offense_seal_list = self.dialog.offense_line_edit.text()
         self.model.offense_date = self.dialog.offense_date.get_date_as_string()
+
+
+class CompetencyDialogUpdater(BaseDialogUpdater):
+    """Updater for Comptency Dialog - no charge grid."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.update_case_information()
+
+    def update_case_information(self) -> CaseInformationUpdater:
+        return CaseInformationUpdater(self.dialog)

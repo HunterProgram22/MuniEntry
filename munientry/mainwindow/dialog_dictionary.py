@@ -8,6 +8,7 @@ from munientry.builders.civil import civ_freeform_dialog
 from munientry.builders.crimtraffic import (
     arraignment_continue_dialog,
     bond_hearing_dialog,
+    competency_dialog,
     criminal_sealing_dialog,
     diversion_dialog,
     failure_to_appear_dialog,
@@ -37,6 +38,7 @@ from munientry.builders.workflows import probation_dw_dialogs as probation
 from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 
 DIALOG_BUTTON_DICT = {
+    # CriminalTraffic
     'FineOnlyPleaButton': fine_only_plea_dialog.FineOnlyPleaDialog,
     'JailCCPleaButton': jail_cc_plea_dialog.JailCCPleaDialog,
     'ArraignmentContinueButton': arraignment_continue_dialog.ArraignmentContinueDialog,
@@ -54,6 +56,7 @@ DIALOG_BUTTON_DICT = {
     'SentencingOnlyButton': sentencing_only_dialog.SentencingOnlyDialog,
     'FreeformEntryButton': freeform_dialog.FreeformDialog,
     'CriminalSealingButton': criminal_sealing_dialog.CriminalSealingDialog,
+    'CompetencyButton': competency_dialog.CompetencyDialog,
 
     # Civil
     'CivFreeformEntryButton': civ_freeform_dialog.CivFreeformDialog,
