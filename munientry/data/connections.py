@@ -21,8 +21,11 @@ Functions:
 
     establish_database_connections() -> None
 """
+from __future__ import annotations
+
 import socket
-from functools import partialmethod
+from functools import partialmethod, wraps
+from types import MappingProxyType
 from typing import Union
 
 from loguru import logger
@@ -36,11 +39,10 @@ DATABASE_LOG_LEVEL = 21
 
 MUNIENTRY_DB_CONN = 'con_munientry_db'
 MUNIENTRY_DB = 'MuniEntryDB.sqlite'
-TEST_MUNIENTRY_DB = 'TEST_MuniEntryDB.sqlite'
 
-CRIM_TRAFFIC_DB_CONN = 'con_authority_court'
-CRIM_TRAFFIC_DATABASE = 'AuthorityCourt'
-CRIM_TRAFFIC_DB_SERVER = r'CLERKCRTR\CMI'
+CRIM_DB_CONN = 'con_authority_court'
+CRIM_DATABASE = 'AuthorityCourt'
+CRIM_DB_SERVER = r'CLERKCRTR\CMI'
 
 CIVIL_DB_CONN = 'con_authority_civil'
 CIVIL_DATABASE = 'AuthorityCivil'
@@ -49,12 +51,13 @@ CIVIL_DB_SERVER = r'CLERKSQL\CMI'
 HOME_DB_SERVER = r'ROOBERRYPRIME\SQLEXPRESS'
 HOME_PC_SOCKET = 'RooberryPrime'
 TEST_COMPUTER_SOCKETS = ('Muni10', 'RooberryPrime')
+TEST_MUNIENTRY_DB = 'TEST_MuniEntryDB.sqlite'
 
-DATABASE_WARNINGS_SETTINGS = {
-    CRIM_TRAFFIC_DB_CONN: True,
+DATABASE_WARNINGS_SETTINGS = MappingProxyType({
+    CRIM_DB_CONN: True,
     CIVIL_DB_CONN: True,
     MUNIENTRY_DB_CONN: True,
-}
+})
 # End Database Constants
 
 
@@ -73,9 +76,9 @@ def set_server_and_database(connection_name: str) -> tuple:
 
             database (str): The name of the database.
     """
-    if connection_name == CRIM_TRAFFIC_DB_CONN:
-        server = CRIM_TRAFFIC_DB_SERVER
-        database = CRIM_TRAFFIC_DATABASE
+    if connection_name == CRIM_DB_CONN:
+        server = CRIM_DB_SERVER
+        database = CRIM_DATABASE
 
     if connection_name == CIVIL_DB_CONN:
         server = CIVIL_DB_SERVER
@@ -85,7 +88,7 @@ def set_server_and_database(connection_name: str) -> tuple:
     if socket.gethostname() == HOME_PC_SOCKET:
         server = HOME_DB_SERVER
 
-    logger.info(f'Database for {connection_name} set to {database} on server {server}.')
+    logger.info(f'Database set to {database} on server {server}.')
     return (server, database)
 
 
@@ -216,6 +219,19 @@ def remove_db_connection(connection_name: str) -> None:
     logger.database(f'{connection_name} database connection removed.')
 
 
+def database_connection(db_connection_string):
+    """Decorator for opening a db connection, calling the function, then closing db connection."""
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            db_connection_obj = open_db_connection(db_connection_string)
+            query_results = func(*args, db_connection=db_connection_obj, **kwargs)
+            close_db_connection(db_connection_obj)
+            return query_results
+        return wrapper
+    return decorator
+
+
 def establish_database_connections():
     """Establishes database connections for the application, tests all connections open.
 
@@ -223,8 +239,8 @@ def establish_database_connections():
     """
     logger.database('Establishing database connections.')
 
-    create_odbc_db_connection(CRIM_TRAFFIC_DB_CONN)
-    authority_court_db = open_db_connection(CRIM_TRAFFIC_DB_CONN)
+    create_odbc_db_connection(CRIM_DB_CONN)
+    authority_court_db = open_db_connection(CRIM_DB_CONN)
     close_db_connection(authority_court_db)
 
     create_odbc_db_connection(CIVIL_DB_CONN)

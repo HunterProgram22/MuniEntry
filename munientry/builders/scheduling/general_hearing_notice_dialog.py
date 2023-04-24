@@ -3,16 +3,12 @@ from loguru import logger
 from PyQt6.QtCore import QDate
 
 from munientry.builders.scheduling import base_scheduling_builders as sched
-from munientry.checkers.base_checks import BaseChecker
+from munientry.checkers.scheduling_checks import SchedulingChecks
 from munientry.helper_functions import set_assigned_judge, set_courtroom
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
-from munientry.updaters.scheduling_updaters import (
-    SchedulingModelUpdater,
-)
-from munientry.views.general_notice_of_hearing_dialog_ui import (
-    Ui_GeneralNoticeOfHearingDialog,
-)
+from munientry.updaters.scheduling_updaters import  SchedulingModelUpdater
+from munientry.views.general_notice_of_hearing_dialog_ui import Ui_GeneralNoticeOfHearingDialog
 
 
 class GeneralNoticeOfHearingDialogViewModifier(sched.SchedulingViewModifier):
@@ -25,7 +21,7 @@ class GeneralNoticeOfHearingDialogViewModifier(sched.SchedulingViewModifier):
     def set_view_dates(self):
         today = QDate.currentDate()
         self.dialog.entry_date.setDate(today)
-        self.dialog.hearing_dateEdit.setDate(today)
+        self.dialog.hearing_date.setDate(today)
 
 
 class GeneralNoticeOfHearingDialogSignalConnector(sched.SchedulingSignalConnector):
@@ -34,18 +30,13 @@ class GeneralNoticeOfHearingDialogSignalConnector(sched.SchedulingSignalConnecto
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
-        self.connect_continuance_calc_signals()
+        self.connect_dialog_specific_signals()
 
-    def connect_continuance_calc_signals(self) -> None:
-        self.dialog.old_speedy_trial_dateEdit.dateChanged.connect(
-            self.dialog.functions.update_speedy_trial_date,
-        )
-        self.dialog.old_hearing_dateEdit.dateChanged.connect(
-            self.dialog.functions.update_speedy_trial_date,
-        )
-        self.dialog.new_hearing_dateEdit.dateChanged.connect(
-            self.dialog.functions.update_speedy_trial_date,
-        )
+    def connect_dialog_specific_signals(self) -> None:
+        func = self.dialog.functions
+        self.dialog.old_speedy_trial_date.dateChanged.connect(func.update_speedy_trial_date)
+        self.dialog.old_hearing_date.dateChanged.connect(func.update_speedy_trial_date)
+        self.dialog.new_hearing_date.dateChanged.connect(func.update_speedy_trial_date)
 
 
 class GeneralNoticeOfHearingDialogSlotFunctions(sched.SchedulingSlotFunctions):
@@ -55,10 +46,10 @@ class GeneralNoticeOfHearingDialogSlotFunctions(sched.SchedulingSlotFunctions):
     """
 
     def update_speedy_trial_date(self) -> None:
-        days_to_add = self.dialog.old_hearing_dateEdit.date().daysTo(
-            self.dialog.new_hearing_dateEdit.date(),
+        days_to_add = self.dialog.old_hearing_date.date().daysTo(
+            self.dialog.new_hearing_date.date(),
         )
-        new_speedy_trial_date = self.dialog.old_speedy_trial_dateEdit.date().addDays(days_to_add)
+        new_speedy_trial_date = self.dialog.old_speedy_trial_date.date().addDays(days_to_add)
         new_speedy_trial_date = new_speedy_trial_date.toString('MMMM dd, yyyy')
         self.dialog.speedy_trial_date_label.setText(new_speedy_trial_date)
 
@@ -73,19 +64,15 @@ class GeneralNoticeOfHearingCaseInformationUpdater(SchedulingModelUpdater):
         self.model.judicial_officer = self.dialog.judicial_officer
 
     def set_scheduling_dates(self):
-        self.model.hearing_date = self.dialog.hearing_dateEdit.date().toString('MMMM dd, yyyy')
-        self.model.hearing_time = self.dialog.hearing_time_box.currentText()
-        self.model.hearing_type = self.dialog.hearing_type_box.currentText()
-        self.model.hearing_location = self.dialog.hearing_location_box.currentText()
+        self.model.hearing.date = self.dialog.hearing_date.date().toString('MMMM dd, yyyy')
+        self.model.hearing.time = self.dialog.hearing_time_box.currentText()
+        self.model.hearing.type = self.dialog.hearing_type_box.currentText()
+        self.model.hearing.location = self.dialog.hearing_location_box.currentText()
 
 
-class GeneralNoticeOfHearingInfoChecker(BaseChecker):
-    """Class with checks for the General Notice Hearing Info Checker."""
-
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.dialog_check_list: list[str] = []
-        self.check_status = self.perform_check_list()
+class GeneralNoticeOfHearingCheckList(SchedulingChecks):
+    """Class with checks for the General Notice Hearing."""
+    check_list = []
 
 
 class GeneralNoticeOfHearingDialog(sched.SchedulingDialogBuilder, Ui_GeneralNoticeOfHearingDialog):
@@ -98,7 +85,7 @@ class GeneralNoticeOfHearingDialog(sched.SchedulingDialogBuilder, Ui_GeneralNoti
 
     _case_information_model = SchedulingCaseInformation
     _case_loader = SchedulingCrimCmsLoader
-    _info_checker = GeneralNoticeOfHearingInfoChecker
+    _info_checker = GeneralNoticeOfHearingCheckList
     _model_updater = GeneralNoticeOfHearingCaseInformationUpdater
     _signal_connector = GeneralNoticeOfHearingDialogSignalConnector
     _slots = GeneralNoticeOfHearingDialogSlotFunctions
@@ -110,7 +97,3 @@ class GeneralNoticeOfHearingDialog(sched.SchedulingDialogBuilder, Ui_GeneralNoti
         self.courtroom = set_courtroom(self.sender())
         self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
         self.hearing_location_box.setCurrentText(self.courtroom)
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

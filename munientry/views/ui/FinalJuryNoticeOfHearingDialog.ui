@@ -176,9 +176,9 @@ font-weight: bold;</string>
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>0</y>
+           <y>-59</y>
            <width>1230</width>
-           <height>856</height>
+           <height>815</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
@@ -378,18 +378,87 @@ background-color: rgb(255, 255, 255);</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
              <item row="0" column="0">
-              <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,2,2,2,0,0,0,0,0" rowminimumheight="0,0,0,0,0,0,0,0,0">
+              <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,2,2,2,0,0,0,0,0,0,0" rowminimumheight="0,0,0,0,0,0,0,0,0,0,0">
                <property name="verticalSpacing">
                 <number>24</number>
                </property>
-               <item row="2" column="0">
+               <item row="10" column="0">
+                <widget class="QLabel" name="label_7">
+                 <property name="text">
+                  <string>Trial / Final Pretrial Location:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QRadioButton" name="jury_trial_only_yes_radio_btn">
+                 <property name="text">
+                  <string>Yes</string>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">buttonGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item row="9" column="0">
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string>Jury Trial Date:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
                 <widget class="QLabel" name="label_8">
                  <property name="text">
                   <string>Jury Trial Only:</string>
                  </property>
                 </widget>
                </item>
-               <item row="6" column="1">
+               <item row="2" column="0">
+                <widget class="QCheckBox" name="interpreter_check_box">
+                 <property name="text">
+                  <string>Interpreter Required</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="0">
+                <widget class="QLabel" name="final_pretrial_time_label">
+                 <property name="text">
+                  <string>Final Pretrial Time:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="0">
+                <widget class="QLabel" name="final_pretrial_date_label">
+                 <property name="text">
+                  <string>Final Pretrial Date:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="2">
+                <widget class="QRadioButton" name="jury_trial_only_no_radio_btn">
+                 <property name="text">
+                  <string>No</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">buttonGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item row="7" column="1" colspan="2">
+                <widget class="NoScrollDateEdit" name="final_pretrial_date">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="calendarPopup">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="1" colspan="2">
                 <widget class="NoScrollComboBox" name="final_pretrial_time_box">
                  <property name="enabled">
                   <bool>true</bool>
@@ -544,32 +613,8 @@ background-color: rgb(255, 255, 255);</string>
                  </item>
                 </widget>
                </item>
-               <item row="6" column="0">
-                <widget class="QLabel" name="final_pretrial_time_label">
-                 <property name="text">
-                  <string>Final Pretrial Time:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QRadioButton" name="jury_trial_only_yes_radioButton">
-                 <property name="text">
-                  <string>Yes</string>
-                 </property>
-                 <attribute name="buttonGroup">
-                  <string notr="true">buttonGroup</string>
-                 </attribute>
-                </widget>
-               </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="final_pretrial_date_label">
-                 <property name="text">
-                  <string>Final Pretrial Date:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="7" column="1">
-                <widget class="NoScrollDateEdit" name="trial_dateEdit">
+               <item row="9" column="1" colspan="2">
+                <widget class="NoScrollDateEdit" name="trial_date">
                  <property name="styleSheet">
                   <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -579,72 +624,7 @@ background-color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
-               <item row="5" column="1">
-                <widget class="NoScrollDateEdit" name="final_pretrial_dateEdit">
-                 <property name="styleSheet">
-                  <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-                 </property>
-                 <property name="calendarPopup">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="7" column="0">
-                <widget class="QLabel" name="label_4">
-                 <property name="text">
-                  <string>Jury Trial Date:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0" colspan="2">
-                <widget class="QLabel" name="instructions_label">
-                 <property name="text">
-                  <string>INSTRUCTIONS:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0" colspan="2">
-                <widget class="QLabel" name="label_5">
-                 <property name="font">
-                  <font>
-                   <family>Palatino Linotype</family>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <italic>false</italic>
-                   <bold>true</bold>
-                   <underline>true</underline>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>SCHEDULING INFORMATION</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QRadioButton" name="jury_trial_only_no_radioButton">
-                 <property name="text">
-                  <string>No</string>
-                 </property>
-                 <property name="checked">
-                  <bool>true</bool>
-                 </property>
-                 <attribute name="buttonGroup">
-                  <string notr="true">buttonGroup</string>
-                 </attribute>
-                </widget>
-               </item>
-               <item row="8" column="0">
-                <widget class="QLabel" name="label_7">
-                 <property name="text">
-                  <string>Trial / Final Pretrial Location:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="8" column="1">
+               <item row="10" column="1" colspan="2">
                 <widget class="NoScrollComboBox" name="hearing_location_box">
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -669,6 +649,43 @@ background-color: rgb(255, 255, 255);</string>
                    <string>Courtroom C</string>
                   </property>
                  </item>
+                </widget>
+               </item>
+               <item row="2" column="1" colspan="2">
+                <widget class="QLineEdit" name="language_box">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Language Required</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0" colspan="3">
+                <widget class="QLabel" name="instructions_label">
+                 <property name="text">
+                  <string>INSTRUCTIONS:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0" colspan="3">
+                <widget class="QLabel" name="label_5">
+                 <property name="font">
+                  <font>
+                   <family>Palatino Linotype</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                   <underline>true</underline>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>SCHEDULING INFORMATION</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
                 </widget>
                </item>
               </layout>
@@ -748,7 +765,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="NoScrollDateEdit" name="old_speedy_trial_dateEdit">
+              <widget class="NoScrollDateEdit" name="old_speedy_trial_date">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -780,7 +797,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="NoScrollDateEdit" name="old_hearing_dateEdit">
+              <widget class="NoScrollDateEdit" name="old_hearing_date">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -818,7 +835,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="NoScrollDateEdit" name="new_hearing_dateEdit">
+              <widget class="NoScrollDateEdit" name="new_hearing_date">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -860,16 +877,14 @@ background-color: rgb(255, 255, 255);</string>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>final_pretrial_dateEdit</tabstop>
+  <tabstop>final_pretrial_date</tabstop>
   <tabstop>final_pretrial_time_box</tabstop>
-  <tabstop>trial_dateEdit</tabstop>
+  <tabstop>trial_date</tabstop>
   <tabstop>hearing_location_box</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
   <tabstop>defense_counsel_name_box</tabstop>
   <tabstop>case_number_lineEdit</tabstop>
-  <tabstop>jury_trial_only_no_radioButton</tabstop>
-  <tabstop>jury_trial_only_yes_radioButton</tabstop>
   <tabstop>create_entry_Button</tabstop>
  </tabstops>
  <resources/>

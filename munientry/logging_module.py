@@ -27,7 +27,6 @@ DIALOG_LOGLEVEL = 22
 BUTTON_LOGLEVEL = 24
 ACTION_LOGLEVEL = 25
 CHOICE_LOGLEVEL = 26
-CHECKFAIL_LOGLEVEL = 27
 REQUIRED_LOGLEVEL = 28
 
 
@@ -83,9 +82,6 @@ logger.__class__.action = partialmethod(logger.__class__.log, 'ACTION')
 
 logger.level('CHOICE', no=CHOICE_LOGLEVEL, color='<cyan>')
 logger.__class__.choice = partialmethod(logger.__class__.log, 'CHOICE')
-
-logger.level('CHECKFAIL', no=CHECKFAIL_LOGLEVEL, color='<magenta>')
-logger.__class__.checkfail = partialmethod(logger.__class__.log, 'CHECKFAIL')
 
 logger.level('REQUIRED', no=REQUIRED_LOGLEVEL, color='<magenta>')
 logger.__class__.required = partialmethod(logger.__class__.log, 'REQUIRED')

@@ -4,7 +4,7 @@ from PyQt6.QtCore import QDate
 
 from munientry.builders import base_builders as base
 from munientry.builders.administrative import base_admin_builders as admin
-from munientry.checkers.base_checks import BaseChecker
+from munientry.checkers.base_checks import BaseChecks
 from munientry.entrycreators.entry_creator import AdminFiscalEntryCreator
 from munientry.models.admin_fiscal_models import AdminFiscalEntryInformation
 from munientry.models.template_types import TEMPLATE_DICT
@@ -72,7 +72,7 @@ class AdminFiscalCaseInformationUpdater(BaseDialogUpdater):
         self.model.invoice_number = self.dialog.invoice_number_lineEdit.text()
 
 
-class AdminFiscalInfoChecker(BaseChecker):
+class AdminFiscalInfoChecks(BaseChecks):
     """Class with checks for the Admin Fiscal Dialog."""
 
     def __init__(self, dialog) -> None:
@@ -89,7 +89,7 @@ class AdminFiscalDialog(base.BaseDialogBuilder, Ui_AdminFiscalDialog):
 
     _case_information_model = AdminFiscalEntryInformation
     _case_loader = None
-    _info_checker = AdminFiscalInfoChecker
+    _info_checker = AdminFiscalInfoChecks
     _model_updater = AdminFiscalCaseInformationUpdater
     _signal_connector = AdminFiscalSignalConnector
     _slots = AdminFiscalSlotFunctions

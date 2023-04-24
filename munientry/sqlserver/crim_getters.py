@@ -1,16 +1,19 @@
 """Module for packaging data from SQL Server database for use in application."""
-from __future__ import annotations
-
-from functools import wraps
+from typing import Any
 
 from loguru import logger
 from PyQt6.QtSql import QSqlDatabase, QSqlQuery
 
-from munientry.settings.app_settings import DAILY_CASE_LIST_STORED_PROCS
-from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.data.data_cleaners import clean_last_name, clean_offense_name, clean_statute_name
+from munientry.data.connections import CRIM_DB_CONN, database_connection
+from munientry.data.data_cleaners import (
+    clean_defense_counsel_name,
+    clean_last_name,
+    clean_offense_name,
+    clean_statute_name,
+)
 from munientry.models.cms_models import CriminalCmsCaseInformation
 from munientry.models.privileges_models import DrivingPrivilegesInformation
+from munientry.settings.app_settings import DAILY_CASE_LIST_STORED_PROCS
 from munientry.sqlserver.crim_sql_server_queries import (
     daily_case_list_query,
     driving_case_search_query,
@@ -19,26 +22,12 @@ from munientry.sqlserver.crim_sql_server_queries import (
 )
 from munientry.widgets.message_boxes import InfoBox
 
-CRIM_DB_CONN = 'con_authority_court'
 CASE_NUMBER = 'CaseNumber'
 
 
 def log_crim_case_query(case_number: str) -> None:
     """Logs when a case number query to the Criminal Traffic database is made."""
     logger.info(f'Querying Authority Court for: {case_number}')
-
-
-def database_connection(db_connection_string):
-    """Decorator for opening a db connection, calling the function, then closing db connection."""
-    def decorator(func):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            db_connection_obj = open_db_connection(db_connection_string)
-            query_results = func(*args, db_connection=db_connection_obj, **kwargs)
-            close_db_connection(db_connection_obj)
-            return query_results
-        return wrapper
-    return decorator
 
 
 def get_daily_case_list(table_name: str) -> list[str]:
@@ -55,7 +44,7 @@ def get_daily_case_list(table_name: str) -> list[str]:
 
 
 @database_connection(CRIM_DB_CONN)
-def execute_query(query_string: str, db_connection: QSqlDatabase) -> list:
+def execute_query(query_string: str, db_connection: str = CRIM_DB_CONN) -> list:
     """Executes a sql query on the Authority Court DBO."""
     query = QSqlQuery(db_connection)
     query.prepare(query_string)
@@ -89,7 +78,7 @@ class CrimCaseDocket(object):
         self.case_number = case_number
 
     @database_connection(CRIM_DB_CONN)
-    def get_docket(self, db_connection: QSqlDatabase = None) -> list[tuple]:
+    def get_docket(self, db_connection: str = CRIM_DB_CONN) -> list[tuple[Any, Any]]:
         query_string = get_case_docket_query(self.case_number)
         log_crim_case_query(self.case_number)
         query = QSqlQuery(db_connection)
@@ -116,7 +105,7 @@ class CrimCaseData(object):
         self.query_case_data()
 
     @database_connection(CRIM_DB_CONN)
-    def query_case_data(self, db_connection: QSqlDatabase) -> None:
+    def query_case_data(self, db_connection: str = CRIM_DB_CONN) -> None:
         """Query database for single cms_case number to load for the dialog."""
         query_string = general_case_search_query(self.case_number)
         query = QSqlQuery(db_connection)
@@ -134,7 +123,9 @@ class CrimCaseData(object):
             self.case.defendant.last_name = query_data.value('DefLastName').title()
             self.case.defendant.first_name = query_data.value('DefFirstName').title()
             self.case.fra_in_file = query_data.value('FraInFile')
-            self.case.defense_counsel = query_data.value('DefenseCounsel').title()
+            self.case.defense_counsel = clean_defense_counsel_name(
+                query_data.value('DefenseCounsel'),
+            )
             self.case.defense_counsel_type = query_data.value('PubDef')
             self.case.violation_date = query_data.value('ViolationDate')
 
@@ -161,7 +152,7 @@ class MultipleCrimCaseData(CrimCaseData):
         """Query database for multiple cms_case numbers to load case data for the dialog."""
         for case_number in self.all_case_numbers:
             self.case_number = case_number
-            self.query_case_data()
+            self.query_case_data(CRIM_DB_CONN)
         self.case.case_number = ', '.join(self.all_case_numbers)
 
 
@@ -173,13 +164,13 @@ class DrivingInfoSQLServer(object):
     loading into the application.
     """
 
-    def __init__(self, case_number: str) -> None:
+    @database_connection(CRIM_DB_CONN)
+    def __init__(self, case_number: str, db_connection: str) -> None:
         self.case_number = case_number
         self.case = DrivingPrivilegesInformation()
-        self.query_case_data()
+        self.query_case_data(db_connection)
 
-    @database_connection(CRIM_DB_CONN)
-    def query_case_data(self, db_connection: QSqlDatabase) -> None:
+    def query_case_data(self, db_connection: str) -> None:
         """Query database based on cms_case number to return the data to load for the dialog."""
         query_string = driving_case_search_query(self.case_number)
         query = QSqlQuery(db_connection)

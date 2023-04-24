@@ -56,6 +56,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.case_search = CaseSearchHandler(self)
         self.case_lists = CaseListHandler(self.daily_case_lists)
         self.connect_signals_to_slots()
+        self.report_window = None
 
     def connect_daily_case_lists(self) -> None:
         self.arraignments_cases_box.setup_combo_box(
@@ -139,7 +140,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.crim_case_data_requested.emit(case_number)
 
     def crim_show_docket_case_search(self) -> None:
-        case_number = self.get_case_number()
+        case_number = self.get_case_number('criminal')
         self.crim_case_docket_requested.emit(case_number)
 
     def crim_show_docket_case_list(self) -> None:

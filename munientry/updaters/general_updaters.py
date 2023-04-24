@@ -117,6 +117,7 @@ class JailDataUpdater(BaseDialogUpdater):
         self.model.jail_terms.currently_in_jail = self.dialog.in_jail_box.currentText()
         self.model.jail_terms.days_in_jail = self.set_jail_time_credit()
         self.model.jail_terms.apply_jtc = self.dialog.jail_time_credit_apply_box.currentText()
+
         self.model.jail_terms.companion_cases_exist = (
             self.dialog.add_companion_cases_checkBox.isChecked()
         )

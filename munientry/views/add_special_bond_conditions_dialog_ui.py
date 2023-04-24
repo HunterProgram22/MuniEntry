@@ -8,9 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from munientry.widgets.combo_boxes import NoScrollComboBox
-from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
-
 
 class Ui_AddSpecialBondConditionsDialog(object):
     def setupUi(self, AddSpecialBondConditionsDialog):
@@ -97,8 +94,9 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.label_21.setObjectName("label_21")
         self.gridLayout_7.addWidget(self.label_21, 2, 0, 1, 1)
         self.admin_license_suspension_objection_box = NoScrollComboBox(self.admin_license_suspension_frame)
-        self.admin_license_suspension_objection_box.setEnabled(False)
+        self.admin_license_suspension_objection_box.setEnabled(True)
         self.admin_license_suspension_objection_box.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.admin_license_suspension_objection_box.setEditable(False)
         self.admin_license_suspension_objection_box.setObjectName("admin_license_suspension_objection_box")
         self.admin_license_suspension_objection_box.addItem("")
         self.admin_license_suspension_objection_box.addItem("")
@@ -114,6 +112,7 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.admin_license_suspension_explanation_box.setObjectName("admin_license_suspension_explanation_box")
         self.gridLayout_7.addWidget(self.admin_license_suspension_explanation_box, 3, 1, 1, 1)
         self.admin_license_suspension_disposition_box = NoScrollComboBox(self.admin_license_suspension_frame)
+        self.admin_license_suspension_disposition_box.setEnabled(True)
         self.admin_license_suspension_disposition_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.admin_license_suspension_disposition_box.setObjectName("admin_license_suspension_disposition_box")
         self.admin_license_suspension_disposition_box.addItem("")
@@ -470,3 +469,5 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.label_2.setText(_translate("AddSpecialBondConditionsDialog", "Exclusive possesion to:"))
         self.domestic_violence_surrender_weapons_checkBox.setText(_translate("AddSpecialBondConditionsDialog", "Surrender deadly weapons no later than:"))
         self.domestic_violence_vacate_checkBox.setText(_translate("AddSpecialBondConditionsDialog", "Vacate Residence located at:"))
+from munientry.widgets.combo_boxes import NoScrollComboBox
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit

@@ -6,7 +6,7 @@ from loguru import logger
 from PyQt6.QtSql import QSqlQuery
 from PyQt6.QtWidgets import QInputDialog, QMainWindow, QTableWidgetItem
 
-from munientry.data.connections import close_db_connection, open_db_connection
+from munientry.data.connections import database_connection, MUNIENTRY_DB_CONN
 from munientry.mainmenu.reports.report_constants import COURTROOM_REPORT_HEADERS, COURTROOM_NAME
 from munientry.sqllite.sql_lite_queries import courtroom_event_report_query
 from munientry.widgets.table_widgets import TableReportWindow
@@ -52,7 +52,8 @@ def user_input_get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[s
         )
 
 
-def get_courtroom_report_data(query_string: str) -> list[tuple[str]]:
+@database_connection(MUNIENTRY_DB_CONN)
+def get_courtroom_report_data(query_string: str, db_connection: str) -> list[tuple[str]]:
     """Queries the MuniEntryDB and loads courtroom events for a specific date.
 
     Args:
@@ -61,8 +62,7 @@ def get_courtroom_report_data(query_string: str) -> list[tuple[str]]:
     Returns:
         list: A list of tuples containing the data queried from the MuniEntryDB.
     """
-    db_conn = open_db_connection('con_munientry_db')
-    query = QSqlQuery(db_conn)
+    query = QSqlQuery(db_connection)
     query.prepare(query_string)
     query.exec()
     data_list = []
@@ -75,7 +75,6 @@ def get_courtroom_report_data(query_string: str) -> list[tuple[str]]:
                 query.value('def_full_name'),
             ),
         )
-    close_db_connection(db_conn)
     return data_list
 
 

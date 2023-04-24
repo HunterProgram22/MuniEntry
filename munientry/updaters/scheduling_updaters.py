@@ -7,13 +7,11 @@ class SchedulingModelUpdater(BaseDialogUpdater):
 
     def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
-        self.update_model_with_case_information_frame_data()
-
-    def update_model_with_case_information_frame_data(self):
         self.set_case_number_and_date()
         self.set_party_information()
         self.set_defense_counsel_information()
         self.set_scheduling_dates()
+        self.set_interpreter()
 
     def set_case_number_and_date(self):
         self.model.case_number = self.dialog.case_number_lineEdit.text()
@@ -25,3 +23,10 @@ class SchedulingModelUpdater(BaseDialogUpdater):
 
     def set_defense_counsel_information(self) -> None:
         self.model.defense_counsel = self.dialog.defense_counsel_name_box.currentText()
+
+    def set_scheduling_dates(self):
+        raise NotImplementedError
+
+    def set_interpreter(self):
+        self.model.interpreter_required = self.dialog.interpreter_check_box.isChecked()
+        self.model.interpreter_language = self.dialog.language_box.text()

@@ -9,6 +9,7 @@ from loguru import logger
 
 from munientry.data.scheduling_data_loader import save_scheduling_data
 from munientry.digitalworkflow.workflow_checker import WorkflowCheck
+from munientry.models.template_types import TEMPLATE_DICT
 from munientry.settings.paths import (
     CRIMTRAFFIC_SAVE_PATH,
     CIVIL_SAVE_PATH,
@@ -30,6 +31,7 @@ class BaseEntryCreator(object):
 
     def __init__(self, dialog):
         self.dialog = dialog
+        self.template = TEMPLATE_DICT.get(self.dialog.dialog_name)
 
     def create_entry_process(self):
         if self.update_info_and_perform_checks() == 'Pass':
@@ -45,7 +47,7 @@ class BaseEntryCreator(object):
         This is overridden in the create_entry method in subpackages (Administrative, CrimTraffic,
         etc.) with the specific path for saving those entry types.
         """
-        doc = DocxTemplate(self.dialog.template.template_path)
+        doc = DocxTemplate(self.template.template_path)
         doc.render(self.case_data)
         try:
             doc.save(f'{self.save_path}{self.docname}')
@@ -59,7 +61,7 @@ class BaseEntryCreator(object):
         logger.info(f'Entry Created: {self.docname}')
         startfile(f'{self.save_path}{self.docname}')
 
-    def update_info_and_perform_checks(self):
+    def update_info_and_perform_checks(self) -> str:
         """This method performs an update then calls to the main_entry_dialog's InfoChecker class.
 
         The InfoChecker check_status will return as 'Fail' if any of the checks are hard stops -
@@ -70,7 +72,7 @@ class BaseEntryCreator(object):
         """
         self.dialog.update_entry_case_information()
         self.dialog.perform_info_checks()
-        if self.dialog.dialog_checks.check_status == 'Fail':
+        if self.dialog.dialog_checks.check_status is False:
             return 'Fail'
         self.dialog.update_entry_case_information()
         return 'Pass'
@@ -81,7 +83,7 @@ class BaseEntryCreator(object):
         Example: 21CRB1234_Crim_Traffic Judgment Entry.docx
         """
         case_number = self.dialog.entry_case_information.case_number
-        template_name = self.dialog.template.template_name
+        template_name = self.template.template_name
         return f'{case_number}_{template_name}.docx'
 
 
@@ -108,7 +110,7 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
         """Overrides BaseEntryCreator and Loads the proper template and creates the entry."""
         if self.dialog.workflow_status == 'ON':
             self.check_if_workflow_entry_needed()
-        doc = DocxTemplate(self.dialog.template.template_path)
+        doc = DocxTemplate(self.template.template_path)
         doc.render(self.case_data)
         try:
             doc.save(f'{self.save_path}{self.docname}')
@@ -132,7 +134,7 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
         """
         case_information = self.dialog.entry_case_information
         if WorkflowCheck(case_information).check_for_probation_workflow()[0] is True:
-            self.workflow_doc = DocxTemplate(self.dialog.template.template_path)
+            self.workflow_doc = DocxTemplate(self.template.template_path)
             self.workflow_path = WorkflowCheck(case_information).check_for_probation_workflow()[1]
 
     def create_workflow_entry_process(self):
@@ -159,7 +161,8 @@ class SchedulingEntryCreator(BaseEntryCreator):
 
         Saves the scheduling data to the MuniEntry_db.sqlite.
         """
-        doc = DocxTemplate(self.dialog.template.template_path)
+        template = self.set_template()
+        doc = DocxTemplate(template.template_path)
         doc.render(self.case_data)
         save_scheduling_data(self.case_data)
         try:
@@ -173,6 +176,9 @@ class SchedulingEntryCreator(BaseEntryCreator):
             self.dialog.message_box.exec()
         logger.info(f'Entry Created: {self.docname}')
         startfile(f'{self.save_path}{self.docname}')
+
+    def set_template(self):
+       return TEMPLATE_DICT.get(self.dialog.dialog_name)
 
 
 class ProbationEntryCreator(BaseEntryCreator):
@@ -193,7 +199,7 @@ class DrivingPrivilegesEntryCreator(BaseEntryCreator):
         """
         first_name = self.dialog.entry_case_information.defendant.first_name
         last_name = self.dialog.entry_case_information.defendant.last_name
-        template_name = self.dialog.template.template_name
+        template_name = self.template.template_name
         return f'{first_name}_{last_name}_{template_name}.docx'
 
 
@@ -206,8 +212,8 @@ class CivilEntryCreator(BaseEntryCreator):
 class AdminFiscalEntryCreator(BaseEntryCreator):
     """Entry Creator for Admin Fiscal entries."""
 
-    # save_path = FISCAL_SAVE_PATH
-    save_path = DW_ADMIN_JUDGE_ADMIN
+    save_path = FISCAL_SAVE_PATH
+    # save_path = DW_ADMIN_JUDGE_ADMIN
 
     def _set_document_name(self) -> str:
         """Overrides BaseEntryCreator set_document_name.
@@ -232,5 +238,5 @@ class JuryPaymentEntryCreator(BaseEntryCreator):
         """
         case_number = self.dialog.entry_case_information.case_number
         last_name = self.dialog.entry_case_information.defendant.last_name
-        template_name = self.dialog.template.template_name
+        template_name = self.template.template_name
         return f'{case_number}_{last_name}_{template_name}.docx'

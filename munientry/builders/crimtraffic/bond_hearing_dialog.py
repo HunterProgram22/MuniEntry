@@ -5,7 +5,7 @@ from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_special_bond_conditions_dialog import (
     AddSpecialBondConditionsDialog,
 )
-from munientry.checkers.bond_checkers import BondHearingDialogInfoChecker
+from munientry.checkers.crim_checks import BondChecks
 from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     BondHearingEntryCaseInformation,
@@ -82,12 +82,32 @@ class BondHearingDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
+class BondHearingCheckList(BondChecks):
+    """Check list for Bond Hearing Dialog."""
+
+    check_list = [
+        'check_defense_counsel',
+        'check_if_no_bond_modification_decision',
+        'check_if_no_bond_amount',
+        'check_if_improper_bond_type',
+        'check_additional_conditions_ordered',
+        'check_domestic_violence_bond_condition',
+    ]
+    conditions_list = [
+        ('admin_license_suspension', 'disposition', 'Admin License Suspension'),
+        ('vehicle_seizure', 'vehicle_make_model', 'Vehicle Seizure'),
+        ('no_contact', 'name', 'No Contact'),
+        ('custodial_supervision', 'supervisor', 'Custodial Supervision'),
+        ('other_conditions', 'terms', 'Other Conditions'),
+    ]
+
+
 class BondHearingDialog(crim.CrimTrafficDialogBuilder, Ui_BondHearingDialog):
     """Dialog builder class for 'Bond Modification / Revocation' Entry."""
 
     _case_information_model = BondHearingEntryCaseInformation
     _case_loader = CrimCmsNoChargeLoader
-    _info_checker = BondHearingDialogInfoChecker
+    _info_checker = BondHearingCheckList
     _model_updater = BondHearingDialogUpdater
     _signal_connector = BondHearingDialogSignalConnector
     _slots = BondHearingDialogSlotFunctions
@@ -115,7 +135,3 @@ class BondHearingDialog(crim.CrimTrafficDialogBuilder, Ui_BondHearingDialog):
             ('vehicle_seizure_checkBox', self.entry_case_information.vehicle_seizure),
         ]
         self.entry_case_information.bond_conditions = BondModificationConditions()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

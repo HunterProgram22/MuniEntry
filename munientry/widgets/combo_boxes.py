@@ -8,7 +8,7 @@ module will be imported as part of the python_view_file.py.
 from loguru import logger
 from PyQt6.QtWidgets import QComboBox, QMenu
 
-from munientry.data.connections import close_db_connection, open_db_connection
+from munientry.data.connections import database_connection, MUNIENTRY_DB_CONN
 from munientry.sqllite.sql_lite_functions import query_attorney_list
 from munientry.widgets.widget_settings import (
     CASE_LIST_BOX_MIN_SIZE,
@@ -97,14 +97,13 @@ class DefenseCounselComboBox(NoScrollComboBox):
         super().__init__(parent)
         self.setFocusPolicy(STRONG_FOCUS)
 
-    def load_attorneys(self):
-        db_connection = open_db_connection('con_munientry_db')
+    @database_connection(MUNIENTRY_DB_CONN)
+    def load_attorneys(self, db_connection: str):
         attorney_list = query_attorney_list(db_connection)
         attorney_count = len(attorney_list)
         logger.info(f'{attorney_count} attorneys loaded.')
         for attorney in attorney_list:
             self.addItem(attorney)
-        close_db_connection(db_connection)
         self.insertItem(0, '')
         self.setCurrentIndex(0)
 

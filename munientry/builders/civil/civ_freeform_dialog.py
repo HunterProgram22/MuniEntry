@@ -1,8 +1,7 @@
 """Builder module for the Civil Freeform Entry Dialog."""
-from loguru import logger
 
 from munientry.builders.civil import base_civil_builders as civil
-from munientry.checkers.base_checks import CivilFreeformDialogInfoChecker
+from munientry.checkers.civil_checks import CivilBaseChecks
 from munientry.loaders.cms_case_loaders import CivCmsLoader
 from munientry.models.case_information.civil_case_information import CivFreeformEntryCaseInformation
 from munientry.updaters.civil_updaters import CivFreeformDialogUpdater
@@ -21,18 +20,20 @@ class CivFreeformDialogSignalConnector(civil.CivilSignalConnector):
     """Signal Connector for Civil Freeform Entry Dialog."""
 
 
+class CivFreeformCheckList(CivilBaseChecks):
+    """Check list for Civil Freeform Entry."""
+
+    check_list = []
+
+
 class CivFreeformDialog(civil.CivilDialogBuilder, Ui_CivFreeformDialog):
     """Dialog builder class for Civil Freeform Entry."""
 
     _case_information_model = CivFreeformEntryCaseInformation
     _case_loader = CivCmsLoader
-    _info_checker = CivilFreeformDialogInfoChecker
+    _info_checker = CivFreeformCheckList
     _model_updater = CivFreeformDialogUpdater
     _signal_connector = CivFreeformDialogSignalConnector
     _slots = CivFreeformDialogSlotFunctions
     _view_modifier = CivFreeformDialogViewModifier
     dialog_name = 'Civil Freeform Entry'
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
