@@ -152,7 +152,7 @@ class MultipleCrimCaseData(CrimCaseData):
         """Query database for multiple cms_case numbers to load case data for the dialog."""
         for case_number in self.all_case_numbers:
             self.case_number = case_number
-            self.query_case_data(CRIM_DB_CONN)
+            self.query_case_data()
         self.case.case_number = ', '.join(self.all_case_numbers)
 
 
