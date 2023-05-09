@@ -425,6 +425,45 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Competency Determination:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QComboBox" name="comboBox">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Found Competent</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Found Competent - Not Insane</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Not Competent - Not Restorable</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Not Competent - Restorable</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Not Restored to Competency - Dismiss</string>
+                </property>
+               </item>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
