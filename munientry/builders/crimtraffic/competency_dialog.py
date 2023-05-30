@@ -40,6 +40,6 @@ class CompetencyDialog(crim.CrimTrafficDialogBuilder, Ui_CompetencyDialog):
     _signal_connector = CompetencyDialogSignalConnector
     _slots = CompetencyDialogSlotFunctions
     _view_modifier = CompetencyDialogViewModifier
-    dialog_name = 'Competency Entry'
+    dialog_name = 'Competency Evaluation Entry'
 
     # def additional_setup(self):
