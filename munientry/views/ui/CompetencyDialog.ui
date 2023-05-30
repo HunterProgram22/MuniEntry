@@ -184,7 +184,7 @@ font-weight: bold;</string>
            <height>685</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
+         <layout class="QGridLayout" name="gridLayout_2" rowstretch="2,2,0">
           <item row="0" column="0" colspan="2">
            <widget class="QFrame" name="case_name_Frame">
             <property name="sizePolicy">
@@ -405,6 +405,78 @@ font-weight: bold;</string>
              <number>2</number>
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0" colspan="2">
+              <widget class="QLabel" name="label_4">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>DECISION</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="final_pretrial_time_label">
+               <property name="text">
+                <string>Final Pretrial Time:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="NoScrollComboBox" name="hearing_location_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Courtroom A</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Courtroom B</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Courtroom C</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="NoScrollDateEdit" name="trial_date">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>Trial / Final Pretrial Location:</string>
+               </property>
+              </widget>
+             </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_5">
                <property name="text">
@@ -413,7 +485,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QComboBox" name="competency_determination_box">
+              <widget class="NoScrollComboBox" name="competency_determination_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -444,13 +516,6 @@ font-weight: bold;</string>
                </item>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="final_pretrial_date_label">
-               <property name="text">
-                <string>Final Pretrial Date:</string>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="1">
               <widget class="NoScrollDateEdit" name="final_pretrial_date">
                <property name="styleSheet">
@@ -459,13 +524,6 @@ background-color: rgb(255, 255, 255);</string>
                </property>
                <property name="calendarPopup">
                 <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="final_pretrial_time_label">
-               <property name="text">
-                <string>Final Pretrial Time:</string>
                </property>
               </widget>
              </item>
@@ -631,69 +689,59 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="1">
-              <widget class="NoScrollDateEdit" name="trial_date">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_7">
+             <item row="2" column="0">
+              <widget class="QLabel" name="final_pretrial_date_label">
                <property name="text">
-                <string>Trial / Final Pretrial Location:</string>
+                <string>Final Pretrial Date:</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="1">
-              <widget class="NoScrollComboBox" name="hearing_location_box">
+             <item row="6" column="0">
+              <widget class="QLabel" name="treatment_type_label">
+               <property name="text">
+                <string>Treatment Type:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="NoScrollComboBox" name="treatment_type_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>inpatient</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>Courtroom A</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Courtroom B</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Courtroom C</string>
+                 <string>outpatient</string>
                 </property>
                </item>
               </widget>
              </item>
-             <item row="0" column="0" colspan="2">
-              <widget class="QLabel" name="label_4">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_8">
                <property name="text">
-                <string>DECISION</string>
+                <string>Defendant in Jail:</string>
                </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="NoScrollComboBox" name="in_jail_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Yes</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>No</string>
+                </property>
+               </item>
               </widget>
              </item>
             </layout>

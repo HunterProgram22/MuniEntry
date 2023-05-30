@@ -140,4 +140,6 @@ class CompetencyDialogUpdater(BaseDialogUpdater):
         self.model.final_pretrial.date = self.dialog.final_pretrial_date.get_date_as_string()
         self.model.final_pretrial.time = self.dialog.final_pretrial_time_box.currentText()
         self.model.jury_trial.location = self.dialog.hearing_location_box.currentText()
+        self.model.treatment_type = self.dialog.treatment_type_box.currentText()
+        self.model.defendant_in_jail = self.dialog.in_jail_box.currentText()
 

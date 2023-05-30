@@ -60,5 +60,7 @@ class CrimSealingModel(CriminalCaseInformation):
 class CriminalCompetencyModel(CriminalCaseInformation):
 
     competency_decision: str = None
+    treatment_type: str = None
+    defendant_in_jail: str = None
     jury_trial: EventInfo = field(default_factory=lambda: EventInfo(time='8:15 AM'))
     final_pretrial: EventInfo = field(default_factory=EventInfo)
