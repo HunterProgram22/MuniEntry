@@ -129,6 +129,10 @@ class CompetencyDialogUpdater(BaseDialogUpdater):
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
+        self.update_entry_content()
 
     def update_case_information(self) -> CaseInformationUpdater:
         return CaseInformationUpdater(self.dialog)
+
+    def update_entry_content(self):
+        self.model.competency_decision = self.dialog.competency_determination_box.currentText()

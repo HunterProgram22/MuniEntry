@@ -53,3 +53,8 @@ class CrimSealingModel(CriminalCaseInformation):
     seal_decision: str = None
     state_response: str = None
     denial_reasons: str = None
+
+@dataclass
+class CriminalCompetencyModel(CriminalCaseInformation):
+
+    competency_decision: str = None

@@ -2,7 +2,7 @@
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.crim_checks import DefenseCounselChecks
 from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
-from munientry.models.case_information.criminal_case_information import CriminalCaseInformation
+from munientry.models.case_information.criminal_case_information import CriminalCompetencyModel
 from munientry.updaters.no_grid_case_updaters import CompetencyDialogUpdater
 from munientry.views.competency_dialog_ui import Ui_CompetencyDialog
 
@@ -33,7 +33,7 @@ class CompetencyCheckList(DefenseCounselChecks):
 
 class CompetencyDialog(crim.CrimTrafficDialogBuilder, Ui_CompetencyDialog):
     """Dialog builder class for Competency Entry."""
-    _case_information_model = CriminalCaseInformation
+    _case_information_model = CriminalCompetencyModel
     _case_loader = CrimCmsNoChargeLoader
     _info_checker = CompetencyCheckList
     _model_updater = CompetencyDialogUpdater
