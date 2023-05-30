@@ -124,7 +124,7 @@ class CriminalSealingDialogUpdater(BaseDialogUpdater):
 
 
 class CompetencyDialogUpdater(BaseDialogUpdater):
-    """Updater for Comptency Dialog - no charge grid."""
+    """Updater for Competency Dialog - no charge grid."""
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
@@ -136,3 +136,8 @@ class CompetencyDialogUpdater(BaseDialogUpdater):
 
     def update_entry_content(self):
         self.model.competency_decision = self.dialog.competency_determination_box.currentText()
+        self.model.jury_trial.date = self.dialog.trial_date.get_date_as_string()
+        self.model.final_pretrial.date = self.dialog.final_pretrial_date.get_date_as_string()
+        self.model.final_pretrial.time = self.dialog.final_pretrial_time_box.currentText()
+        self.model.jury_trial.location = self.dialog.hearing_location_box.currentText()
+
