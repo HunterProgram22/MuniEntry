@@ -511,3 +511,13 @@ def test_create_criminalsealing_entry(monkeypatch, main_window):
     enter_data(dialog.case_number_lineEdit, 'crimsealing_test')
     mouse_click(dialog.create_entry_Button)
     assert dialog.entry_case_information.case_number == '21TRC05611crimsealing_test'
+
+
+def test_create_competency_entry(monkeypatch, main_window):
+    """Tests the creation of a Competency entry."""
+    entry_dialog(monkeypatch, main_window)
+    mouse_click(main_window.CompetencyButton)
+    dialog = main_window.dialog
+    enter_data(dialog.case_number_lineEdit, 'competency_test')
+    mouse_click(dialog.create_entry_Button)
+    assert dialog.entry_case_information.case_number == '21TRC05611competency_test'
