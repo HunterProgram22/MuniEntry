@@ -121,3 +121,25 @@ class CriminalSealingDialogUpdater(BaseDialogUpdater):
         self.model.fbi_number = self.dialog.fbi_number_line_edit.text()
         self.model.offense_seal_list = self.dialog.offense_line_edit.text()
         self.model.offense_date = self.dialog.offense_date.get_date_as_string()
+
+
+class CompetencyDialogUpdater(BaseDialogUpdater):
+    """Updater for Competency Dialog - no charge grid."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.update_case_information()
+        self.update_entry_content()
+
+    def update_case_information(self) -> CaseInformationUpdater:
+        return CaseInformationUpdater(self.dialog)
+
+    def update_entry_content(self):
+        self.model.competency_decision = self.dialog.competency_determination_box.currentText()
+        self.model.jury_trial.date = self.dialog.trial_date.get_date_as_string()
+        self.model.final_pretrial.date = self.dialog.final_pretrial_date.get_date_as_string()
+        self.model.final_pretrial.time = self.dialog.final_pretrial_time_box.currentText()
+        self.model.jury_trial.location = self.dialog.hearing_location_box.currentText()
+        self.model.treatment_type = self.dialog.treatment_type_box.currentText()
+        self.model.defendant_in_jail = self.dialog.in_jail_box.currentText()
+

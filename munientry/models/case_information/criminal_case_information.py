@@ -3,6 +3,7 @@ from loguru import logger
 from dataclasses import asdict, dataclass, field
 
 from munientry.models.party_types import Defendant
+from munientry.models.scheduling_information import EventInfo
 
 
 @dataclass
@@ -53,3 +54,13 @@ class CrimSealingModel(CriminalCaseInformation):
     seal_decision: str = None
     state_response: str = None
     denial_reasons: str = None
+
+
+@dataclass
+class CriminalCompetencyModel(CriminalCaseInformation):
+
+    competency_decision: str = None
+    treatment_type: str = None
+    defendant_in_jail: str = None
+    jury_trial: EventInfo = field(default_factory=lambda: EventInfo(time='8:15 AM'))
+    final_pretrial: EventInfo = field(default_factory=EventInfo)
