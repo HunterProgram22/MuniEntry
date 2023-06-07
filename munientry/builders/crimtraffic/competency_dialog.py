@@ -17,8 +17,19 @@ class CompetencyDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     def show_hide_condition_boxes(self):
         if self.dialog.competency_determination_box.currentText() == 'Found Competent':
             self.dialog.final_pretrial_date.show()
+            self.dialog.final_pretrial_date_label.show()
+            self.dialog.final_pretrial_date_time_box.show()
+            self.dialog.final_pretrial_date_time_label.show()
+            self.dialog.treatment_type_box.show()
+            self.dialog.treatment_type_label.show()
+
         else:
             self.dialog.final_pretrial_date.hide()
+            self.dialog.final_pretrial_date_label.hide()
+            self.dialog.final_pretrial_time_box.hide()
+            self.dialog.final_pretrial_time_label.hide()
+            self.dialog.treatment_type_box.hide()
+            self.dialog.treatment_type_label.hide()
 
 
 class CompetencyDialogSignalConnector(crim.CrimTrafficSignalConnector):
