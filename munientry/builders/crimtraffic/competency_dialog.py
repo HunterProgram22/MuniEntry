@@ -14,6 +14,12 @@ class CompetencyDialogViewModifier(crim.CrimTrafficViewModifier):
 class CompetencyDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Competency Entry Dialog."""
 
+    def show_hide_condition_boxes(self):
+        if self.dialog.competency_determination_box.currentText() == 'Found Competent':
+            self.dialog.final_pretrial_date.show()
+        else:
+            self.dialog.final_pretrial_date.hide()
+
 
 class CompetencyDialogSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal Connector for Competency Entry Dialog."""
@@ -21,6 +27,12 @@ class CompetencyDialogSignalConnector(crim.CrimTrafficSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
+        self.connect_dialog_specific_signals()
+
+    def connect_dialog_specific_signals(self):
+        self.dialog.competency_determination_box.currentTextChanged.connect(
+            self.dialog.functions.show_hide_condition_boxes,
+        )
 
 
 class CompetencyCheckList(DefenseCounselChecks):
