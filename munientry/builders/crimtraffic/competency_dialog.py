@@ -95,3 +95,7 @@ class CompetencyDialog(crim.CrimTrafficDialogBuilder, Ui_CompetencyDialog):
 
     def additional_setup(self):
         self.functions.show_hide_condition_boxes()
+        self.label_24.hide()
+        self.defense_counsel_name_box.hide()
+        self.defense_counsel_type_box.hide()
+        self.defense_counsel_waived_checkBox.hide()
