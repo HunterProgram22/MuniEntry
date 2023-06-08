@@ -471,7 +471,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="5" column="0">
-              <widget class="QLabel" name="label_7">
+              <widget class="QLabel" name="hearing_location_label">
                <property name="text">
                 <string>Trial / Final Pretrial Location:</string>
                </property>
@@ -683,7 +683,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="4" column="0">
-              <widget class="QLabel" name="label_6">
+              <widget class="QLabel" name="trial_date_label">
                <property name="text">
                 <string>Jury Trial Date:</string>
                </property>
@@ -721,7 +721,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="7" column="0">
-              <widget class="QLabel" name="label_8">
+              <widget class="QLabel" name="in_jail_label">
                <property name="text">
                 <string>Defendant in Jail:</string>
                </property>
