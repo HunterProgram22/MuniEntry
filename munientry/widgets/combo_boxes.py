@@ -207,6 +207,9 @@ class FindingComboBox(NoScrollComboBox):
     @warning_check('OVI Test','OVI mins?')
     def ovi_one_mins(self, msg_response: int = None) -> bool:
         """Checks if the offense is a 1st OVI and Guilty and asks user if they want to set mins."""
+        logger.debug(msg_response)
         if msg_response is None:
             return False
+        elif msg_response == 16384:
+            logger.debug('Yes mins')
         return True
