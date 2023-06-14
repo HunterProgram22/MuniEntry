@@ -206,7 +206,8 @@ class FindingComboBox(NoScrollComboBox):
     @warning_check('OVI Test','OVI mins?')
     def ovi_one_mins(self, msg_response: int = None) -> bool:
         logger.debug('OVI mins func')
-        if msg_response is not None:
+        logger.debug(msg_response)
+        if msg_response is None:
             logger.debug(msg_response)
             return False
         return True
