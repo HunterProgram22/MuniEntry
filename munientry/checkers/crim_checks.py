@@ -3,6 +3,7 @@
 from typing import Any, Optional
 
 from PyQt6.QtWidgets import QComboBox, QLabel
+from loguru import logger
 
 from munientry.checkers import check_messages as cm
 from munientry.checkers.base_checks import (
@@ -218,9 +219,8 @@ class ChargeGridChecks(InsuranceChecks):
             col += 1
         return True, []
 
-    # @required_check(cm.MISSING_FINDING_TITLE, cm.MISSING_FINDING_MSG)
-    @warning_check('OVI TEST', 'There appears to be an OVI-1 Guilty, do you want to set the mins?')
-    def check_if_ovi_one_guilty(self) -> tuple[bool, list[Optional[str]]]:
+    @warning_check(cm.OVI_ONE_TITLE, cm.OVI_ONE_MSG)
+    def check_if_ovi_one_guilty(self, msg_response: int = None) -> bool:
         """Checks the charges of a case and if it finds an OVI-1 with a guilty find prompts user.
 
         The column (col) starts at 1 to skip the label column (col 0) of the charge grid.
@@ -235,11 +235,12 @@ class ChargeGridChecks(InsuranceChecks):
             if finding == 'Guilty':
                 offense = self.get_widget_text(self.grid.row_offense, col)
                 if offense == 'OVI Alcohol / Drugs 1st':
-                    return False, [offense]
+                    logger.debug('offense matches')
+                    return False
                 col += 1
             else:
                 col += 1
-        return True, []
+        return True
 
 
 class JailTimeChecks(ChargeGridChecks):
