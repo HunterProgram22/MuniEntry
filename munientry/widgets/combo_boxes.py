@@ -212,10 +212,13 @@ class FindingComboBox(NoScrollComboBox):
         if msg_response is None:
             return False
         elif msg_response == 16384:
-            self.set_jail_days()
+            self.set_ovi_one_mins()
         return True
 
-    def set_jail_days(self):
+    def set_ovi_one_mins(self):
+        dialog = self.window()
+        dialog.community_control_checkBox.setChecked(True)
+        dialog.license_suspension_checkBox.setChecked(True)
         self.parent_layout.itemAtPosition(self.parent_layout.row_jail_days, self.column).widget().setText('180')
         self.parent_layout.itemAtPosition(self.parent_layout.row_jail_days_suspended, self.column).widget().setText('177')
         self.parent_layout.itemAtPosition(self.parent_layout.row_fine, self.column).widget().setText('375')

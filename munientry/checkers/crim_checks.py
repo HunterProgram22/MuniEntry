@@ -60,6 +60,8 @@ class CrimBaseChecks(BaseChecks):
 
         The conditions_list for each dialog provides a tuple of (condition, the primary condition
         that is checked, the formal name of the Condition).
+
+        TODO: This is probably something that could be simplified.
         """
         for condition in self.conditions_list:
             condition_model, primary_condition, condition_name = self._get_condition_info(condition)
