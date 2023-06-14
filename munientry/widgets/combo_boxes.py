@@ -173,6 +173,7 @@ class FindingComboBox(NoScrollComboBox):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.set_up_widget()
+        self.currentTextChanged.connect(self.log_finding)
 
     def set_up_widget(self):
         self.setMinimumSize(COMBO_BOX_MIN_SIZE)
@@ -190,3 +191,6 @@ class FindingComboBox(NoScrollComboBox):
         self.addItem('Lesser Included')
         self.addItem('Guilty - Allied Offense')
         self.addItem('Not Guilty - Allied Offense')
+
+    def log_finding(self, text):
+        logger.debug(text)
