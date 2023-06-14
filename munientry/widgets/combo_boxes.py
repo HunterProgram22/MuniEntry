@@ -9,6 +9,7 @@ from loguru import logger
 from PyQt6.QtWidgets import QComboBox, QMenu, QGridLayout
 
 from munientry.checkers.base_checks import warning_check
+from munientry.checkers import check_messages as cm
 from munientry.data.connections import database_connection, MUNIENTRY_DB_CONN
 from munientry.sqllite.sql_lite_functions import query_attorney_list
 from munientry.widgets.widget_settings import (
@@ -204,12 +205,18 @@ class FindingComboBox(NoScrollComboBox):
                 self.ovi_one_mins()
                 logger.info('OVI Mins message')
 
-    @warning_check('OVI Test','OVI mins?')
+    @warning_check(cm.OVI_ONE_TITLE, cm.OVI_ONE_MSG)
     def ovi_one_mins(self, msg_response: int = None) -> bool:
         """Checks if the offense is a 1st OVI and Guilty and asks user if they want to set mins."""
         logger.debug(msg_response)
         if msg_response is None:
             return False
         elif msg_response == 16384:
-            logger.debug('Yes mins')
+            self.set_jail_days()
         return True
+
+    def set_jail_days(self):
+        self.parent_layout.itemAtPosition(self.parent_layout.row_jail_days, self.column).widget().setText('180')
+        self.parent_layout.itemAtPosition(self.parent_layout.row_jail_days_suspended, self.column).widget().setText('177')
+        self.parent_layout.itemAtPosition(self.parent_layout.row_fine, self.column).widget().setText('375')
+        self.parent_layout.itemAtPosition(self.parent_layout.row_fine_suspended, self.column).widget().setText('0')
