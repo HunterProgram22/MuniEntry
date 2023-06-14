@@ -143,5 +143,5 @@ Please choose whether to apply Jail Time Credit to Sentence or Costs and Fines."
 OVI_ONE_TITLE = 'OVI 1st - Set Minimums?'
 OVI_ONE_MSG = """You have found the defendant guilty of a 1st OVI. Do you want to set the minimums?
 \n\nFine: $375\nFine Suspended: $0\nJail Days: 180\nJail Days Suspended: 177\nDIP Option: Yes
-\nALS Suspension: One Year
+\nCourt Suspension: One Year and Terminate ALS
 """
