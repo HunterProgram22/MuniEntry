@@ -124,7 +124,7 @@ class ChargeGridBuilder(BaseChargeGrid):
         self.addWidget(cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column)
 
     def add_finding_box_to_grid(self, column: int) -> None:
-        self.addWidget(munientry.widgets.combo_boxes.FindingComboBox(), self.row_finding, column)
+        self.addWidget(munientry.widgets.combo_boxes.FindingComboBox(column, self), self.row_finding, column)
 
     def add_allied_checkbox_to_grid(self, column: int, dialog) -> None:
         self.addWidget(cw.AlliedCheckbox(column, dialog), self.row_allied_box, column)

@@ -6,8 +6,9 @@ when the file is converted using 'pyuic6 -o {python_view_file.py} {qt_ui_file.ui
 module will be imported as part of the python_view_file.py.
 """
 from loguru import logger
-from PyQt6.QtWidgets import QComboBox, QMenu
+from PyQt6.QtWidgets import QComboBox, QMenu, QGridLayout
 
+from munientry.checkers.base_checks import warning_check
 from munientry.data.connections import database_connection, MUNIENTRY_DB_CONN
 from munientry.sqllite.sql_lite_functions import query_attorney_list
 from munientry.widgets.widget_settings import (
@@ -170,10 +171,12 @@ class PleaComboBox(NoScrollComboBox):
 class FindingComboBox(NoScrollComboBox):
     """Custom ComboBox used for charges grid finding boxes."""
 
-    def __init__(self, parent=None):
-        super().__init__(parent)
+    def __init__(self, column, parent=None):
+        super().__init__()
+        self.column = column
+        self.parent_layout = parent
         self.set_up_widget()
-        self.currentTextChanged.connect(self.log_finding)
+        self.currentTextChanged.connect(self.check_charge)
 
     def set_up_widget(self):
         self.setMinimumSize(COMBO_BOX_MIN_SIZE)
@@ -192,5 +195,18 @@ class FindingComboBox(NoScrollComboBox):
         self.addItem('Guilty - Allied Offense')
         self.addItem('Not Guilty - Allied Offense')
 
-    def log_finding(self, text):
-        logger.debug(text)
+    def check_charge(self, text: str):
+        if text == 'Guilty':
+            offense_box = self.parent_layout.itemAtPosition(self.parent_layout.row_offense, self.column).widget()
+            logger.debug(offense_box.text())
+            if offense_box.text() == 'OVI Alcohol / Drugs 1st':
+                logger.debug('OVI')
+                self.ovi_one_mins()
+
+    @warning_check('OVI Test','OVI mins?')
+    def ovi_one_mins(self, msg_response: int = None) -> bool:
+        logger.debug('OVI mins func')
+        if msg_response is not None:
+            logger.debug(msg_response)
+            return False
+        return True
