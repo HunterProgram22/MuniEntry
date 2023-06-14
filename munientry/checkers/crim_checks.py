@@ -219,29 +219,6 @@ class ChargeGridChecks(InsuranceChecks):
             col += 1
         return True, []
 
-    @warning_check(cm.OVI_ONE_TITLE, cm.OVI_ONE_MSG)
-    def check_if_ovi_one_guilty(self, msg_response: int = None) -> bool:
-        """Checks the charges of a case and if it finds an OVI-1 with a guilty find prompts user.
-
-        The column (col) starts at 1 to skip the label column (col 0) of the charge grid.
-        """
-        col = 1
-        while col < self.dialog.charges_gridLayout.columnCount():
-            if self.should_skip_charge(col):
-                col += 1
-                continue
-            finding = self.get_widget_text(self.grid.row_finding, col)
-
-            if finding == 'Guilty':
-                offense = self.get_widget_text(self.grid.row_offense, col)
-                if offense == 'OVI Alcohol / Drugs 1st':
-                    logger.debug('offense matches')
-                    return False
-                col += 1
-            else:
-                col += 1
-        return True
-
 
 class JailTimeChecks(ChargeGridChecks):
     """Class with checks for the Jail Time Credit Box on Dialogs with jail options."""
