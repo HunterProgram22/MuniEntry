@@ -139,6 +139,3 @@ APPLY_JTC_TITLE = 'Apply Jail Time Credit'
 APPLY_JTC_MSG = """The Days in Jail has been provided, but the Apply to JTC field is blank.
 
 Please choose whether to apply Jail Time Credit to Sentence or Costs and Fines."""
-
-OVI_ONE_TITLE = 'OVI 1st Minimums'
-OVI_ONE_MSG = 'You have set a finding of guilty for an OVI 1st. Do you want to set the minimums?'

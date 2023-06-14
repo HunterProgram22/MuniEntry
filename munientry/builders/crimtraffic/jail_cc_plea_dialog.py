@@ -86,7 +86,6 @@ class JailCCPleaCheckList(JailTimeChecks):
         'check_defense_counsel',
         'check_if_no_plea_entered',
         'check_if_no_finding_entered',
-        'check_if_ovi_one_guilty',
         'check_insurance',
         'check_additional_conditions_ordered',
         'check_if_jail_suspended_more_than_imposed',
