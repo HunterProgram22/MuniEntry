@@ -197,17 +197,16 @@ class FindingComboBox(NoScrollComboBox):
 
     def check_charge(self, text: str):
         if text == 'Guilty':
-            offense_box = self.parent_layout.itemAtPosition(self.parent_layout.row_offense, self.column).widget()
-            logger.debug(offense_box.text())
+            offense_box = self.parent_layout.itemAtPosition(
+                self.parent_layout.row_offense, self.column,
+            ).widget()
             if offense_box.text() == 'OVI Alcohol / Drugs 1st':
-                logger.debug('OVI')
                 self.ovi_one_mins()
+                logger.info('OVI Mins message')
 
     @warning_check('OVI Test','OVI mins?')
     def ovi_one_mins(self, msg_response: int = None) -> bool:
-        logger.debug('OVI mins func')
-        logger.debug(msg_response)
+        """Checks if the offense is a 1st OVI and Guilty and asks user if they want to set mins."""
         if msg_response is None:
-            logger.debug(msg_response)
             return False
         return True
