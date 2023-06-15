@@ -208,7 +208,6 @@ class FindingComboBox(NoScrollComboBox):
     @warning_check(cm.OVI_ONE_TITLE, cm.OVI_ONE_MSG)
     def ovi_one_mins(self, msg_response: int = None) -> bool:
         """Checks if the offense is a 1st OVI and Guilty and asks user if they want to set mins."""
-        logger.debug(msg_response)
         if msg_response is None:
             return False
         elif msg_response == 16384:
@@ -231,3 +230,10 @@ class FindingComboBox(NoScrollComboBox):
         self.parent_layout.itemAtPosition(self.parent_layout.row_jail_days_suspended, self.column).widget().setText('177')
         self.parent_layout.itemAtPosition(self.parent_layout.row_fine, self.column).widget().setText('375')
         self.parent_layout.itemAtPosition(self.parent_layout.row_fine_suspended, self.column).widget().setText('0')
+        col = self.column + 1
+        while col <= self.parent_layout.columnCount():
+            if self.parent_layout.itemAtPosition(self.parent_layout.row_dismissed_box, col) is None:
+                col +=1
+            else:
+                self.parent_layout.itemAtPosition(self.parent_layout.row_dismissed_box, col).widget().setChecked(True)
+                col +=1

@@ -39,7 +39,7 @@ def jail_warning_check(title: str, message: str) -> Callable:
     """Wraps a check function and displays a warning message if the check fails.
 
     The Jail Warning Box allows a user to modify the data by responding with Yes or No and based on
-    the response the data is updated and teh check is run again.
+    the response the data is updated and the check is run again.
 
     Args:
         title (str): The title of the warning message box.
