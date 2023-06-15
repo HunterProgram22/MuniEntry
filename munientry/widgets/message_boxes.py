@@ -132,3 +132,23 @@ class JailWarningBox(QMessageBox):
             | QMessageBox.StandardButton.No
             | QMessageBox.StandardButton.Cancel,
         )
+
+
+class MinimumsQuestionBox(QMessageBox):
+
+    def __init__(self, message, title='Set Minimums', parent=None):
+        super().__init__(parent)
+        self.message = message
+        self.title = title
+        self.set_up_widget()
+        logger.choice(self.title)
+
+    def set_up_widget(self):
+        self.setWindowIcon(QtGui.QIcon(GAVEL_PATH))
+        self.setIcon(QMessageBox.Icon.Warning)
+        self.setWindowTitle(self.title)
+        self.setText(self.message)
+        self.min_dismiss_button = self.addButton('Yes and Dismiss Other Charges', QMessageBox.ActionRole)
+        self.min_no_dismiss_button = self.addButton('Yes and Do Not Dismiss Other Charges', QMessageBox.ActionRole)
+        self.no_mins= self.addButton('No', QMessageBox.ActionRole)
+
