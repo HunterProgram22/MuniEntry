@@ -217,8 +217,16 @@ class FindingComboBox(NoScrollComboBox):
 
     def set_ovi_one_mins(self):
         dialog = self.window()
+        model = dialog.entry_case_information
         dialog.community_control_checkBox.setChecked(True)
         dialog.license_suspension_checkBox.setChecked(True)
+        model.community_control.type_of_control = 'basic'
+        model.community_control.term_of_control = 'One Year'
+        model.community_control.driver_intervention_program = True
+        model.license_suspension.license_type = 'driving'
+        model.license_suspension.suspension_term = '12 months'
+        model.license_suspension.als_terminated = True
+
         self.parent_layout.itemAtPosition(self.parent_layout.row_jail_days, self.column).widget().setText('180')
         self.parent_layout.itemAtPosition(self.parent_layout.row_jail_days_suspended, self.column).widget().setText('177')
         self.parent_layout.itemAtPosition(self.parent_layout.row_fine, self.column).widget().setText('375')
