@@ -8,6 +8,7 @@ module will be imported as part of the python_view_file.py.
 from loguru import logger
 from PyQt6 import QtGui
 from PyQt6.QtWidgets import QMessageBox, QPushButton
+from PyQt6.QtCore import Qt, pyqtSignal
 
 from munientry.settings.paths import GAVEL_PATH
 
@@ -148,7 +149,8 @@ class MinimumsQuestionBox(QMessageBox):
         self.setIcon(QMessageBox.Icon.Warning)
         self.setWindowTitle(self.title)
         self.setText(self.message)
-        self.min_dismiss_button = self.addButton('Yes and Dismiss Other Charges', QMessageBox.ButtonRole.ActionRole)
-        self.min_no_dismiss_button = self.addButton('Yes and Do Not Dismiss Other Charges', QMessageBox.ButtonRole.ActionRole)
-        self.no_mins = self.addButton('No', QMessageBox.ButtonRole.ActionRole)
+
+        self.min_dismiss_button = self.addButton('Yes - Dismiss Other Charges', QMessageBox.ButtonRole.ActionRole)
+        self.min_no_dismiss_button = self.addButton('Yes - Do Not Dismiss Other Charges', QMessageBox.ButtonRole.ActionRole)
+        self.no_mins_button = self.addButton('No', QMessageBox.ButtonRole.ActionRole)
 
