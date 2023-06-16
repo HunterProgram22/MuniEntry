@@ -8,7 +8,7 @@ module will be imported as part of the python_view_file.py.
 from loguru import logger
 from PyQt6.QtWidgets import QComboBox, QMenu, QGridLayout
 
-from munientry.checkers.base_checks import warning_check
+from munientry.checkers.base_checks import warning_check, min_charge_check
 from munientry.checkers import check_messages as cm
 from munientry.data.connections import database_connection, MUNIENTRY_DB_CONN
 from munientry.sqllite.sql_lite_functions import query_attorney_list
@@ -205,7 +205,7 @@ class FindingComboBox(NoScrollComboBox):
                 self.ovi_one_mins()
                 logger.info('OVI Mins message')
 
-    @warning_check(cm.OVI_ONE_TITLE, cm.OVI_ONE_MSG)
+    @min_charge_check(cm.OVI_ONE_TITLE, cm.OVI_ONE_MSG)
     def ovi_one_mins(self, msg_response: int = None) -> bool:
         """Checks if the offense is a 1st OVI and Guilty and asks user if they want to set mins."""
         if msg_response is None:

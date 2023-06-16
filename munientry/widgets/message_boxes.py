@@ -148,7 +148,7 @@ class MinimumsQuestionBox(QMessageBox):
         self.setIcon(QMessageBox.Icon.Warning)
         self.setWindowTitle(self.title)
         self.setText(self.message)
-        self.min_dismiss_button = self.addButton('Yes and Dismiss Other Charges', QMessageBox.ActionRole)
-        self.min_no_dismiss_button = self.addButton('Yes and Do Not Dismiss Other Charges', QMessageBox.ActionRole)
-        self.no_mins= self.addButton('No', QMessageBox.ActionRole)
+        self.min_dismiss_button = self.addButton('Yes and Dismiss Other Charges', QMessageBox.ButtonRole.ActionRole)
+        self.min_no_dismiss_button = self.addButton('Yes and Do Not Dismiss Other Charges', QMessageBox.ButtonRole.ActionRole)
+        self.no_mins = self.addButton('No', QMessageBox.ButtonRole.ActionRole)
 
