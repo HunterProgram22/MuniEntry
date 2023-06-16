@@ -5,6 +5,11 @@ from PyQt6.QtWidgets import QMessageBox, QPushButton
 
 from munientry.settings.paths import GAVEL_PATH
 
+# Constants used for import of message boxes - do not delete
+PASS = 'Pass'
+FAIL = 'Fail'
+BLANK = ''
+
 
 class BaseBox(QMessageBox):
     """A Custom QMessageBox base class for interacting with the user."""
@@ -66,9 +71,9 @@ class TwoChoiceQuestionBox(BaseBox):
     """
 
     def __init__(self, message, yes_choice, no_choice, title='Information Required', parent=None):
-        super().__init__(parent)
         self.yes_choice = yes_choice
-        self.no_choie = no_choice
+        self.no_choice = no_choice
+        super().__init__(message, title, parent)
 
     def set_buttons(self):
         self.addButton(QPushButton(self.yes_choice), QMessageBox.ButtonRole.YesRole)  # YesRole returns 5
