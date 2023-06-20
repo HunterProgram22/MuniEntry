@@ -132,8 +132,9 @@ class CrimCaseData(object):
         offense = clean_offense_name(query_data.value('Charge'))
         statute = clean_statute_name(query_data.value('Statute'))
         degree = query_data.value('DegreeCode')
+        violation_date = query_data.value('ViolationDate')
         moving_bool = query_data.value('MovingBool')
-        charge = (offense, statute, degree, moving_bool)
+        charge = (offense, statute, degree, moving_bool, violation_date)
         self.case.charges_list.append(charge)
 
     def load_case(self) -> CriminalCmsCaseInformation:

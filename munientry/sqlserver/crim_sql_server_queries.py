@@ -14,7 +14,7 @@ def general_case_search_query(case_number: str) -> str:
         cp.FirstName AS DefFirstName,
         cp.LastName AS DefLastName,
         vd.IsMoving AS MovingBool,
-        sc.ViolationDate,
+        sc.ViolationDate AS ViolationDate,
         vd.EndDate,
         cm.InsuranceStatus AS FraInFile,
         CONCAT(att.FirstName, ' ', att.LastName) AS DefenseCounsel,

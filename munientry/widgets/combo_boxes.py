@@ -208,7 +208,6 @@ class FindingComboBox(NoScrollComboBox):
     @min_charge_check(cm.OVI_ONE_TITLE, cm.OVI_ONE_MSG)
     def ovi_one_mins(self, msg_response: int = None) -> bool:
         """Checks if the offense is a 1st OVI and Guilty and asks user if they want to set mins."""
-        logger.debug(msg_response)
         if msg_response is None:
             return False
         elif msg_response == 0:
@@ -227,6 +226,9 @@ class FindingComboBox(NoScrollComboBox):
         model.community_control.term_of_control = 'One Year'
         model.community_control.driver_intervention_program = True
         model.license_suspension.license_type = 'driving'
+        logger.debug(model.charges_list)
+        model.license_suspension.suspended_date = self.get_violation_date(model)
+        logger.debug(model.license_suspension.suspended_date)
         model.license_suspension.suspension_term = '12 months'
         model.license_suspension.als_terminated = True
 
@@ -243,3 +245,11 @@ class FindingComboBox(NoScrollComboBox):
             else:
                 self.parent_layout.itemAtPosition(self.parent_layout.row_dismissed_box, col).widget().setChecked(True)
                 col +=1
+
+    def get_violation_date(self, model):
+        for charge in model.charges_list:
+            if charge.offense == 'OVI Alcohol / Drugs 1st':
+                logger.debug(charge.violation_date)
+                date_formatted = charge.violation_date[5:] + '-' + charge.violation_date[:4]
+                logger.debug(date_formatted)
+                return date_formatted

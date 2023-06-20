@@ -10,6 +10,7 @@ class CriminalCharge:
     offense: str = None
     statute: str = None
     degree: str = None
+    violation_date: str = None
     plea: str = None
     type: str = None
     finding: str = None
