@@ -195,13 +195,18 @@ class FindingComboBox(ChargeGridComboBox):
                 self.charge_grid.row_offense, self.column,
             ).widget()
             if offense_box.text() == 'OVI Alcohol / Drugs 1st':
-                bool_response, msg_response = self.case_information.ovi_one_mins()
+                try:
+                    bool_response, msg_response = self.case_information.ovi_one_mins()
+                except AttributeError as error:
+                    logger.warning(error)
+                    return None
                 logger.info('OVI Mins message')
                 if msg_response == 1:
                     self.update_grid()
                 elif msg_response == 0:
                     self.update_grid()
                     self.charge_grid.dismiss_other_charges(self.column)
+
 
     def update_grid(self) -> None:
         self.dialog.community_control_checkBox.setChecked(True)
