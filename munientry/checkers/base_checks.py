@@ -6,7 +6,8 @@ from loguru import logger
 from PyQt6.QtCore import QDate
 
 from munientry.checkers.check_messages import ADD_CONDITIONS_MSG, ADD_CONDITIONS_TITLE
-from munientry.widgets.message_boxes import JailWarningBox, RequiredBox, WarningBox
+from munientry.widgets.message_boxes import JailWarningBox, RequiredBox, WarningBox, \
+    MinimumsQuestionBox
 
 
 def warning_check(title: str, message: str) -> Callable:
@@ -35,11 +36,42 @@ def warning_check(title: str, message: str) -> Callable:
     return decorator
 
 
+def min_charge_check(title: str, message: str) -> Callable:
+    """Wraps a check function and displays a warning message if the check fails.
+
+    Args:
+        title (str): The title of the warning message box.
+        message (str): The message to display in the warning message box.
+
+    Returns:
+        Callable: A decorator that wraps a check function.
+    """
+    def decorator(func: Callable) -> Callable:
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            func_result = func(*args, **kwargs)
+            if isinstance(func_result, tuple):
+                status, msg_insert = func_result
+            else:
+                status = func_result
+                msg_insert = None
+            if status is False:
+                if msg_insert is not None:
+                    formatted_msg = message.format(*msg_insert)
+                else:
+                    formatted_msg = message
+                msg_response = MinimumsQuestionBox(formatted_msg, title).exec()
+                kwargs['msg_response'] = msg_response
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+
 def jail_warning_check(title: str, message: str) -> Callable:
     """Wraps a check function and displays a warning message if the check fails.
 
     The Jail Warning Box allows a user to modify the data by responding with Yes or No and based on
-    the response the data is updated and teh check is run again.
+    the response the data is updated and the check is run again.
 
     Args:
         title (str): The title of the warning message box.

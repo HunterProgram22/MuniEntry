@@ -139,3 +139,11 @@ APPLY_JTC_TITLE = 'Apply Jail Time Credit'
 APPLY_JTC_MSG = """The Days in Jail has been provided, but the Apply to JTC field is blank.
 
 Please choose whether to apply Jail Time Credit to Sentence or Costs and Fines."""
+
+OVI_ONE_TITLE = 'OVI 1st - Set Minimums?'
+OVI_ONE_MSG = """You have found the defendant guilty of a 1st OVI. Do you want to set the minimums?
+\nFine: $375\nFine Suspended: $0
+\nJail Days: 180\nJail Days Suspended: 177
+\nCommunity Control: Basic Supervision for 1 year\nDIP Option: Yes
+\nCourt Suspension: One Year from {0}\nTerminate ALS.
+"""

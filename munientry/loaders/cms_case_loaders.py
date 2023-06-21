@@ -140,7 +140,7 @@ class CmsChargeLoader(CrimCmsNoChargeLoader):
         """Loads charges from the sql database objec (self.cms_case) into the data model.
 
         The charge from self.cms_case.charges_list is a tuple in the format:
-        (Offense, Statute, Degree, Offense Type [Moving/Non-Moving/Criminal]).
+        (Offense, Statute, Degree, Offense Type [Moving/Non-Moving/Criminal], Violation Date).
         """
         for charge in self.cms_case.charges_list:
             self.criminal_charge = CriminalCharge()
@@ -148,6 +148,7 @@ class CmsChargeLoader(CrimCmsNoChargeLoader):
             self.criminal_charge.statute = charge[1]
             self.criminal_charge.degree = charge[2]
             self.criminal_charge.type = self.set_offense_type(charge[3])
+            self.criminal_charge.violation_date = charge[4]
             self.dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
             self.add_charge_to_grid()
         self.dialog.setFocus()

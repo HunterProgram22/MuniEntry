@@ -5,9 +5,14 @@ widgets that is used. The header file for this module must then be added in QtDe
 when the file is converted using 'pyuic6 -o {python_view_file.py} {qt_ui_file.ui}' this
 module will be imported as part of the python_view_file.py.
 """
-from loguru import logger
-from PyQt6.QtWidgets import QComboBox, QMenu
+# import calendar
 
+from loguru import logger
+from PyQt6.QtWidgets import QComboBox, QMenu, QGridLayout
+from PyQt6.QtCore import QDate
+
+from munientry.checkers.base_checks import warning_check, min_charge_check
+from munientry.checkers import check_messages as cm
 from munientry.data.connections import database_connection, MUNIENTRY_DB_CONN
 from munientry.sqllite.sql_lite_functions import query_attorney_list
 from munientry.widgets.widget_settings import (
@@ -170,9 +175,14 @@ class PleaComboBox(NoScrollComboBox):
 class FindingComboBox(NoScrollComboBox):
     """Custom ComboBox used for charges grid finding boxes."""
 
-    def __init__(self, parent=None):
-        super().__init__(parent)
+    def __init__(self, column, dialog=None, parent=None):
+        super().__init__()
+        self.column = column
+        self.dialog = dialog
+        self.charge_grid = self.dialog.charges_gridLayout
+        self.case_information = self.dialog.entry_case_information
         self.set_up_widget()
+        self.currentTextChanged.connect(self.check_charge)
 
     def set_up_widget(self):
         self.setMinimumSize(COMBO_BOX_MIN_SIZE)
@@ -190,3 +200,25 @@ class FindingComboBox(NoScrollComboBox):
         self.addItem('Lesser Included')
         self.addItem('Guilty - Allied Offense')
         self.addItem('Not Guilty - Allied Offense')
+
+    def check_charge(self, text: str):
+        if text == 'Guilty':
+            offense_box = self.charge_grid.itemAtPosition(
+                self.charge_grid.row_offense, self.column,
+            ).widget()
+            if offense_box.text() == 'OVI Alcohol / Drugs 1st':
+                bool_response, msg_response = self.case_information.ovi_one_mins()
+                logger.info('OVI Mins message')
+                if msg_response == 1:
+                    self.update_grid()
+                elif msg_response == 0:
+                    self.update_grid()
+                    self.charge_grid.dismiss_other_charges(self.column)
+
+    def update_grid(self) -> None:
+        self.dialog.community_control_checkBox.setChecked(True)
+        self.dialog.license_suspension_checkBox.setChecked(True)
+        self.charge_grid.itemAtPosition(self.charge_grid.row_jail_days, self.column).widget().setText('180')
+        self.charge_grid.itemAtPosition(self.charge_grid.row_jail_days_suspended, self.column).widget().setText('177')
+        self.charge_grid.itemAtPosition(self.charge_grid.row_fine, self.column).widget().setText('375')
+        self.charge_grid.itemAtPosition(self.charge_grid.row_fine_suspended, self.column).widget().setText('0')
