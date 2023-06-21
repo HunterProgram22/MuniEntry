@@ -93,6 +93,15 @@ class BaseChargeGrid(QGridLayout):
                 logger.warning(error)
             break
 
+    def dismiss_other_charges(self, column) -> None:
+        col = column + 1
+        while col <= self.columnCount():
+            if self.itemAtPosition(self.row_dismissed_box, col) is None:
+                col +=1
+            else:
+                self.itemAtPosition(self.row_dismissed_box, col).widget().setChecked(True)
+                col +=1
+
 
 class ChargeGridBuilder(BaseChargeGrid):
     """The class contains all the methods used to build a charge grid."""
@@ -123,8 +132,8 @@ class ChargeGridBuilder(BaseChargeGrid):
     def add_dismissed_checkbox_to_grid(self, column: int, dialog) -> None:
         self.addWidget(cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column)
 
-    def add_finding_box_to_grid(self, column: int) -> None:
-        self.addWidget(munientry.widgets.combo_boxes.FindingComboBox(), self.row_finding, column)
+    def add_finding_box_to_grid(self, column: int, dialog) -> None:
+        self.addWidget(munientry.widgets.combo_boxes.FindingComboBox(column, dialog), self.row_finding, column)
 
     def add_allied_checkbox_to_grid(self, column: int, dialog) -> None:
         self.addWidget(cw.AlliedCheckbox(column, dialog), self.row_allied_box, column)
@@ -213,7 +222,7 @@ class PleaOnlyGrid(ChargeGridBuilder):
         self.add_dismissed_checkbox_to_grid(column, dialog)
         self.add_allied_checkbox_to_grid(column, dialog)
         self.add_plea_box_to_grid(column, dialog)
-        self.add_finding_box_to_grid(column)
+        self.add_finding_box_to_grid(column, dialog)
         self.add_amend_button_to_grid(column, charge, dialog)
         self.add_delete_button_to_grid(column, charge, dialog)
 
@@ -243,7 +252,7 @@ class FineOnlyChargeGrid(ChargeGridBuilder):
         self.add_dismissed_checkbox_to_grid(column, dialog)
         self.add_allied_checkbox_to_grid(column, dialog)
         self.add_plea_box_to_grid(column, dialog)
-        self.add_finding_box_to_grid(column)
+        self.add_finding_box_to_grid(column, dialog)
         self.add_fine_boxes_to_grid(column, charge)
         self.add_amend_button_to_grid(column, charge, dialog)
         self.add_delete_button_to_grid(column, charge, dialog)
@@ -280,7 +289,7 @@ class JailChargesGrid(FineOnlyChargeGrid):
         self.add_dismissed_checkbox_to_grid(column, dialog)
         self.add_allied_checkbox_to_grid(column, dialog)
         self.add_plea_box_to_grid(column, dialog)
-        self.add_finding_box_to_grid(column)
+        self.add_finding_box_to_grid(column, dialog)
         self.add_fine_boxes_to_grid(column, charge)
         self.add_jail_boxes_to_grid(column, charge)
         self.add_amend_button_to_grid(column, charge, dialog)

@@ -1,7 +1,10 @@
 """Contains all dataclasses for entries that include FRA and Court Costs."""
+import calendar
 from loguru import logger
 from dataclasses import dataclass, field
 
+from munientry.checkers.base_checks import warning_check, min_charge_check
+from munientry.checkers import check_messages as check_msg
 from munientry.models import conditions_models as cm
 from munientry.models.case_information.criminal_case_information import (
     CriminalCaseInformation,
@@ -56,6 +59,40 @@ class JailCCEntryCaseInformation(FineOnlyEntryCaseInformation):
     victim_notification: object = field(default_factory=cm.VictimNotification)
     impoundment: object = field(default_factory=cm.Impoundment)
 
+    @min_charge_check(check_msg.OVI_ONE_TITLE, check_msg.OVI_ONE_MSG)
+    def ovi_one_mins(self, msg_response: int = None) -> bool:
+        """Checks if the offense is a 1st OVI and Guilty and asks user if they want to set mins.
+
+        Message box has three options - Yes set mins and dismiss other charges returns 0;
+        Yes set mins and do not disimss other charges returns 1; and No returns 2.
+        """
+        if msg_response is None:
+            violation_date = self.get_violation_date()
+            return False, [violation_date]
+        elif msg_response == 0:
+            self.set_ovi_one_mins()
+        elif msg_response == 1:
+            self.set_ovi_one_mins()
+        return True, msg_response
+
+    def set_ovi_one_mins(self) -> None:
+        self.community_control.type_of_control = 'basic'
+        self.community_control.term_of_control = 'One Year'
+        self.community_control.driver_intervention_program = True
+        self.license_suspension.license_type = 'driving'
+        self.license_suspension.suspended_date = self.get_violation_date()
+        self.license_suspension.suspension_term = '12 months'
+        self.license_suspension.als_terminated = True
+
+    def get_violation_date(self) -> str:
+        for charge in self.charges_list:
+            if charge.offense == 'OVI Alcohol / Drugs 1st':
+                year = charge.violation_date[:4]
+                month_number = charge.violation_date[5:7]
+                month_name = calendar.month_name[int(month_number)]
+                day = charge.violation_date[8:]
+                date_formatted = f'{month_name} {day}, {year}'
+                return date_formatted
 
 @dataclass
 class SentencingOnlyEntryCaseInformation(JailCCEntryCaseInformation):

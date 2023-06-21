@@ -14,7 +14,7 @@ def general_case_search_query(case_number: str) -> str:
         cp.FirstName AS DefFirstName,
         cp.LastName AS DefLastName,
         vd.IsMoving AS MovingBool,
-        sc.ViolationDate,
+        sc.ViolationDate AS ViolationDate,
         vd.EndDate,
         cm.InsuranceStatus AS FraInFile,
         CONCAT(att.FirstName, ' ', att.LastName) AS DefenseCounsel,
@@ -33,6 +33,7 @@ def general_case_search_query(case_number: str) -> str:
 	    cm.CaseNumber = '{case_number}' 
 	    AND sc.IsDeleted = '0' 
 	    AND cp.PersonTypeID = '1'
+	    AND vd.IsActive = '1'
 	    AND (vd.EndDate is NULL OR vd.EndDate >= sc.ViolationDate)	 	 
 	ORDER BY 
 	    sc.SubCaseNumber 
