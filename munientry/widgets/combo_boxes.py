@@ -212,7 +212,8 @@ class FindingComboBox(NoScrollComboBox):
     def ovi_one_mins(self, msg_response: int = None) -> bool:
         """Checks if the offense is a 1st OVI and Guilty and asks user if they want to set mins."""
         if msg_response is None:
-            return False
+            violation_date = self.get_violation_date()
+            return False, [violation_date]
         elif msg_response == 0:
             self.set_ovi_one_mins()
             self.ovi_dismiss_other_charges()
@@ -229,7 +230,7 @@ class FindingComboBox(NoScrollComboBox):
         model.community_control.term_of_control = 'One Year'
         model.community_control.driver_intervention_program = True
         model.license_suspension.license_type = 'driving'
-        model.license_suspension.suspended_date = self.get_violation_date(model)
+        model.license_suspension.suspended_date = self.get_violation_date()
         model.license_suspension.suspension_term = '12 months'
         model.license_suspension.als_terminated = True
 
@@ -238,7 +239,7 @@ class FindingComboBox(NoScrollComboBox):
         self.parent_layout.itemAtPosition(self.parent_layout.row_fine, self.column).widget().setText('375')
         self.parent_layout.itemAtPosition(self.parent_layout.row_fine_suspended, self.column).widget().setText('0')
 
-    def ovi_dismiss_other_charges(self):
+    def ovi_dismiss_other_charges(self) -> None:
         col = self.column + 1
         while col <= self.parent_layout.columnCount():
             if self.parent_layout.itemAtPosition(self.parent_layout.row_dismissed_box, col) is None:
@@ -247,7 +248,9 @@ class FindingComboBox(NoScrollComboBox):
                 self.parent_layout.itemAtPosition(self.parent_layout.row_dismissed_box, col).widget().setChecked(True)
                 col +=1
 
-    def get_violation_date(self, model):
+    def get_violation_date(self) -> str:
+        dialog = self.window()
+        model = dialog.entry_case_information
         for charge in model.charges_list:
             if charge.offense == 'OVI Alcohol / Drugs 1st':
                 year = charge.violation_date[:4]

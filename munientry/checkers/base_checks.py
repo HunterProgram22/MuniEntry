@@ -39,9 +39,6 @@ def warning_check(title: str, message: str) -> Callable:
 def min_charge_check(title: str, message: str) -> Callable:
     """Wraps a check function and displays a warning message if the check fails.
 
-    The Warning Box allows a user to modify the data by responding with Yes or No and based on the
-    response the data is updated and teh check is run again.
-
     Args:
         title (str): The title of the warning message box.
         message (str): The message to display in the warning message box.
@@ -53,11 +50,21 @@ def min_charge_check(title: str, message: str) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
             func_result = func(*args, **kwargs)
-            if func_result is False:
-                msg_response = MinimumsQuestionBox(message, title).exec()
+            if isinstance(func_result, tuple):
+                status, msg_insert = func_result
+            else:
+                status = func_result
+                msg_insert = None
+            logger.debug(f'The status is {status}')
+            if status is False:
+                if msg_insert is not None:
+                    formatted_msg = message.format(*msg_insert)
+                else:
+                    formatted_msg = message
+
+                msg_response = MinimumsQuestionBox(formatted_msg, title).exec()
                 kwargs['msg_response'] = msg_response
-                return func(*args, **kwargs)
-            return func_result
+            return func(*args, **kwargs)
         return wrapper
     return decorator
 
