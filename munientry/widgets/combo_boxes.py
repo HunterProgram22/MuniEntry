@@ -5,8 +5,11 @@ widgets that is used. The header file for this module must then be added in QtDe
 when the file is converted using 'pyuic6 -o {python_view_file.py} {qt_ui_file.ui}' this
 module will be imported as part of the python_view_file.py.
 """
+import calendar
+
 from loguru import logger
 from PyQt6.QtWidgets import QComboBox, QMenu, QGridLayout
+from PyQt6.QtCore import QDate
 
 from munientry.checkers.base_checks import warning_check, min_charge_check
 from munientry.checkers import check_messages as cm
@@ -226,9 +229,7 @@ class FindingComboBox(NoScrollComboBox):
         model.community_control.term_of_control = 'One Year'
         model.community_control.driver_intervention_program = True
         model.license_suspension.license_type = 'driving'
-        logger.debug(model.charges_list)
         model.license_suspension.suspended_date = self.get_violation_date(model)
-        logger.debug(model.license_suspension.suspended_date)
         model.license_suspension.suspension_term = '12 months'
         model.license_suspension.als_terminated = True
 
@@ -249,7 +250,9 @@ class FindingComboBox(NoScrollComboBox):
     def get_violation_date(self, model):
         for charge in model.charges_list:
             if charge.offense == 'OVI Alcohol / Drugs 1st':
-                logger.debug(charge.violation_date)
-                date_formatted = charge.violation_date[5:] + '-' + charge.violation_date[:4]
-                logger.debug(date_formatted)
+                year = charge.violation_date[:4]
+                month_number = charge.violation_date[5:7]
+                month_name = calendar.month_name[int(month_number)]
+                day = charge.violation_date[8:]
+                date_formatted = f'{month_name} {day}, {year}'
                 return date_formatted
