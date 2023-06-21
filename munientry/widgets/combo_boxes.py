@@ -5,15 +5,10 @@ widgets that is used. The header file for this module must then be added in QtDe
 when the file is converted using 'pyuic6 -o {python_view_file.py} {qt_ui_file.ui}' this
 module will be imported as part of the python_view_file.py.
 """
-# import calendar
-
 from loguru import logger
-from PyQt6.QtWidgets import QComboBox, QMenu, QGridLayout
-from PyQt6.QtCore import QDate
+from PyQt6.QtWidgets import QComboBox, QMenu
 
-from munientry.checkers.base_checks import warning_check, min_charge_check
-from munientry.checkers import check_messages as cm
-from munientry.data.connections import database_connection, MUNIENTRY_DB_CONN
+from munientry.data.connections import MUNIENTRY_DB_CONN, database_connection
 from munientry.sqllite.sql_lite_functions import query_attorney_list
 from munientry.widgets.widget_settings import (
     CASE_LIST_BOX_MIN_SIZE,
@@ -98,10 +93,6 @@ class NoScrollComboBox(QComboBox):
 class DefenseCounselComboBox(NoScrollComboBox):
     """Custom ComboBox for loading attorneys from internal DB (MuniEntryDB.sqlite)."""
 
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setFocusPolicy(STRONG_FOCUS)
-
     @database_connection(MUNIENTRY_DB_CONN)
     def load_attorneys(self, db_connection: str):
         attorney_list = query_attorney_list(db_connection)
@@ -113,19 +104,26 @@ class DefenseCounselComboBox(NoScrollComboBox):
         self.setCurrentIndex(0)
 
 
-class DegreeComboBox(NoScrollComboBox):
-    """Custom ComboBox used for charges grid degree boxes."""
+class ChargeGridComboBox(NoScrollComboBox):
+    """Base Class for Combo Boxes used in the Charges Grid."""
 
-    def __init__(self, degree, parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent)
-        self.set_up_widget(degree)
-
-    def set_up_widget(self, degree):
         self.setMinimumSize(COMBO_BOX_MIN_SIZE)
         self.setMaximumSize(COMBO_BOX_MAX_SIZE)
         self.setStyleSheet(WHITE_BACKGROUND_STYLE_SHEET)
         self.setEditable(False)
         self.setFocusPolicy(STRONG_FOCUS)
+
+
+class DegreeComboBox(ChargeGridComboBox):
+    """Custom ComboBox used for charges grid degree boxes."""
+
+    def __init__(self, degree: str, parent=None) -> None:
+        super().__init__(parent)
+        self.set_up_widget(degree)
+
+    def set_up_widget(self, degree: str) -> None:
         self.setObjectName('degree_choice_box')
         self.add_degree_box_items(degree)
 
@@ -141,7 +139,7 @@ class DegreeComboBox(NoScrollComboBox):
         self.setCurrentText(degree)
 
 
-class PleaComboBox(NoScrollComboBox):
+class PleaComboBox(ChargeGridComboBox):
     """Custom ComboBox used for charges grid plea boxes."""
 
     def __init__(self, column, dialog=None, parent=None):
@@ -151,11 +149,6 @@ class PleaComboBox(NoScrollComboBox):
         self.set_up_widget()
 
     def set_up_widget(self):
-        self.setMinimumSize(COMBO_BOX_MIN_SIZE)
-        self.setMaximumSize(COMBO_BOX_MAX_SIZE)
-        self.setStyleSheet(WHITE_BACKGROUND_STYLE_SHEET)
-        self.setEditable(False)
-        self.setFocusPolicy(STRONG_FOCUS)
         self.setObjectName('plea_choice_box')
         self.add_plea_box_items()
 
@@ -172,7 +165,7 @@ class PleaComboBox(NoScrollComboBox):
             self.addItem('Dismissed')
 
 
-class FindingComboBox(NoScrollComboBox):
+class FindingComboBox(ChargeGridComboBox):
     """Custom ComboBox used for charges grid finding boxes."""
 
     def __init__(self, column, dialog=None, parent=None):
@@ -185,11 +178,6 @@ class FindingComboBox(NoScrollComboBox):
         self.currentTextChanged.connect(self.check_charge)
 
     def set_up_widget(self):
-        self.setMinimumSize(COMBO_BOX_MIN_SIZE)
-        self.setMaximumSize(COMBO_BOX_MAX_SIZE)
-        self.setStyleSheet(WHITE_BACKGROUND_STYLE_SHEET)
-        self.setEditable(False)
-        self.setFocusPolicy(STRONG_FOCUS)
         self.setObjectName('finding_choice_box')
         self.add_finding_box_items()
 

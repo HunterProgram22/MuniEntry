@@ -75,7 +75,7 @@ class JailCCEntryCaseInformation(FineOnlyEntryCaseInformation):
             self.set_ovi_one_mins()
         return True, msg_response
 
-    def set_ovi_one_mins(self):
+    def set_ovi_one_mins(self) -> None:
         self.community_control.type_of_control = 'basic'
         self.community_control.term_of_control = 'One Year'
         self.community_control.driver_intervention_program = True
