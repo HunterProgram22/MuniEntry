@@ -190,25 +190,42 @@ class FindingComboBox(ChargeGridComboBox):
         self.addItem('Not Guilty - Allied Offense')
 
     def check_charge(self, text: str):
-        if text == 'Guilty':
-            offense_box = self.charge_grid.itemAtPosition(
-                self.charge_grid.row_offense, self.column,
-            ).widget()
-            if offense_box.text() == 'OVI Alcohol / Drugs 1st':
-                try:
-                    bool_response, msg_response = self.case_information.ovi_one_mins()
-                except AttributeError as error:
-                    logger.warning(error)
-                    return None
-                logger.info('OVI Mins message')
-                if msg_response == 1:
-                    self.update_grid()
-                elif msg_response == 0:
-                    self.update_grid()
-                    self.charge_grid.dismiss_other_charges(self.column)
+        """Checks the text of the Finding Box to determine the type of charge to process."""
+        if text == 'Guilty' and self.get_offense_box_text() == 'OVI Alcohol / Drugs 1st':
+            self.process_ovi_one_charge()
 
+    def get_offense_box_text(self) -> str:
+        """Returns the text of an offense box as a string."""
+        return self.charge_grid.itemAtPosition(
+            self.charge_grid.row_offense, self.column,
+        ).widget().text()
+
+    def process_ovi_one_charge(self):
+        """Runs the process for asking the user if they one to set 1st OVI minimums.
+
+        The ovi_one_mins returns one of 3 options. Yes set mins and dismiss other charges returns 0;
+        Yes set mins and do not disimss other charges returns 1; and No returns 2.
+
+        The try/except block is used in case the user uses a dialog that has a finding box, but that
+        does not impose jail time (i.e. Fine Only Dialog).
+        """
+        try:
+            bool_response, msg_response = self.case_information.ovi_one_mins()
+        except AttributeError as error:
+            logger.warning(error)
+            return None
+        logger.info('OVI Mins message')
+        if msg_response == 2:
+            return None
+        self.update_grid()
+        if msg_response == 0:
+            self.charge_grid.dismiss_other_charges(self.column)
 
     def update_grid(self) -> None:
+        """Updates the UI if the user choses to set the OVI Mins.
+
+        TODO: This should be a general function that updates grid based on the charge.
+        """
         self.dialog.community_control_checkBox.setChecked(True)
         self.dialog.license_suspension_checkBox.setChecked(True)
         self.charge_grid.itemAtPosition(self.charge_grid.row_jail_days, self.column).widget().setText('180')
