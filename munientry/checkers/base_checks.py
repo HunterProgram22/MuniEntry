@@ -55,13 +55,11 @@ def min_charge_check(title: str, message: str) -> Callable:
             else:
                 status = func_result
                 msg_insert = None
-            logger.debug(f'The status is {status}')
             if status is False:
                 if msg_insert is not None:
                     formatted_msg = message.format(*msg_insert)
                 else:
                     formatted_msg = message
-
                 msg_response = MinimumsQuestionBox(formatted_msg, title).exec()
                 kwargs['msg_response'] = msg_response
             return func(*args, **kwargs)

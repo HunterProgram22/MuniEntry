@@ -5,7 +5,7 @@ widgets that is used. The header file for this module must then be added in QtDe
 when the file is converted using 'pyuic6 -o {python_view_file.py} {qt_ui_file.ui}' this
 module will be imported as part of the python_view_file.py.
 """
-import calendar
+# import calendar
 
 from loguru import logger
 from PyQt6.QtWidgets import QComboBox, QMenu, QGridLayout
@@ -175,10 +175,12 @@ class PleaComboBox(NoScrollComboBox):
 class FindingComboBox(NoScrollComboBox):
     """Custom ComboBox used for charges grid finding boxes."""
 
-    def __init__(self, column, parent=None):
+    def __init__(self, column, dialog=None, parent=None):
         super().__init__()
         self.column = column
-        self.parent_layout = parent
+        self.dialog = dialog
+        self.charge_grid = self.dialog.charges_gridLayout
+        self.case_information = self.dialog.entry_case_information
         self.set_up_widget()
         self.currentTextChanged.connect(self.check_charge)
 
@@ -201,61 +203,22 @@ class FindingComboBox(NoScrollComboBox):
 
     def check_charge(self, text: str):
         if text == 'Guilty':
-            offense_box = self.parent_layout.itemAtPosition(
-                self.parent_layout.row_offense, self.column,
+            offense_box = self.charge_grid.itemAtPosition(
+                self.charge_grid.row_offense, self.column,
             ).widget()
             if offense_box.text() == 'OVI Alcohol / Drugs 1st':
-                self.ovi_one_mins()
+                bool_response, msg_response = self.case_information.ovi_one_mins()
                 logger.info('OVI Mins message')
+                if msg_response == 1:
+                    self.update_grid()
+                elif msg_response == 0:
+                    self.update_grid()
+                    self.charge_grid.dismiss_other_charges(self.column)
 
-    @min_charge_check(cm.OVI_ONE_TITLE, cm.OVI_ONE_MSG)
-    def ovi_one_mins(self, msg_response: int = None) -> bool:
-        """Checks if the offense is a 1st OVI and Guilty and asks user if they want to set mins."""
-        if msg_response is None:
-            violation_date = self.get_violation_date()
-            return False, [violation_date]
-        elif msg_response == 0:
-            self.set_ovi_one_mins()
-            self.ovi_dismiss_other_charges()
-        elif msg_response == 1:
-            self.set_ovi_one_mins()
-        return True
-
-    def set_ovi_one_mins(self):
-        dialog = self.window()
-        model = dialog.entry_case_information
-        dialog.community_control_checkBox.setChecked(True)
-        dialog.license_suspension_checkBox.setChecked(True)
-        model.community_control.type_of_control = 'basic'
-        model.community_control.term_of_control = 'One Year'
-        model.community_control.driver_intervention_program = True
-        model.license_suspension.license_type = 'driving'
-        model.license_suspension.suspended_date = self.get_violation_date()
-        model.license_suspension.suspension_term = '12 months'
-        model.license_suspension.als_terminated = True
-
-        self.parent_layout.itemAtPosition(self.parent_layout.row_jail_days, self.column).widget().setText('180')
-        self.parent_layout.itemAtPosition(self.parent_layout.row_jail_days_suspended, self.column).widget().setText('177')
-        self.parent_layout.itemAtPosition(self.parent_layout.row_fine, self.column).widget().setText('375')
-        self.parent_layout.itemAtPosition(self.parent_layout.row_fine_suspended, self.column).widget().setText('0')
-
-    def ovi_dismiss_other_charges(self) -> None:
-        col = self.column + 1
-        while col <= self.parent_layout.columnCount():
-            if self.parent_layout.itemAtPosition(self.parent_layout.row_dismissed_box, col) is None:
-                col +=1
-            else:
-                self.parent_layout.itemAtPosition(self.parent_layout.row_dismissed_box, col).widget().setChecked(True)
-                col +=1
-
-    def get_violation_date(self) -> str:
-        dialog = self.window()
-        model = dialog.entry_case_information
-        for charge in model.charges_list:
-            if charge.offense == 'OVI Alcohol / Drugs 1st':
-                year = charge.violation_date[:4]
-                month_number = charge.violation_date[5:7]
-                month_name = calendar.month_name[int(month_number)]
-                day = charge.violation_date[8:]
-                date_formatted = f'{month_name} {day}, {year}'
-                return date_formatted
+    def update_grid(self) -> None:
+        self.dialog.community_control_checkBox.setChecked(True)
+        self.dialog.license_suspension_checkBox.setChecked(True)
+        self.charge_grid.itemAtPosition(self.charge_grid.row_jail_days, self.column).widget().setText('180')
+        self.charge_grid.itemAtPosition(self.charge_grid.row_jail_days_suspended, self.column).widget().setText('177')
+        self.charge_grid.itemAtPosition(self.charge_grid.row_fine, self.column).widget().setText('375')
+        self.charge_grid.itemAtPosition(self.charge_grid.row_fine_suspended, self.column).widget().setText('0')
