@@ -87,11 +87,15 @@ class JailCCEntryCaseInformation(FineOnlyEntryCaseInformation):
     def get_violation_date(self) -> str:
         for charge in self.charges_list:
             if charge.offense == 'OVI Alcohol / Drugs 1st':
-                year = charge.violation_date[:4]
-                month_number = charge.violation_date[5:7]
-                month_name = calendar.month_name[int(month_number)]
-                day = charge.violation_date[8:]
-                date_formatted = f'{month_name} {day}, {year}'
+                try:
+                    year = charge.violation_date[:4]
+                    month_number = charge.violation_date[5:7]
+                    day = charge.violation_date[8:]
+                    month_name = calendar.month_name[int(month_number)]
+                    date_formatted = f'{month_name} {day}, {year}'
+                except TypeError as err:
+                    logger.warning(err)
+                    date_formatted = 'May 05, 2023'
                 return date_formatted
 
 @dataclass

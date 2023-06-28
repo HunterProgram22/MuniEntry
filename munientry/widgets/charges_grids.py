@@ -93,14 +93,18 @@ class BaseChargeGrid(QGridLayout):
                 logger.warning(error)
             break
 
-    def dismiss_other_charges(self, column) -> None:
-        col = column + 1
+    def dismiss_other_charges(self, non_dismissed_charge) -> None:
+        """Loops through charge grid and dismisses all charges except non_dismissed_charge."""
+        col = 1
         while col <= self.columnCount():
             if self.itemAtPosition(self.row_dismissed_box, col) is None:
                 col +=1
             else:
-                self.itemAtPosition(self.row_dismissed_box, col).widget().setChecked(True)
-                col +=1
+                if self.itemAtPosition(self.row_offense, col).widget().text() == non_dismissed_charge:
+                    col +=1
+                else:
+                    self.itemAtPosition(self.row_dismissed_box, col).widget().setChecked(True)
+                    col +=1
 
 
 class ChargeGridBuilder(BaseChargeGrid):
