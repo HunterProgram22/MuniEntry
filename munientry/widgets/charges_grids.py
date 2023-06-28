@@ -79,10 +79,9 @@ class BaseChargeGrid(QGridLayout):
     def set_cursor_to_first_fine_box(self) -> None:
         """Sets the cursor to the first non-dismissed charge's fine box.
 
-        Column is immediately incremented because 1st column is grid labels.
+        Column range starts at 1 because the 1st column is grid labels.
         """
-        for column in range(0, self.columnCount()):
-            column += 1
+        for column in range(1, self.columnCount() + 1):
             if self.check_if_column_empty(column):
                 continue
             if self.check_if_charge_dismissed(column):
@@ -95,16 +94,13 @@ class BaseChargeGrid(QGridLayout):
 
     def dismiss_other_charges(self, non_dismissed_charge) -> None:
         """Loops through charge grid and dismisses all charges except non_dismissed_charge."""
-        col = 1
-        while col <= self.columnCount():
-            if self.itemAtPosition(self.row_dismissed_box, col) is None:
-                col +=1
-            else:
-                if self.itemAtPosition(self.row_offense, col).widget().text() == non_dismissed_charge:
-                    col +=1
-                else:
-                    self.itemAtPosition(self.row_dismissed_box, col).widget().setChecked(True)
-                    col +=1
+        for col in range(1, self.columnCount() + 1):
+            dismissed_box = self.itemAtPosition(self.row_dismissed_box, col)
+            if dismissed_box is None:
+                continue
+            if self.itemAtPosition(self.row_offense, col).widget().text() == non_dismissed_charge:
+                continue
+            dismissed_box.widget().setChecked(True)
 
 
 class ChargeGridBuilder(BaseChargeGrid):
