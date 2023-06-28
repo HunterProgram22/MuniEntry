@@ -2,11 +2,10 @@
 from loguru import logger
 from PyQt6.QtWidgets import QGridLayout, QLabel
 
-import munientry.widgets.combo_boxes
-import munientry.widgets.line_edits
 from munientry.models.criminal_charge_models import CriminalCharge
+from munientry.widgets import combo_boxes
 from munientry.widgets import custom_widgets as cw
-
+from munientry.widgets import line_edits
 
 
 class BaseChargeGrid(QGridLayout):
@@ -49,8 +48,9 @@ class BaseChargeGrid(QGridLayout):
 
         Ex. Pressing 'No Contest All' sets all pleas to No Contest.
         """
-        logger.button(f'{self.sender().text()} Pressed')
-        if plea == None:
+        button = self.sender().text()
+        logger.button(f'{button} Pressed')
+        if plea is None:
             plea = self.get_plea()
         for column in range(0, self.columnCount()):
             column += 1
@@ -62,9 +62,11 @@ class BaseChargeGrid(QGridLayout):
             plea_box.setCurrentText(plea)
 
     def set_all_findings(self) -> None:
-        """Sets the findings for all charges to either Guilty or Guilty - Allied Offense."""
-        for column in range(0, self.columnCount()):
-            column += 1
+        """Sets the findings for all charges to either Guilty or Guilty - Allied Offense.
+
+        Column range starts at 1 because the 1st column is grid labels.
+        """
+        for column in range(1, self.columnCount() + 1):
             if self.check_if_column_empty(column):
                 continue
             finding_box = self.itemAtPosition(self.row_finding, column).widget()
@@ -109,8 +111,8 @@ class ChargeGridBuilder(BaseChargeGrid):
     def add_charge_to_grid(self, column: int, charge: CriminalCharge) -> None:
         """Adds three required charge fields - offense, statute and degree - to the charge grid."""
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
-        self.addWidget(munientry.widgets.line_edits.StatuteLineEdit(charge.statute), self.row_statute, column)
-        self.addWidget(munientry.widgets.combo_boxes.DegreeComboBox(charge.degree), self.row_degree, column)
+        self.addWidget(line_edits.StatuteLineEdit(charge.statute), self.row_statute, column)
+        self.addWidget(combo_boxes.DegreeComboBox(charge.degree), self.row_degree, column)
 
     def add_delete_button_to_grid(self, column: int, charge: CriminalCharge, dialog) -> None:
         self.addWidget(
@@ -120,7 +122,7 @@ class ChargeGridBuilder(BaseChargeGrid):
         )
 
     def add_plea_box_to_grid(self, column: int, dialog) -> None:
-        self.addWidget(munientry.widgets.combo_boxes.PleaComboBox(column, dialog), self.row_plea, column)
+        self.addWidget(combo_boxes.PleaComboBox(column, dialog), self.row_plea, column)
 
     def add_amend_button_to_grid(self, column: int, charge: CriminalCharge, dialog) -> None:
         self.addWidget(
@@ -133,7 +135,7 @@ class ChargeGridBuilder(BaseChargeGrid):
         self.addWidget(cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column)
 
     def add_finding_box_to_grid(self, column: int, dialog) -> None:
-        self.addWidget(munientry.widgets.combo_boxes.FindingComboBox(column, dialog), self.row_finding, column)
+        self.addWidget(combo_boxes.FindingComboBox(column, dialog), self.row_finding, column)
 
     def add_allied_checkbox_to_grid(self, column: int, dialog) -> None:
         self.addWidget(cw.AlliedCheckbox(column, dialog), self.row_allied_box, column)
@@ -159,13 +161,12 @@ class NotGuiltyPleaGrid(ChargeGridBuilder):
         self.add_plea_box_to_grid(column, dialog)
         self.add_delete_button_to_grid(column, charge, dialog)
 
-
     def set_pleas_to_not_guilty(self) -> None:
         """Sets all pleas to Not Guilty for Not Guilty Plea / Bond Dialog."""
-        logger.button(f'{self.sender().text()} Pressed')
+        button = self.sender().text()
+        logger.button(f'{button} Pressed')
         plea = 'Not Guilty'
-        for column in range(0, self.columnCount()):
-            column += 1
+        for column in range(1, self.columnCount() + 1):
             if self.check_if_column_empty(column):
                 continue
             plea_box = self.itemAtPosition(self.row_plea, column).widget()
@@ -258,8 +259,8 @@ class FineOnlyChargeGrid(ChargeGridBuilder):
         self.add_delete_button_to_grid(column, charge, dialog)
 
     def add_fine_boxes_to_grid(self, column: int, charge: CriminalCharge) -> None:
-        self.addWidget(munientry.widgets.line_edits.FineLineEdit(charge.offense), self.row_fine, column)
-        self.addWidget(munientry.widgets.line_edits.FineSuspendedLineEdit(), self.row_fine_suspended, column)
+        self.addWidget(line_edits.FineLineEdit(charge.offense), self.row_fine, column)
+        self.addWidget(line_edits.FineSuspendedLineEdit(), self.row_fine_suspended, column)
 
 
 class JailChargesGrid(FineOnlyChargeGrid):
@@ -296,27 +297,26 @@ class JailChargesGrid(FineOnlyChargeGrid):
         self.add_delete_button_to_grid(column, charge, dialog)
 
     def add_jail_boxes_to_grid(self, column: int, charge: CriminalCharge) -> None:
-        self.addWidget(munientry.widgets.line_edits.JailLineEdit(charge.offense), self.row_jail_days, column)
-        self.addWidget(munientry.widgets.line_edits.JailSuspendedLineEdit(), self.row_jail_days_suspended, column)
+        self.addWidget(line_edits.JailLineEdit(charge.offense), self.row_jail_days, column)
+        self.addWidget(line_edits.JailSuspendedLineEdit(), self.row_jail_days_suspended, column)
+
+    def set_trial_finding_text(self, trial_finding, is_allied_offense):
+        suffix = ' - Allied Offense' if is_allied_offense else ''
+        finding_dict = {
+            'Guilty': f'Guilty{suffix}',
+            'Not Guilty': f'Not Guilty{suffix}',
+        }
+        return finding_dict.get(trial_finding, trial_finding)
 
     def set_all_trial_findings(self) -> None:
-        logger.button(f'{self.sender().text()} Pressed')
+        button = self.sender().text()
+        logger.button(f'{button} Pressed')
         trial_finding = self.get_plea()
-        for column in range(0, self.columnCount()):
-            column += 1
+        for column in range(1, self.columnCount() + 1):
             if self.check_if_column_empty(column):
                 continue
-            finding_box = self.itemAtPosition(self.row_finding, column).widget()
+            finding = self.itemAtPosition(self.row_finding, column).widget()
             if self.check_if_charge_dismissed(column):
                 continue
-            if self.check_if_allied_offense(column):
-                if trial_finding == 'Guilty':
-                    finding_box.setCurrentText('Guilty - Allied Offense')
-                if trial_finding == 'Not Guilty':
-                    finding_box.setCurrentText('Not Guilty - Allied Offense')
-            else:
-                finding_box.setCurrentText(trial_finding)
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
+            is_allied_offense = self.check_if_allied_offense(column)
+            finding.setCurrentText(self.set_trial_finding_text(trial_finding, is_allied_offense))
