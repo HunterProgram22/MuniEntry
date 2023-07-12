@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1177</width>
-    <height>857</height>
+    <width>1175</width>
+    <height>850</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -177,8 +177,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1137</width>
-           <height>817</height>
+           <width>1135</width>
+           <height>810</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
@@ -249,7 +249,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="1" column="3">
-              <widget class="NoScrollDateEdit" name="plea_trial_date">
+              <widget class="NoScrollDateEdit" name="entry_date">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -278,6 +278,12 @@ background-color: rgb(255, 255, 255);</string>
              </item>
              <item row="0" column="0" colspan="6">
               <widget class="QLabel" name="label_6">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
                <property name="font">
                 <font>
                  <family>Palatino Linotype</family>
