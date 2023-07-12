@@ -108,7 +108,9 @@ class CourtStaffManager(object):
             self.mw.court_admin_admin_radio_btn: JudicialOfficer('Justin', 'Kudela', CT_ADMIN),
             self.mw.jury_comm_1_admin_radio_btn: JudicialOfficer('Kathryn', 'Patterson', JURY),
             self.mw.none_admin_radio_btn: JudicialOfficer('None', 'Assigned', ADMIN),
-            self.mw.mag_1_admin_radio_btn: JudicialOfficer('A', 'B', ADMIN),
+            self.mw.mag_1_admin_radio_btn: JudicialOfficer('Amanda', 'Bunner', MAGISTRATE),
+            self.mw.mag_2_radio_btn: JudicialOfficer('Kevin', 'Pelanda', MAGISTRATE),
+            self.mw.mag_3_radio_btn: JudicialOfficer('Justin', 'Kudela', MAGISTRATE),
 
             self.mw.chief_prob_officer_radio_btn: JudicialOfficer('Lindsey', 'Blue', CHIEF_CCO),
             self.mw.dep_chief_prob_officer_radio_btn: JudicialOfficer('Kurt', 'Olson', DEP_CCCO),

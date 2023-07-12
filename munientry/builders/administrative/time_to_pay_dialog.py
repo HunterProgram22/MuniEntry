@@ -4,9 +4,9 @@ from PyQt6.QtCore import QDate
 
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecks
-# from munientry.entrycreators.entry_creator import JuryPaymentEntryCreator
+from munientry.entrycreators.entry_creator import BaseEntryCreator
 from munientry.loaders.cms_case_loaders import CrimCmsLoader
-from munientry.models.jury_models import JuryPaymentInformation
+from munientry.models.time_to_pay_models import TimeToPayInformation
 from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.views.time_to_pay_dialog_ui import Ui_TimeToPayDialog
 
@@ -27,7 +27,7 @@ class TimeToPaySlotFunctions(admin.AdminSlotFunctions):
     """Additional functions for the Time to Pay Dialog"""
 
     def create_entry_process(self) -> None:
-        TimeToPayEntryCreator(self.dialog).create_entry_process()
+        BaseEntryCreator(self.dialog).create_entry_process()
 
 
 class TimeToPaySignalConnector(admin.AdminSignalConnector):
@@ -52,6 +52,7 @@ class TimeToPayCaseInformationUpdater(BaseDialogUpdater):
 
     def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
+        logger.debug(self.dialog.judicial_officer.last_name)
         self.model.judicial_officer = self.dialog.judicial_officer
         self.update_model_with_case_information_frame_data()
 
@@ -71,7 +72,7 @@ class TimeToPayCaseInformationUpdater(BaseDialogUpdater):
 class TimeToPayDialog(admin.AdminDialogBuilder, Ui_TimeToPayDialog):
     """Builder for the Time to Pay Dialog."""
 
-    _case_information_model = JuryPaymentInformation
+    _case_information_model = TimeToPayInformation
     _case_loader = CrimCmsLoader
     _info_checker = TimeToPayInfoChecks
     _model_updater = TimeToPayCaseInformationUpdater
