@@ -3,6 +3,7 @@ from munientry.builders.administrative import (
     admin_fiscal_dialog,
     driving_privileges_dialog,
     jury_payment_dialog,
+    time_to_pay_dialog,
 )
 from munientry.builders.civil import civ_freeform_dialog
 from munientry.builders.crimtraffic import (
@@ -79,6 +80,7 @@ DIALOG_BUTTON_DICT = {
     'limited_driving_privilegesButton': driving_privileges_dialog.DrivingPrivilegesDialog,
     'juror_paymentButton': jury_payment_dialog.JuryPaymentDialog,
     'fiscal_entriesButton': admin_fiscal_dialog.AdminFiscalDialog,
+    'time_to_pay_orderButton': time_to_pay_dialog.TimeToPayDialog,
 
     # Workflow
     'admin_workflowButton': hemmeter.AdminWorkflowDialog,

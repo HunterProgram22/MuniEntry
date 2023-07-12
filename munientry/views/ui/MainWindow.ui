@@ -735,6 +735,16 @@ font-weight: bold;</string>
                     </property>
                    </widget>
                   </item>
+                  <item row="1" column="0">
+                   <widget class="AdminTimeDialogButton" name="time_to_pay_orderButton">
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 255);</string>
+                    </property>
+                    <property name="text">
+                     <string>Time to Pay Order</string>
+                    </property>
+                   </widget>
+                  </item>
                  </layout>
                 </widget>
                 <widget class="QWidget" name="civil_tab">
@@ -2273,6 +2283,11 @@ font-weight: bold;</string>
   </customwidget>
   <customwidget>
    <class>ProbationDialogButton</class>
+   <extends>QPushButton</extends>
+   <header>munientry.mainwindow.dialog_buttons</header>
+  </customwidget>
+  <customwidget>
+   <class>AdminTimeDialogButton</class>
    <extends>QPushButton</extends>
    <header>munientry.mainwindow.dialog_buttons</header>
   </customwidget>

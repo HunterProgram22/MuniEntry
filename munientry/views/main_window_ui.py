@@ -319,6 +319,10 @@ class Ui_MainWindow(object):
         self.juror_paymentButton.setStyleSheet("background-color: rgb(85, 170, 255);")
         self.juror_paymentButton.setObjectName("juror_paymentButton")
         self.gridLayout_15.addWidget(self.juror_paymentButton, 1, 1, 1, 1)
+        self.time_to_pay_orderButton = AdminTimeDialogButton(self.administrative_tab)
+        self.time_to_pay_orderButton.setStyleSheet("background-color: rgb(85, 170, 255);")
+        self.time_to_pay_orderButton.setObjectName("time_to_pay_orderButton")
+        self.gridLayout_15.addWidget(self.time_to_pay_orderButton, 1, 0, 1, 1)
         self.entries_tab_widget.addTab(self.administrative_tab, "")
         self.civil_tab = QtWidgets.QWidget()
         self.civil_tab.setStyleSheet("background-color: rgb(220, 244, 255);")
@@ -1128,6 +1132,7 @@ class Ui_MainWindow(object):
         self.limited_driving_privilegesButton.setText(_translate("MainWindow", "Limited Driving Privileges"))
         self.fiscal_entriesButton.setText(_translate("MainWindow", "Fiscal Journal Entries"))
         self.juror_paymentButton.setText(_translate("MainWindow", "Juror Payment Entry"))
+        self.time_to_pay_orderButton.setText(_translate("MainWindow", "Time to Pay Order"))
         self.entries_tab_widget.setTabText(self.entries_tab_widget.indexOf(self.administrative_tab), _translate("MainWindow", "Administrative"))
         self.CivFreeformEntryButton.setText(_translate("MainWindow", "Freeform Entry"))
         self.entries_tab_widget.setTabText(self.entries_tab_widget.indexOf(self.civil_tab), _translate("MainWindow", "Civil"))
@@ -1247,5 +1252,5 @@ class Ui_MainWindow(object):
         self.actionCourtroom_C.setText(_translate("MainWindow", "Courtroom C"))
         self.actionCreate_single_FTA_Entry.setText(_translate("MainWindow", "Create single FTA Entry"))
         self.actionNot_Guilty_Continuance.setText(_translate("MainWindow", "Not Guilty / Continuance"))
-from munientry.mainwindow.dialog_buttons import AdminDrivingDialogButton, AdminFiscalDialogButton, AdminJuryDialogButton, CivilDialogButton, CrimDialogButton, ProbationDialogButton, SchedDialogButton, WorkDialogButton
+from munientry.mainwindow.dialog_buttons import AdminDrivingDialogButton, AdminFiscalDialogButton, AdminJuryDialogButton, AdminTimeDialogButton, CivilDialogButton, CrimDialogButton, ProbationDialogButton, SchedDialogButton, WorkDialogButton
 from munientry.widgets.combo_boxes import DailyCaseListComboBox
