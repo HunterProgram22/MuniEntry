@@ -38,6 +38,7 @@ TEMPLATE_LIST = (
     Template('Arraignment Continuance Entry', 'Arraignment_Continue_Template.docx'),
     Template('Fine Only Judgment Entry', 'Fine_Only_Plea_Final_Judgment_Template.docx'),
     Template('Jury Payment Entry', 'Jury_Payment_Template.docx'),
+    Template('Time To Pay Entry', 'Time_To_Pay_Template.docx'),
     Template('Admin Fiscal Entry', 'Admin_Fiscal_Template.docx'),
     Template('Driving Privileges Entry', 'Driving_Privileges_Template.docx'),
     Template('Leap Admission Plea Entry', 'Leap_Admission_Plea_Template.docx'),

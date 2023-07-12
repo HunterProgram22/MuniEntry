@@ -133,6 +133,25 @@ class AdminDrivingDialogButton(DialogButton):
         return mainwindow.court_staff.administrative_staff_buttons
 
 
+class AdminTimeDialogButton(DialogButton):
+    """Custom Dialog button for Time to Paym Entry only.
+
+    TODO: Refactor this is same as AdminJuryDialogButton
+    """
+
+    def load_dialog(self):
+        mainwindow = self.window()
+        if AdminPreloadChecker(mainwindow).perform_checks():
+            self._create_dialog_instance(
+                mainwindow,
+                cms_case_data=get_crim_cms_case_data(mainwindow),
+                case_table=set_case_table(mainwindow),
+            )
+
+    def set_officer_buttons(self, mainwindow):
+        return mainwindow.court_staff.administrative_staff_buttons
+
+
 class AdminJuryDialogButton(DialogButton):
     """Custom Dialog button for Jury Payment Entry only."""
 
