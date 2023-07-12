@@ -225,11 +225,16 @@ class FindingComboBox(ChargeGridComboBox):
     def update_grid(self) -> None:
         """Updates the UI if the user choses to set the OVI Mins.
 
+        TODO: Refactor out different values based on judicial officer.
+
         TODO: This should be a general function that updates grid based on the charge.
         """
         self.dialog.community_control_checkBox.setChecked(True)
         self.dialog.license_suspension_checkBox.setChecked(True)
         self.charge_grid.itemAtPosition(self.charge_grid.row_jail_days, self.column).widget().setText('180')
         self.charge_grid.itemAtPosition(self.charge_grid.row_jail_days_suspended, self.column).widget().setText('177')
-        self.charge_grid.itemAtPosition(self.charge_grid.row_fine, self.column).widget().setText('375')
+        if self.dialog.entry_case_information.judicial_officer.last_name == 'Hemmeter':
+            self.charge_grid.itemAtPosition(self.charge_grid.row_fine, self.column).widget().setText('450')
+        else:
+            self.charge_grid.itemAtPosition(self.charge_grid.row_fine, self.column).widget().setText('375')
         self.charge_grid.itemAtPosition(self.charge_grid.row_fine_suspended, self.column).widget().setText('0')
