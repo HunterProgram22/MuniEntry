@@ -25,6 +25,7 @@ class SchedulingCaseInformation:
     jury_trial_only: str = None
     interpreter_required: bool = False
     interpreter_language: str = None
+    dates_confirmed: bool = False
 
     jury_trial: EventInfo = field(default_factory=lambda: EventInfo(time='8:15 AM'))
     trial_to_court: EventInfo = field(default_factory=EventInfo)
