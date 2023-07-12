@@ -94,12 +94,12 @@ class Ui_TimeToPayDialog(object):
         self.label_5 = QtWidgets.QLabel(self.frame)
         self.label_5.setObjectName("label_5")
         self.gridLayout_4.addWidget(self.label_5, 1, 0, 1, 1)
-        self.dateEdit = QtWidgets.QDateEdit(self.frame)
-        self.dateEdit.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.appearance_date = QtWidgets.QDateEdit(self.frame)
+        self.appearance_date.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);")
-        self.dateEdit.setCalendarPopup(True)
-        self.dateEdit.setObjectName("dateEdit")
-        self.gridLayout_4.addWidget(self.dateEdit, 1, 1, 1, 1)
+        self.appearance_date.setCalendarPopup(True)
+        self.appearance_date.setObjectName("appearance_date")
+        self.gridLayout_4.addWidget(self.appearance_date, 1, 1, 1, 1)
         self.label_4 = QtWidgets.QLabel(self.frame)
         self.label_4.setMaximumSize(QtCore.QSize(16777215, 50))
         font = QtGui.QFont()

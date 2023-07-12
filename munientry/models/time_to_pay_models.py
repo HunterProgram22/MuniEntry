@@ -10,6 +10,7 @@ class TimeToPayInformation:
     judicial_officer: object = None
     defendant: object = field(default_factory=Defendant)
     entry_date: str = None
+    appearance_date: str = None
 
     def get_case_information(self) -> dict:
         """Returns a dictionary with all of information required to populate an entry."""

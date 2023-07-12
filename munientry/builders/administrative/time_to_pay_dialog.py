@@ -9,6 +9,7 @@ from munientry.loaders.cms_case_loaders import CrimCmsLoader
 from munientry.models.time_to_pay_models import TimeToPayInformation
 from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.views.time_to_pay_dialog_ui import Ui_TimeToPayDialog
+from munientry.helper_functions import set_future_date
 
 
 class TimeToPayViewModifier(admin.AdminViewModifier):
@@ -21,6 +22,8 @@ class TimeToPayViewModifier(admin.AdminViewModifier):
     def set_view_dates(self):
         today = QDate.currentDate()
         self.dialog.entry_date.setDate(today)
+        appearance_days_to_add = set_future_date(14, 'Monday')
+        self.dialog.appearance_date.setDate(today.addDays(appearance_days_to_add))
 
 
 class TimeToPaySlotFunctions(admin.AdminSlotFunctions):
@@ -54,6 +57,7 @@ class TimeToPayCaseInformationUpdater(BaseDialogUpdater):
         super().__init__(dialog)
         self.model.judicial_officer = self.dialog.judicial_officer
         self.update_model_with_case_information_frame_data()
+        self.set_appearance_date()
 
     def update_model_with_case_information_frame_data(self) -> None:
         self.set_case_number_and_date()
@@ -66,6 +70,9 @@ class TimeToPayCaseInformationUpdater(BaseDialogUpdater):
     def set_party_information(self) -> None:
         self.model.defendant.first_name = self.dialog.defendant_first_name_lineEdit.text()
         self.model.defendant.last_name = self.dialog.defendant_last_name_lineEdit.text()
+
+    def set_appearance_date(self) -> None:
+        self.model.appearance_date = self.dialog.appearance_date.date().toString('MMMM dd, yyyy')
 
 
 class TimeToPayDialog(admin.AdminDialogBuilder, Ui_TimeToPayDialog):
