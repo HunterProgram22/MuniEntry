@@ -12,6 +12,7 @@ class SchedulingModelUpdater(BaseDialogUpdater):
         self.set_defense_counsel_information()
         self.set_scheduling_dates()
         self.set_interpreter()
+        self.set_dates_confirmed()
 
     def set_case_number_and_date(self):
         self.model.case_number = self.dialog.case_number_lineEdit.text()
@@ -30,3 +31,6 @@ class SchedulingModelUpdater(BaseDialogUpdater):
     def set_interpreter(self):
         self.model.interpreter_required = self.dialog.interpreter_check_box.isChecked()
         self.model.interpreter_language = self.dialog.language_box.text()
+
+    def set_dates_confirmed(self):
+        self.model.dates_confirmed = self.dialog.dates_confirmed_check_box.isChecked()

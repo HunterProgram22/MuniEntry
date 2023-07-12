@@ -181,7 +181,7 @@ font-weight: bold;</string>
            <x>0</x>
            <y>0</y>
            <width>1027</width>
-           <height>744</height>
+           <height>802</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
@@ -517,14 +517,7 @@ background-color: rgb(255, 255, 255);</string>
                <property name="verticalSpacing">
                 <number>36</number>
                </property>
-               <item row="3" column="0">
-                <widget class="QLabel" name="label_7">
-                 <property name="text">
-                  <string>Trial To Court Time:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
+               <item row="3" column="1">
                 <widget class="NoScrollDateEdit" name="trial_date">
                  <property name="styleSheet">
                   <string notr="true">color: rgb(0, 0, 0);
@@ -535,7 +528,43 @@ background-color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_7">
+                 <property name="text">
+                  <string>Trial To Court Time:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_8">
+                 <property name="text">
+                  <string>Assigned Courtroom:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <widget class="NoScrollComboBox" name="hearing_location_box">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>Courtroom C</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Courtroom B</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Courtroom A</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="3" column="0">
                 <widget class="QLabel" name="label_4">
                  <property name="text">
                   <string>Trial To Court Date:</string>
@@ -562,36 +591,24 @@ background-color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="label_8">
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="language_box">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="placeholderText">
+                  <string>Language Required</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="interpreter_check_box">
                  <property name="text">
-                  <string>Assigned Courtroom:</string>
+                  <string>Interpreter Required</string>
                  </property>
                 </widget>
                </item>
                <item row="4" column="1">
-                <widget class="NoScrollComboBox" name="hearing_location_box">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string>Courtroom C</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Courtroom B</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Courtroom A</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-               <item row="3" column="1">
                 <widget class="NoScrollComboBox" name="trial_time_box">
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -648,20 +665,10 @@ background-color: rgb(255, 255, 255);</string>
                  </item>
                 </widget>
                </item>
-               <item row="1" column="0">
-                <widget class="QCheckBox" name="interpreter_check_box">
+               <item row="2" column="0">
+                <widget class="QCheckBox" name="dates_confirmed_check_box">
                  <property name="text">
-                  <string>Interpreter Required</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLineEdit" name="language_box">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                 <property name="placeholderText">
-                  <string>Language Required</string>
+                  <string>Date Confirmed with Counsel</string>
                  </property>
                 </widget>
                </item>

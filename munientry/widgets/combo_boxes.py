@@ -192,7 +192,8 @@ class FindingComboBox(ChargeGridComboBox):
     def check_charge(self, text: str):
         """Checks the text of the Finding Box to determine the type of charge to process."""
         if text == 'Guilty' and self.get_offense_box_text() == 'OVI Alcohol / Drugs 1st':
-            self.process_ovi_one_charge()
+            charge = 'OVI Alcohol / Drugs 1st'
+            self.process_ovi_one_charge(charge)
 
     def get_offense_box_text(self) -> str:
         """Returns the text of an offense box as a string."""
@@ -200,7 +201,7 @@ class FindingComboBox(ChargeGridComboBox):
             self.charge_grid.row_offense, self.column,
         ).widget().text()
 
-    def process_ovi_one_charge(self):
+    def process_ovi_one_charge(self, charge):
         """Runs the process for asking the user if they one to set 1st OVI minimums.
 
         The ovi_one_mins returns one of 3 options. Yes set mins and dismiss other charges returns 0;
@@ -219,10 +220,12 @@ class FindingComboBox(ChargeGridComboBox):
             return None
         self.update_grid()
         if msg_response == 0:
-            self.charge_grid.dismiss_other_charges(self.column)
+            self.charge_grid.dismiss_other_charges(charge)
 
     def update_grid(self) -> None:
         """Updates the UI if the user choses to set the OVI Mins.
+
+        TODO: Refactor out different values based on judicial officer.
 
         TODO: This should be a general function that updates grid based on the charge.
         """
@@ -230,5 +233,8 @@ class FindingComboBox(ChargeGridComboBox):
         self.dialog.license_suspension_checkBox.setChecked(True)
         self.charge_grid.itemAtPosition(self.charge_grid.row_jail_days, self.column).widget().setText('180')
         self.charge_grid.itemAtPosition(self.charge_grid.row_jail_days_suspended, self.column).widget().setText('177')
-        self.charge_grid.itemAtPosition(self.charge_grid.row_fine, self.column).widget().setText('375')
+        if self.dialog.entry_case_information.judicial_officer.last_name == 'Hemmeter':
+            self.charge_grid.itemAtPosition(self.charge_grid.row_fine, self.column).widget().setText('450')
+        else:
+            self.charge_grid.itemAtPosition(self.charge_grid.row_fine, self.column).widget().setText('375')
         self.charge_grid.itemAtPosition(self.charge_grid.row_fine_suspended, self.column).widget().setText('0')

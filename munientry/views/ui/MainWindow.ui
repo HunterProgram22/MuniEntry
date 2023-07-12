@@ -56,8 +56,8 @@ font-weight: bold;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1264</width>
-             <height>455</height>
+             <width>1285</width>
+             <height>430</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_33">
@@ -1655,7 +1655,7 @@ font-weight: bold;</string>
            <string notr="true">background-color: rgb(208, 225, 255);</string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="mattox_tab">
            <attribute name="title">
@@ -1764,7 +1764,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="WorkDialogButton" name="md_adopt_workflowButton">
+               <widget class="WorkDialogButton" name="md_adopt_workflow_btn">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 127);</string>
                 </property>
@@ -1784,7 +1784,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="WorkDialogButton" name="admin_workflowButton">
+               <widget class="WorkDialogButton" name="admin_entries_workflow_btn">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 255);</string>
                 </property>
