@@ -3,25 +3,32 @@
 
 def general_case_search_query(case_number: str) -> str:
     return f"""
-    SELECT DISTINCT
+   DROP TABLE IF EXISTS #MuniEntrySelect
+
+    SELECT
         sc.SubCaseNumber,
         cm.CaseNumber,
         sc.Id AS SubCaseID,
         sc.ChargeDescription AS Charge,
         v.Id AS ViolationID,
+        vd.Id AS ViolationDetailID,
         v.SectionCode AS Statute,
+        v.IsActive as VIsActive,
+        vd.IsActive as VDIsActive,
         d.DegreeCode,
         cp.FirstName AS DefFirstName,
         cp.LastName AS DefLastName,
         vd.IsMoving AS MovingBool,
-        sc.ViolationDate AS ViolationDate,
+        sc.ViolationDate,
         vd.EndDate,
         cm.InsuranceStatus AS FraInFile,
         CONCAT(att.FirstName, ' ', att.LastName) AS DefenseCounsel,
-        IIF (sc.AttorneyTypeID = '476', 1, 0) AS PubDef
+        IIF (sc.AttorneyTypeID = '476', 1, 0) AS PubDef,
+        ROW_NUMBER() over(partition by sc.id order by sc.subcasenumber asc) as RowNumber
 
-    FROM 
-        [AuthorityCourt].[dbo].[CaseMaster] cm
+    INTO #MuniEntrySelect
+
+    FROM [AuthorityCourt].[dbo].[CaseMaster] cm
         JOIN [AuthorityCourt].[dbo].[SubCase] sc ON cm.Id = sc.CaseMasterID
         JOIN [AuthorityCourt].[dbo].[Violation] v ON sc.ViolationId = v.Id
         JOIN [AuthorityCourt].[dbo].[ViolationDetail] vd ON v.Id = vd.ViolationID
@@ -29,14 +36,14 @@ def general_case_search_query(case_number: str) -> str:
         JOIN [AuthorityCourt].[dbo].[CasePerson] cp ON cp.CaseMasterID = cm.Id
         LEFT JOIN [AuthorityCourt].[dbo].[Attorney] att ON sc.AttorneyID = att.Id
 
-	WHERE 
-	    cm.CaseNumber = '{case_number}' 
-	    AND sc.IsDeleted = '0' 
-	    AND cp.PersonTypeID = '1'
-	    AND vd.IsActive = '1'
-	    AND (vd.EndDate is NULL OR vd.EndDate >= sc.ViolationDate)	 	 
-	ORDER BY 
-	    sc.SubCaseNumber 
+    WHERE 
+        cm.CaseNumber = '{case_number}'
+        AND sc.IsDeleted = '0' 
+        AND cp.PersonTypeID = '1'
+
+    Select * from #MuniEntrySelect
+    WHERE RowNumber = 1
+    ORDER BY SubCaseNumber ASC
     """
 
 
