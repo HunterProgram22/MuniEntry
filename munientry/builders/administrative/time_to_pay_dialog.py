@@ -52,7 +52,6 @@ class TimeToPayCaseInformationUpdater(BaseDialogUpdater):
 
     def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
-        logger.debug(self.dialog.judicial_officer.last_name)
         self.model.judicial_officer = self.dialog.judicial_officer
         self.update_model_with_case_information_frame_data()
 

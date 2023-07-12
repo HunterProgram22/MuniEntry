@@ -45,6 +45,8 @@ class CourtStaffManager(object):
             self.mw.court_admin_admin_radio_btn,
             self.mw.jury_comm_1_admin_radio_btn,
             self.mw.mag_1_admin_radio_btn,
+            self.mw.mag_2_admin_radio_btn,
+            self.mw.mag_3_admin_radio_btn,
             self.mw.none_admin_radio_btn,
         ]
         self.probation_staff_buttons: list = [
@@ -109,13 +111,13 @@ class CourtStaffManager(object):
             self.mw.jury_comm_1_admin_radio_btn: JudicialOfficer('Kathryn', 'Patterson', JURY),
             self.mw.none_admin_radio_btn: JudicialOfficer('None', 'Assigned', ADMIN),
             self.mw.mag_1_admin_radio_btn: JudicialOfficer('Amanda', 'Bunner', MAGISTRATE),
-            self.mw.mag_2_radio_btn: JudicialOfficer('Kevin', 'Pelanda', MAGISTRATE),
-            self.mw.mag_3_radio_btn: JudicialOfficer('Justin', 'Kudela', MAGISTRATE),
+            self.mw.mag_2_admin_radio_btn: JudicialOfficer('Kevin', 'Pelanda', MAGISTRATE),
+            self.mw.mag_3_admin_radio_btn: JudicialOfficer('Justin', 'Kudela', MAGISTRATE),
 
             self.mw.chief_prob_officer_radio_btn: JudicialOfficer('Lindsey', 'Blue', CHIEF_CCO),
             self.mw.dep_chief_prob_officer_radio_btn: JudicialOfficer('Kurt', 'Olson', DEP_CCCO),
             self.mw.prob_officer_1_radio_btn: JudicialOfficer('Andrew', 'Conway', CCO),
-            self.mw.prob_officer_2_radio_btn: JudicialOfficer('Jennifer', 'Stamolis', CCO),
+            self.mw.prob_officer_2_radio_btn: JudicialOfficer('None', 'None', CCO),
             self.mw.prob_officer_3_radio_btn: JudicialOfficer('Jessica', 'Scholz', CCO),
             self.mw.prob_officer_4_radio_btn: JudicialOfficer('LeAnn', 'Taylor', CCO),
             self.mw.prob_officer_5_radio_btn: JudicialOfficer('Zachary', 'Slater', CCO),
