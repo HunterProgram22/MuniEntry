@@ -231,6 +231,7 @@ class FindingComboBox(ChargeGridComboBox):
         """
         self.dialog.community_control_checkBox.setChecked(True)
         self.dialog.license_suspension_checkBox.setChecked(True)
+        self.dialog.victim_notification_checkBox.setChecked(True)
         self.charge_grid.itemAtPosition(self.charge_grid.row_jail_days, self.column).widget().setText('180')
         self.charge_grid.itemAtPosition(self.charge_grid.row_jail_days_suspended, self.column).widget().setText('177')
         if self.dialog.entry_case_information.judicial_officer.last_name == 'Hemmeter':
