@@ -57,7 +57,7 @@ font-weight: bold;</string>
              <x>0</x>
              <y>0</y>
              <width>1285</width>
-             <height>430</height>
+             <height>432</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_33">
@@ -82,22 +82,6 @@ font-weight: bold;</string>
                   <property name="verticalSpacing">
                    <number>12</number>
                   </property>
-                  <item row="5" column="0">
-                   <widget class="CrimDialogButton" name="JailCCPleaButton">
-                    <property name="minimumSize">
-                     <size>
-                      <width>120</width>
-                      <height>30</height>
-                     </size>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(85, 170, 127);</string>
-                    </property>
-                    <property name="text">
-                     <string>Jail and/or Community Control</string>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="3" column="0">
                    <widget class="QLabel" name="label_2">
                     <property name="font">
@@ -115,22 +99,6 @@ font-weight: bold;</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="6" column="0">
-                   <widget class="CrimDialogButton" name="DiversionButton">
-                    <property name="minimumSize">
-                     <size>
-                      <width>120</width>
-                      <height>30</height>
-                     </size>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(85, 170, 127);</string>
-                    </property>
-                    <property name="text">
-                     <string>Diversion</string>
                     </property>
                    </widget>
                   </item>
@@ -394,22 +362,6 @@ font-weight: bold;</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="4" column="0">
-                   <widget class="CrimDialogButton" name="FineOnlyPleaButton">
-                    <property name="minimumSize">
-                     <size>
-                      <width>120</width>
-                      <height>30</height>
-                     </size>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(85, 170, 127);</string>
-                    </property>
-                    <property name="text">
-                     <string>Fine Only</string>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="10" column="1">
                    <widget class="CrimDialogButton" name="CriminalSealingButton">
                     <property name="styleSheet">
@@ -476,7 +428,39 @@ font-weight: bold;</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="11" column="2">
+                  <item row="4" column="0">
+                   <widget class="CrimDialogButton" name="JailCCPleaButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Plea and Sentencing Entry</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="CrimDialogButton" name="DiversionButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Diversion</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="0">
                    <widget class="CrimDialogButton" name="CompetencyButton">
                     <property name="styleSheet">
                      <string notr="true">background-color: rgb(160, 160, 160);</string>
@@ -2308,11 +2292,9 @@ font-weight: bold;</string>
  </customwidgets>
  <tabstops>
   <tabstop>NoPleaBondButton</tabstop>
-  <tabstop>JailCCPleaButton</tabstop>
   <tabstop>NotGuiltyBondButton</tabstop>
   <tabstop>BondHearingButton</tabstop>
   <tabstop>PleaOnlyButton</tabstop>
-  <tabstop>DiversionButton</tabstop>
   <tabstop>ProbationViolationBondButton</tabstop>
   <tabstop>FailureToAppearButton</tabstop>
   <tabstop>LeapAdmissionButton</tabstop>
@@ -2350,7 +2332,6 @@ font-weight: bold;</string>
   <tabstop>arraignments_radio_btn</tabstop>
   <tabstop>slated_cases_box</tabstop>
   <tabstop>arraignments_cases_box</tabstop>
-  <tabstop>FineOnlyPleaButton</tabstop>
   <tabstop>entries_tab_widget</tabstop>
  </tabstops>
  <resources/>
