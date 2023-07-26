@@ -8,9 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from munientry.widgets.combo_boxes import NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit, NoScrollTimeEdit
-
 
 class Ui_AddJailOnly(object):
     def setupUi(self, AddJailOnly):
@@ -234,7 +231,7 @@ class Ui_AddJailOnly(object):
         self.offense_label_1.setText(_translate("AddJailOnly", "Offense:"))
         self.label_14.setText(_translate("AddJailOnly", "Finding:"))
         self.label_19.setText(_translate("AddJailOnly", "Statute:"))
-        self.label_11.setText(_translate("AddJailOnly", "Type of Sentence Execution:"))
+        self.label_11.setText(_translate("AddJailOnly", "Jail Days beyond statutory minimum to be served:"))
         self.label_10.setText(_translate("AddJailOnly", "Report Type:"))
         self.report_date_label.setText(_translate("AddJailOnly", "Report Date:"))
         self.jail_report_days_notes_box.setPlaceholderText(_translate("AddJailOnly", "Jail report days if not consecutive"))
@@ -242,9 +239,11 @@ class Ui_AddJailOnly(object):
         self.report_type_box.setItemText(1, _translate("AddJailOnly", "forthwith"))
         self.report_type_box.setItemText(2, _translate("AddJailOnly", "date set by Office of Community Control"))
         self.report_time_label.setText(_translate("AddJailOnly", "Report Time:"))
-        self.jail_sentence_execution_type_box.setItemText(0, _translate("AddJailOnly", "consecutive days"))
-        self.jail_sentence_execution_type_box.setItemText(1, _translate("AddJailOnly", "intermittent days"))
-        self.jail_sentence_execution_type_box.setItemText(2, _translate("AddJailOnly", "weekends (Friday evening to Monday morning)"))
+        self.jail_sentence_execution_type_box.setItemText(0, _translate("AddJailOnly", "intermittently"))
+        self.jail_sentence_execution_type_box.setItemText(1, _translate("AddJailOnly", "consecutively"))
+        self.jail_sentence_execution_type_box.setItemText(2, _translate("AddJailOnly", "on weekends"))
         self.label_27.setText(_translate("AddJailOnly", "JAIL COMMITMENT"))
         self.cancel_Button.setText(_translate("AddJailOnly", "Cancel"))
         self.add_conditions_Button.setText(_translate("AddJailOnly", "Add Jail Reporting Terms"))
+from munientry.widgets.combo_boxes import NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit, NoScrollTimeEdit
