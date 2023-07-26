@@ -83,6 +83,7 @@ class JailCCEntryCaseInformation(FineOnlyEntryCaseInformation):
         self.license_suspension.suspended_date = self.get_violation_date()
         self.license_suspension.suspension_term = '12 months'
         self.license_suspension.als_terminated = True
+        self.victim_notification.fingerprinting_ordered = True
 
     def get_violation_date(self) -> str:
         for charge in self.charges_list:

@@ -146,4 +146,5 @@ OVI_ONE_MSG = """You have found the defendant guilty of a 1st OVI. Do you want t
 \nJail Days: 180\nJail Days Suspended: 177
 \nCommunity Control: Basic Supervision for 1 year\nDIP Option: Yes
 \nCourt Suspension: One Year from {0}\nTerminate ALS.
+\nFingerprinting is Ordered.
 """
