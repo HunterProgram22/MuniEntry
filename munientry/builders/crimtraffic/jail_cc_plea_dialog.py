@@ -1,4 +1,5 @@
 """Builder module for the Jail CC Plea Dialog."""
+from PyQt6.QtWidgets import QWidget
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
@@ -36,6 +37,20 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
             self.dialog.companion_cases_box.setHidden(True)
             self.dialog.companion_cases_sentence_box.setHidden(True)
             self.dialog.companion_cases_sentence_label.setHidden(True)
+
+    def show_diversion_frame(self):
+        if self.dialog.diversion_check_box.isChecked():
+            for child in self.dialog.diversion_frame.children():
+                if isinstance(child, QWidget) and child != self.dialog.diversion_check_box:
+                    child.show()
+            # self.dialog.diversion_frame.setMinimumHeight(0)
+            # self.dialog.diversion_frame.setMaximumHeight(1500)
+            # self.dialog.adjustSize()
+        else:
+            for child in self.dialog.diversion_frame.children():
+                if isinstance(child, QWidget) and child != self.dialog.diversion_check_box:
+                    child.hide()
+            # self.dialog.diversion_frame.setFixedHeight(60)
 
     def start_add_jail_report_dialog(self):
         self.dialog.update_entry_case_information()
@@ -76,6 +91,9 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
         self.dialog.add_jail_report_Button.pressed.connect(
             self.dialog.functions.start_add_jail_report_dialog,
+        )
+        self.dialog.diversion_check_box.toggled.connect(
+            self.dialog.functions.show_diversion_frame,
         )
 
 
@@ -132,5 +150,6 @@ class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
             ('victim_notification_checkBox', self.entry_case_information.victim_notification),
         ]
         self.functions.show_companion_case_fields()
+        self.functions.show_diversion_frame()
         if self.case_table == 'slated':
             self.in_jail_box.setCurrentText('Yes')
