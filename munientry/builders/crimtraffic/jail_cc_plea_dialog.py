@@ -57,6 +57,7 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
             for child in self.dialog.jail_details_frame.children():
                 if isinstance(child, QWidget) and child != self.dialog.jail_details_check_box:
                     child.hide()
+        self.show_companion_case_fields()
 
     def start_add_jail_report_dialog(self):
         self.dialog.update_entry_case_information()
@@ -83,9 +84,9 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
 
     def connect_dialog_specific_signals(self):
         self.dialog.jail_checkBox.toggled.connect(self.dialog.functions.conditions_checkbox_toggle)
-        # self.dialog.add_companion_cases_checkBox.toggled.connect(
-        #     self.dialog.functions.show_companion_case_fields,
-        # )
+        self.dialog.add_companion_cases_checkBox.toggled.connect(
+            self.dialog.functions.show_companion_case_fields,
+        )
         self.dialog.community_control_checkBox.toggled.connect(
             self.dialog.functions.conditions_checkbox_toggle,
         )
@@ -158,7 +159,6 @@ class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
             ('impoundment_checkBox', self.entry_case_information.impoundment),
             ('victim_notification_checkBox', self.entry_case_information.victim_notification),
         ]
-        # self.functions.show_companion_case_fields()
         self.functions.show_diversion_frame()
         self.functions.show_jail_details_frame()
         if self.case_table == 'slated':
