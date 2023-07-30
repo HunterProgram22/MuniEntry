@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1285</width>
-    <height>881</height>
+    <width>1287</width>
+    <height>888</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -170,9 +170,9 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-572</y>
-        <width>1248</width>
-        <height>1722</height>
+        <y>0</y>
+        <width>1250</width>
+        <height>1721</height>
        </rect>
       </property>
       <property name="focusPolicy">
@@ -411,10 +411,19 @@ background-color: rgb(255, 255, 255);</string>
           <bool>true</bool>
          </property>
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Palatino Linotype</family>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(240, 240, 240);</string>
@@ -428,8 +437,42 @@ background-color: rgb(255, 255, 255);</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_9" rowstretch="1,1,1,1,1,0,0,0,0,0,0,0,0,0">
-          <item row="3" column="4">
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="0" colspan="5">
+           <widget class="QCheckBox" name="diversion_check_box">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>21</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Diversion Case</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="marijuana_diversion_radio_btn">
+            <property name="text">
+             <string>Marijuana Diversion Program</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" rowspan="4">
+           <widget class="Line" name="line_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="fine_pay_date_label">
+            <property name="text">
+             <string>Fine Pay Date:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
            <widget class="NoScrollDateEdit" name="diversion_fine_pay_date">
             <property name="styleSheet">
              <string notr="true">color: rgb(0, 0, 0);
@@ -440,31 +483,108 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="3" column="0">
            <widget class="QRadioButton" name="theft_diversion_radio_btn">
             <property name="text">
              <string>Theft Diversion Program</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="2" colspan="3">
-           <widget class="QLabel" name="jail_report_date_note_label">
+          <item row="3" column="2" colspan="3">
+           <widget class="QLabel" name="label_30">
             <property name="text">
-             <string>Jail report date is set to first Friday after 97 days from today.</string>
+             <string>Fine pay date is set to first Tuesday after 97 days from today.</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="3">
+          <item row="4" column="0">
+           <widget class="QRadioButton" name="other_diversion_radio_btn">
+            <property name="text">
+             <string>Other Diversion Program</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QCheckBox" name="diversion_jail_imposed_check_box">
+            <property name="text">
+             <string>Jail Time Imposed</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
            <widget class="QLabel" name="diversion_jail_report_date_label">
             <property name="text">
              <string>Jail Report Date:</string>
             </property>
            </widget>
           </item>
-          <item row="11" column="0">
+          <item row="4" column="4">
+           <widget class="NoScrollDateEdit" name="diversion_jail_report_date">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2" colspan="3">
+           <widget class="QLabel" name="jail_report_date_note_label">
+            <property name="text">
+             <string>Jail report date is set to first Friday after 97 days from today.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="5">
+           <widget class="Line" name="line_4">
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
            <widget class="QCheckBox" name="pay_restitution_check_box">
             <property name="text">
              <string>Restitution Ordered</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="2">
+           <widget class="QLabel" name="pay_restitution_to_label">
+            <property name="text">
+             <string>Pay Restitution To:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="4">
+           <widget class="QLineEdit" name="pay_restitution_to_line">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="2">
+           <widget class="QLabel" name="pay_restitution_amount_label">
+            <property name="text">
+             <string>Pay Restitution in Amount of:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="4">
+           <widget class="QLineEdit" name="pay_restitution_amount_line">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QCheckBox" name="other_conditions_check_box">
+            <property name="text">
+             <string>Add Other Conditions</string>
             </property>
            </widget>
           </item>
@@ -488,115 +608,10 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1" rowspan="5">
-           <widget class="Line" name="line_7">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QRadioButton" name="other_diversion_radio_btn">
-            <property name="text">
-             <string>Other Diversion Program</string>
-            </property>
-           </widget>
-          </item>
-          <item row="13" column="2" colspan="3">
+          <item row="9" column="2" colspan="3">
            <widget class="QTextEdit" name="other_conditions_text">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="13" column="0">
-           <widget class="QCheckBox" name="other_conditions_check_box">
-            <property name="text">
-             <string>Add Other Conditions</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="0" colspan="5">
-           <widget class="Line" name="line_4">
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QCheckBox" name="diversion_jail_imposed_check_box">
-            <property name="text">
-             <string>Jail Time Imposed</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QRadioButton" name="marijuana_diversion_radio_btn">
-            <property name="text">
-             <string>Marijuana Diversion Program</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2" colspan="3">
-           <widget class="QLabel" name="label_30">
-            <property name="text">
-             <string>Fine pay date is set to first Tuesday after 97 days from today.</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="4">
-           <widget class="QLineEdit" name="pay_restitution_to_line">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="4">
-           <widget class="QLineEdit" name="pay_restitution_amount_line">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="2">
-           <widget class="QLabel" name="pay_restitution_to_label">
-            <property name="text">
-             <string>Pay Restitution To:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="2">
-           <widget class="QLabel" name="pay_restitution_amount_label">
-            <property name="text">
-             <string>Pay Restitution in Amount of:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLabel" name="fine_pay_date_label">
-            <property name="text">
-             <string>Fine Pay Date:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="4">
-           <widget class="NoScrollDateEdit" name="diversion_jail_report_date">
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="5">
-           <widget class="QCheckBox" name="diversion_check_box">
-            <property name="text">
-             <string>Diversion Case</string>
             </property>
            </widget>
           </item>
@@ -855,6 +870,15 @@ background-color: rgb(255, 255, 255);</string>
        </item>
        <item row="3" column="0">
         <widget class="QFrame" name="jail_details_frame">
+         <property name="font">
+          <font>
+           <family>Palatino Linotype</family>
+           <pointsize>9</pointsize>
+           <weight>75</weight>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(240, 240, 240);
 font: 75 9pt &quot;Palatino Linotype&quot;;
@@ -870,10 +894,10 @@ font-weight: bold;</string>
           <number>2</number>
          </property>
          <layout class="QGridLayout" name="gridLayout_6">
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_6">
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_16">
             <property name="text">
-             <string>Currently In Jail:</string>
+             <string>Apply JTC to:</string>
             </property>
            </widget>
           </item>
@@ -916,10 +940,55 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_16">
+          <item row="5" column="0" colspan="2">
+           <widget class="Line" name="line_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_6">
             <property name="text">
-             <string>Apply JTC to:</string>
+             <string>Currently In Jail:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QCheckBox" name="jail_checkBox">
+            <property name="text">
+             <string>Set Jail Reporting Terms - This must be checked before adding report date</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QCheckBox" name="add_companion_cases_checkBox">
+            <property name="text">
+             <string>Add Companion Cases</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QPushButton" name="add_jail_report_Button">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(62, 146, 255)</string>
+            </property>
+            <property name="text">
+             <string>Add Jail Report Date</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="companion_cases_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QCheckBox" name="jail_details_check_box">
+            <property name="text">
+             <string>Jail Details</string>
             </property>
            </widget>
           </item>
@@ -948,68 +1017,6 @@ font-weight: bold;</string>
             </item>
            </widget>
           </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="Line" name="line_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QCheckBox" name="add_companion_cases_checkBox">
-            <property name="text">
-             <string>Add Companion Cases</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="companion_cases_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="companion_cases_sentence_label">
-            <property name="text">
-             <string>Companion Case Jail Time Served:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="NoScrollComboBox" name="companion_cases_sentence_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>consecutively</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>concurrently</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QCheckBox" name="jail_checkBox">
-            <property name="text">
-             <string>Set Jail Reporting Terms - This must be checked before adding report date</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
-           <widget class="QPushButton" name="add_jail_report_Button">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(62, 146, 255)</string>
-            </property>
-            <property name="text">
-             <string>Add Jail Report Date</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="0" colspan="2">
            <widget class="QLabel" name="jail_time_credit_label">
             <property name="maximumSize">
@@ -1036,11 +1043,28 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="jail_details_check_box">
+          <item row="7" column="0">
+           <widget class="QLabel" name="companion_cases_sentence_label">
             <property name="text">
-             <string>Jail Details</string>
+             <string>Companion Case Jail Time Served:</string>
             </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="NoScrollComboBox" name="companion_cases_sentence_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>consecutively</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>concurrently</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
