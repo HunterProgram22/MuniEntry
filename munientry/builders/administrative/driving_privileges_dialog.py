@@ -80,6 +80,13 @@ class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
             self.dialog.varied_hours_checkBox,
             self.dialog.other_conditions_checkBox,
         ]
+        self.bmv_elements = [
+            self.dialog.bmv_cases_label,
+            self.dialog.bmv_cases_textEdit,
+            self.dialog.related_case_checkBox,
+            self.dialog.related_case_lineEdit,
+            self.dialog.bmv_payment_plan_checkBox,
+        ]
 
     def create_entry_process(self) -> None:
         DrivingPrivilegesEntryCreator(self.dialog).create_entry_process()
@@ -123,11 +130,17 @@ class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
 
     def show_hide_bmv_cases_fields(self):
         if self.dialog.bmv_suspension_radioButton.isChecked():
-            self.dialog.bmv_cases_label.setHidden(False)
-            self.dialog.bmv_cases_textEdit.setHidden(False)
+            self.show_bmv_elements()
         else:
-            self.dialog.bmv_cases_label.setHidden(True)
-            self.dialog.bmv_cases_textEdit.setHidden(True)
+            self.hide_bmv_elements()
+
+    def show_bmv_elements(self):
+        for element in self.bmv_elements:
+            element.show()
+
+    def hide_bmv_elements(self):
+        for element in self.bmv_elements:
+            element.hide()
 
     def add_employer_school(self):
         employer_school = EmployerSchoolInformation()
@@ -286,7 +299,3 @@ class DrivingPrivilegesDialog(admin.AdminDialogBuilder, Ui_DrivingPrivilegesDial
         self.functions.enable_other_conditions()
         self.functions.enable_additional_information()
         self.functions.show_hide_bmv_cases_fields()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
