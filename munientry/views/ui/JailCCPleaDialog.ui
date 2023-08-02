@@ -170,9 +170,9 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-615</y>
+        <y>-339</y>
         <width>1252</width>
-        <height>1490</height>
+        <height>1451</height>
        </rect>
       </property>
       <property name="focusPolicy">
@@ -630,6 +630,19 @@ background-color: rgb(255, 255, 255);</string>
               </property>
              </widget>
             </item>
+            <item row="1" column="0" colspan="3">
+             <widget class="Line" name="line">
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <property name="lineWidth">
+               <number>2</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="0" colspan="3">
              <layout class="QGridLayout" name="charges_gridLayout">
               <item row="12" column="0">
@@ -791,222 +804,7 @@ background-color: rgb(255, 255, 255);</string>
               </item>
              </layout>
             </item>
-            <item row="1" column="0" colspan="3">
-             <widget class="Line" name="line">
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-              <property name="lineWidth">
-               <number>2</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
            </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QFrame" name="jail_details_frame">
-         <property name="font">
-          <font>
-           <family>Palatino Linotype</family>
-           <pointsize>9</pointsize>
-           <weight>75</weight>
-           <italic>false</italic>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(240, 240, 240);
-font: 75 9pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <property name="lineWidth">
-          <number>2</number>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_6">
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_16">
-            <property name="text">
-             <string>Apply JTC to:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="NoScrollComboBox" name="in_jail_box">
-            <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string/>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Yes</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>No</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string>Days In Jail:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="jail_time_credit_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="Line" name="line_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Currently In Jail:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QCheckBox" name="jail_checkBox">
-            <property name="text">
-             <string>Set Jail Reporting Terms - This must be checked before adding report date</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QCheckBox" name="add_companion_cases_checkBox">
-            <property name="text">
-             <string>Add Companion Cases</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
-           <widget class="QPushButton" name="add_jail_report_Button">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(62, 146, 255)</string>
-            </property>
-            <property name="text">
-             <string>Add Jail Report Date</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLineEdit" name="companion_cases_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="jail_details_check_box">
-            <property name="text">
-             <string>Jail Details</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="NoScrollComboBox" name="jail_time_credit_apply_box">
-            <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string/>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Costs and Fines</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Sentence</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QLabel" name="jail_time_credit_label">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>9</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="text">
-             <string>JAIL CREDIT AND REPORTING</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="companion_cases_sentence_label">
-            <property name="text">
-             <string>Companion Case Jail Time Served:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="NoScrollComboBox" name="companion_cases_sentence_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>consecutively</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>concurrently</string>
-             </property>
-            </item>
-           </widget>
           </item>
          </layout>
         </widget>
@@ -1034,20 +832,6 @@ font-weight: bold;</string>
           <number>2</number>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="community_control_checkBox">
-            <property name="text">
-             <string>Community Control                     </string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QCheckBox" name="victim_notification_checkBox">
-            <property name="text">
-             <string>Fingerprinting and Victim Notification</string>
-            </property>
-           </widget>
-          </item>
           <item row="3" column="1">
            <widget class="QCheckBox" name="other_conditions_checkBox">
             <property name="enabled">
@@ -1061,13 +845,6 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QCheckBox" name="community_service_checkBox">
-            <property name="text">
-             <string>Community Service                        </string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QCheckBox" name="license_suspension_checkBox">
             <property name="text">
@@ -1075,23 +852,24 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QCheckBox" name="impoundment_checkBox">
+          <item row="2" column="1">
+           <widget class="QCheckBox" name="community_service_checkBox">
             <property name="text">
-             <string>Immobilize/Impound                         </string>
+             <string>Community Service                        </string>
             </property>
            </widget>
           </item>
-          <item row="8" column="0" colspan="2">
-           <widget class="QPushButton" name="add_conditions_Button">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(62, 146, 255)</string>
-            </property>
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="victim_notification_checkBox">
             <property name="text">
-             <string>Add Additional Conditions</string>
+             <string>Fingerprinting and Victim Notification</string>
             </property>
-            <property name="autoDefault">
-             <bool>false</bool>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="community_control_checkBox">
+            <property name="text">
+             <string>Community Control                     </string>
             </property>
            </widget>
           </item>
@@ -1118,6 +896,26 @@ font-weight: bold;</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="2">
+           <widget class="QPushButton" name="add_conditions_Button">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(62, 146, 255)</string>
+            </property>
+            <property name="text">
+             <string>Add Additional Conditions</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="impoundment_checkBox">
+            <property name="text">
+             <string>Immobilize/Impound                         </string>
             </property>
            </widget>
           </item>
@@ -1471,6 +1269,314 @@ background-color: rgb(255, 255, 255);</string>
          <layout class="QGridLayout" name="gridLayout_7"/>
         </widget>
        </item>
+       <item row="3" column="0">
+        <widget class="QFrame" name="jail_details_frame">
+         <property name="font">
+          <font>
+           <family>Palatino Linotype</family>
+           <pointsize>9</pointsize>
+           <weight>75</weight>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(240, 240, 240);
+font: 75 9pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="lineWidth">
+          <number>2</number>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_6" columnstretch="1,1,1,1">
+          <item row="12" column="0" rowspan="2">
+           <widget class="QCheckBox" name="add_companion_cases_checkBox">
+            <property name="text">
+             <string>Add Companion Cases</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2" colspan="2">
+           <widget class="QLabel" name="label_32">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>JAIL REPORTING</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="NoScrollComboBox" name="report_type_box">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>future date</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>forthwith</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>date set by Office of Community Control</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLabel" name="report_date_label">
+            <property name="text">
+             <string>Report Date:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="NoScrollDateEdit" name="report_date_box">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Days In Jail:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Apply JTC to:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Currently In Jail:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="jail_time_credit_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QLabel" name="jail_time_credit_label">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>JAIL CREDIT</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="label_29">
+            <property name="text">
+             <string>Report Type:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="2" colspan="2">
+           <widget class="QLineEdit" name="jail_report_days_notes_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="placeholderText">
+             <string>Jail report days if not consecutive</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="NoScrollTimeEdit" name="report_time_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="time">
+             <time>
+              <hour>8</hour>
+              <minute>30</minute>
+              <second>0</second>
+             </time>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLabel" name="report_time_label">
+            <property name="text">
+             <string>Report Time:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="NoScrollComboBox" name="jail_time_credit_apply_box">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string/>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Costs and Fines</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Sentence</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="12" column="1">
+           <widget class="QLineEdit" name="companion_cases_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="NoScrollComboBox" name="in_jail_box">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string/>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Yes</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>No</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="3">
+           <widget class="QCheckBox" name="jail_checkBox">
+            <property name="text">
+             <string>Jail Details -&gt; Check to set jail credit and reporting. Checkbox must remain checked if ordering jail time.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="3">
+           <widget class="NoScrollComboBox" name="companion_cases_sentence_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>consecutively</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>concurrently</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="12" column="2">
+           <widget class="QLabel" name="companion_cases_sentence_label">
+            <property name="text">
+             <string>Companion Case Jail Time Served:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QLabel" name="label_31">
+            <property name="text">
+             <string>Jail Days beyond statutory minimum to be served:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="3">
+           <widget class="NoScrollComboBox" name="jail_sentence_execution_type_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>intermittently</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>consecutively</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>on weekends</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>
@@ -1492,6 +1598,11 @@ background-color: rgb(255, 255, 255);</string>
    <class>DefenseCounselComboBox</class>
    <extends>QComboBox</extends>
    <header>munientry.widgets.combo_boxes</header>
+  </customwidget>
+  <customwidget>
+   <class>NoScrollTimeEdit</class>
+   <extends>QTimeEdit</extends>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -1515,15 +1626,7 @@ background-color: rgb(255, 255, 255);</string>
   <tabstop>pay_restitution_to_line</tabstop>
   <tabstop>pay_restitution_amount_line</tabstop>
   <tabstop>add_charge_Button</tabstop>
-  <tabstop>jail_details_check_box</tabstop>
-  <tabstop>in_jail_box</tabstop>
-  <tabstop>jail_time_credit_box</tabstop>
-  <tabstop>jail_time_credit_apply_box</tabstop>
   <tabstop>add_companion_cases_checkBox</tabstop>
-  <tabstop>companion_cases_box</tabstop>
-  <tabstop>companion_cases_sentence_box</tabstop>
-  <tabstop>jail_checkBox</tabstop>
-  <tabstop>add_jail_report_Button</tabstop>
   <tabstop>community_control_checkBox</tabstop>
   <tabstop>license_suspension_checkBox</tabstop>
   <tabstop>impoundment_checkBox</tabstop>

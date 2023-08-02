@@ -76,13 +76,13 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
                     child.hide()
 
     def show_jail_details_frame(self):
-        if self.dialog.jail_details_check_box.isChecked():
+        if self.dialog.jail_checkBox.isChecked():
             for child in self.dialog.jail_details_frame.children():
-                if isinstance(child, QWidget) and child != self.dialog.jail_details_check_box:
+                if isinstance(child, QWidget) and child != self.dialog.jail_checkBox:
                     child.show()
         else:
             for child in self.dialog.jail_details_frame.children():
-                if isinstance(child, QWidget) and child != self.dialog.jail_details_check_box:
+                if isinstance(child, QWidget) and child != self.dialog.jail_checkBox:
                     child.hide()
         self.show_companion_case_fields()
 
@@ -123,13 +123,13 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.dialog.victim_notification_checkBox.toggled.connect(
             self.dialog.functions.conditions_checkbox_toggle,
         )
-        self.dialog.add_jail_report_Button.pressed.connect(
-            self.dialog.functions.start_add_jail_report_dialog,
-        )
+        # self.dialog.add_jail_report_Button.pressed.connect(
+        #     self.dialog.functions.start_add_jail_report_dialog,
+        # )
         self.dialog.diversion_check_box.toggled.connect(
             self.dialog.functions.show_diversion_frame,
         )
-        self.dialog.jail_details_check_box.toggled.connect(
+        self.dialog.jail_checkBox.toggled.connect(
             self.dialog.functions.show_jail_details_frame,
         )
 
