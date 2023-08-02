@@ -170,7 +170,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-615</y>
         <width>1252</width>
         <height>1490</height>
        </rect>
@@ -447,7 +447,7 @@ background-color: rgb(255, 255, 255);</string>
              </size>
             </property>
             <property name="text">
-             <string>Diversion Case</string>
+             <string>Diversion Case -&gt; Check to order diversion. Checkbox must remain checked if ordering diversion.</string>
             </property>
            </widget>
           </item>
@@ -472,88 +472,17 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="fine_pay_date_label">
-            <property name="text">
-             <string>Fine Pay Date:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLabel" name="label_30">
-            <property name="text">
-             <string>Fine pay date is set to first Tuesday after 97 days from today.</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="NoScrollDateEdit" name="diversion_fine_pay_date">
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
           <item row="4" column="0">
            <widget class="QCheckBox" name="diversion_jail_imposed_check_box">
             <property name="text">
-             <string>Jail Time Imposed</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLabel" name="diversion_jail_report_date_label">
-            <property name="text">
-             <string>Jail Report Date (set to first Friday 97 days from today):</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="NoScrollDateEdit" name="diversion_jail_report_date">
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
+             <string>Jail Time Imposed. Jail Report Date (set to first Friday 97 days from today):</string>
             </property>
            </widget>
           </item>
           <item row="5" column="0">
            <widget class="QCheckBox" name="pay_restitution_check_box">
             <property name="text">
-             <string>Restitution Ordered</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLabel" name="pay_restitution_to_label">
-            <property name="text">
-             <string>Pay Restitution To:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QLineEdit" name="pay_restitution_to_line">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLabel" name="pay_restitution_amount_label">
-            <property name="text">
-             <string>Pay Restitution in Amount of:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="2">
-           <widget class="QLineEdit" name="pay_restitution_amount_line">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string>Restitution Ordered. Pay Restitution To:</string>
             </property>
            </widget>
           </item>
@@ -574,6 +503,56 @@ background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>Fine Pay Date (set to first Tuesday after 97 days from today):</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="NoScrollDateEdit" name="diversion_fine_pay_date">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="NoScrollDateEdit" name="diversion_jail_report_date">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="pay_restitution_to_line">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="pay_restitution_amount_label">
+            <property name="text">
+             <string>Pay Restitution in Amount of:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="pay_restitution_amount_line">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
@@ -1519,17 +1498,45 @@ background-color: rgb(255, 255, 255);</string>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
   <tabstop>case_number_lineEdit</tabstop>
+  <tabstop>defense_counsel_name_box</tabstop>
+  <tabstop>defense_counsel_type_box</tabstop>
+  <tabstop>defense_counsel_waived_checkBox</tabstop>
   <tabstop>appearance_reason_box</tabstop>
+  <tabstop>offense_of_violence_checkBox</tabstop>
+  <tabstop>victim_statements_checkBox</tabstop>
+  <tabstop>diversion_check_box</tabstop>
+  <tabstop>theft_diversion_radio_btn</tabstop>
+  <tabstop>marijuana_diversion_radio_btn</tabstop>
+  <tabstop>other_diversion_radio_btn</tabstop>
+  <tabstop>diversion_fine_pay_date</tabstop>
+  <tabstop>diversion_jail_imposed_check_box</tabstop>
+  <tabstop>diversion_jail_report_date</tabstop>
+  <tabstop>pay_restitution_check_box</tabstop>
+  <tabstop>pay_restitution_to_line</tabstop>
+  <tabstop>pay_restitution_amount_line</tabstop>
+  <tabstop>add_charge_Button</tabstop>
+  <tabstop>jail_details_check_box</tabstop>
+  <tabstop>in_jail_box</tabstop>
+  <tabstop>jail_time_credit_box</tabstop>
+  <tabstop>jail_time_credit_apply_box</tabstop>
+  <tabstop>add_companion_cases_checkBox</tabstop>
+  <tabstop>companion_cases_box</tabstop>
+  <tabstop>companion_cases_sentence_box</tabstop>
+  <tabstop>jail_checkBox</tabstop>
+  <tabstop>add_jail_report_Button</tabstop>
+  <tabstop>community_control_checkBox</tabstop>
+  <tabstop>license_suspension_checkBox</tabstop>
+  <tabstop>impoundment_checkBox</tabstop>
+  <tabstop>victim_notification_checkBox</tabstop>
+  <tabstop>community_service_checkBox</tabstop>
+  <tabstop>other_conditions_checkBox</tabstop>
+  <tabstop>add_conditions_Button</tabstop>
   <tabstop>court_costs_box</tabstop>
   <tabstop>ability_to_pay_box</tabstop>
   <tabstop>balance_due_date</tabstop>
   <tabstop>fra_in_file_box</tabstop>
-  <tabstop>community_control_checkBox</tabstop>
-  <tabstop>in_jail_box</tabstop>
-  <tabstop>jail_time_credit_box</tabstop>
-  <tabstop>jail_time_credit_apply_box</tabstop>
-  <tabstop>add_conditions_Button</tabstop>
-  <tabstop>add_charge_Button</tabstop>
+  <tabstop>fra_in_court_box</tabstop>
+  <tabstop>close_dialog_Button</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -50,11 +50,17 @@ class JailCCDialogUpdater(BaseDialogUpdater):
         self.update_court_costs()
         self.update_fines()
         self.update_jail_data()
+        self.update_diversion_information()
 
     def update_case_information(self) -> CaseInformationUpdater:
         self.model.victim_statements = self.dialog.victim_statements_checkBox.isChecked()
         self.model.offense_of_violence = self.dialog.offense_of_violence_checkBox.isChecked()
         return CaseInformationUpdater(self.dialog)
+
+    def update_diversion_information(self) -> None:
+        self.model.diversion_ordered = self.dialog.diversion_check_box.isChecked()
+        self.dialog.transfer_view_data_to_model(self.model.diversion)
+        self.model.diversion.program_name = self.model.diversion.get_program_name()
 
     def update_model_with_charge_grid_data(self) -> JailCCGridModelUpdater:
         return JailCCGridModelUpdater(self.dialog)

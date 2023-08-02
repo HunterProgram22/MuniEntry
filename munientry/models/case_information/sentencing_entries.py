@@ -98,6 +98,7 @@ class JailCCEntryCaseInformation(FineOnlyEntryCaseInformation):
                     date_formatted = 'May 05, 2023'
                 return date_formatted
 
+
 @dataclass
 class SentencingOnlyEntryCaseInformation(JailCCEntryCaseInformation):
     """General case information data variables for Sentencing Only entry."""

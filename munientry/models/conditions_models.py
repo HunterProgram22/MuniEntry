@@ -239,8 +239,6 @@ class Diversion(ConditionsModel):
     restitution_ordered: bool = False
     pay_restitution_to: str = None
     pay_restitution_amount: str = None
-    other_conditions_ordered: bool = False
-    other_conditions_text: str = None
     terms_list = [
         ('marijuana_diversion', 'marijuana_diversion_radio_btn'),
         ('theft_diversion', 'theft_diversion_radio_btn'),
@@ -251,8 +249,6 @@ class Diversion(ConditionsModel):
         ('restitution_ordered', 'pay_restitution_check_box'),
         ('pay_restitution_to', 'pay_restitution_to_line'),
         ('pay_restitution_amount', 'pay_restitution_amount_line'),
-        ('other_conditions_ordered', 'other_conditions_check_box'),
-        ('other_conditions_text', 'other_conditions_text'),
     ]
 
     def get_program_name(self) -> str:

@@ -1,4 +1,5 @@
 """Builder module for the Jail CC Plea Dialog."""
+from PyQt6.QtCore import QDate
 from PyQt6.QtWidgets import QWidget
 from loguru import logger
 
@@ -8,6 +9,7 @@ from munientry.builders.secondary.add_community_control_dialog import (
 )
 from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
 from munientry.checkers.crim_checks import JailTimeChecks
+from munientry.helper_functions import set_future_date
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     JailCCEntryCaseInformation,
@@ -16,6 +18,7 @@ from munientry.settings.pyqt_constants import MAX_JAIL_TIME_VALIDATOR
 from munientry.updaters.grid_case_updaters import JailCCDialogUpdater
 from munientry.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 
+DIVERSION_ADD_DAYS = 97
 
 class JailCCDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Jail CC Plea Dialog."""
@@ -23,6 +26,30 @@ class JailCCDialogViewModifier(crim.CrimTrafficViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_appearance_reason()
+        self.set_diversion_fine_pay_date()
+        self.set_diversion_jail_report_date()
+
+    def set_diversion_fine_pay_date(self):
+        """Diversion pay date is set to the first Tuesday after 97 days.
+
+        90 days to comply, plus 7 days to process paperwork (per Judge Hemmeter).
+        """
+        today = QDate.currentDate()
+        diversion_pay_days_to_add = set_future_date(DIVERSION_ADD_DAYS, 'Tuesday')
+        self.dialog.diversion_fine_pay_date.setDate(
+            today.addDays(diversion_pay_days_to_add),
+        )
+
+    def set_diversion_jail_report_date(self):
+        """Diversion jail report date is set to the first Friday after 97 days.
+
+        90 days to comply, plus 7 days to process paperwork (per Judge Hemmeter).
+        """
+        today = QDate.currentDate()
+        jail_report_days_to_add = set_future_date(DIVERSION_ADD_DAYS, 'Friday')
+        self.dialog.diversion_jail_report_date.setDate(
+            today.addDays(jail_report_days_to_add),
+        )
 
 
 class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMixin):

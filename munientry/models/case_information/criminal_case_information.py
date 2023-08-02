@@ -4,6 +4,7 @@ from dataclasses import asdict, dataclass, field
 
 from munientry.models.party_types import Defendant
 from munientry.models.scheduling_information import EventInfo
+from munientry.models import conditions_models as cm
 
 
 @dataclass
@@ -28,6 +29,9 @@ class CriminalCaseInformation(object):
     charges_list: list = field(default_factory=list)
     amended_charges_list: list = field(default_factory=list)
     amend_offense_details: object = None
+
+    diversion_ordered: bool = False
+    diversion: object = field(default_factory=cm.Diversion)
 
     def add_charge_to_list(self, charge) -> None:
         self.charges_list.append(charge)
