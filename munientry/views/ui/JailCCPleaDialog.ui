@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1287</width>
-    <height>888</height>
+    <width>1289</width>
+    <height>895</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -171,8 +171,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1250</width>
-        <height>1721</height>
+        <width>1252</width>
+        <height>1490</height>
        </rect>
       </property>
       <property name="focusPolicy">
@@ -437,8 +437,8 @@ background-color: rgb(255, 255, 255);</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_9">
-          <item row="0" column="0" colspan="5">
+         <layout class="QGridLayout" name="gridLayout_9" columnstretch="1,1,1">
+          <item row="0" column="0" colspan="3">
            <widget class="QCheckBox" name="diversion_check_box">
             <property name="maximumSize">
              <size>
@@ -452,27 +452,41 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="2" column="0">
+           <widget class="QRadioButton" name="theft_diversion_radio_btn">
+            <property name="text">
+             <string>Theft Diversion Program</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
            <widget class="QRadioButton" name="marijuana_diversion_radio_btn">
             <property name="text">
              <string>Marijuana Diversion Program</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1" rowspan="4">
-           <widget class="Line" name="line_7">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
+          <item row="2" column="2">
+           <widget class="QRadioButton" name="other_diversion_radio_btn">
+            <property name="text">
+             <string>Other Diversion Program</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
+          <item row="3" column="0">
            <widget class="QLabel" name="fine_pay_date_label">
             <property name="text">
              <string>Fine Pay Date:</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="4">
+          <item row="3" column="1">
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>Fine pay date is set to first Tuesday after 97 days from today.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
            <widget class="NoScrollDateEdit" name="diversion_fine_pay_date">
             <property name="styleSheet">
              <string notr="true">color: rgb(0, 0, 0);
@@ -483,42 +497,21 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QRadioButton" name="theft_diversion_radio_btn">
-            <property name="text">
-             <string>Theft Diversion Program</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2" colspan="3">
-           <widget class="QLabel" name="label_30">
-            <property name="text">
-             <string>Fine pay date is set to first Tuesday after 97 days from today.</string>
-            </property>
-           </widget>
-          </item>
           <item row="4" column="0">
-           <widget class="QRadioButton" name="other_diversion_radio_btn">
-            <property name="text">
-             <string>Other Diversion Program</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
            <widget class="QCheckBox" name="diversion_jail_imposed_check_box">
             <property name="text">
              <string>Jail Time Imposed</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="3">
+          <item row="4" column="1">
            <widget class="QLabel" name="diversion_jail_report_date_label">
             <property name="text">
-             <string>Jail Report Date:</string>
+             <string>Jail Report Date (set to first Friday 97 days from today):</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="4">
+          <item row="4" column="2">
            <widget class="NoScrollDateEdit" name="diversion_jail_report_date">
             <property name="styleSheet">
              <string notr="true">color: rgb(0, 0, 0);
@@ -529,66 +522,42 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="2" colspan="3">
-           <widget class="QLabel" name="jail_report_date_note_label">
-            <property name="text">
-             <string>Jail report date is set to first Friday after 97 days from today.</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0" colspan="5">
-           <widget class="Line" name="line_4">
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
+          <item row="5" column="0">
            <widget class="QCheckBox" name="pay_restitution_check_box">
             <property name="text">
              <string>Restitution Ordered</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="2">
+          <item row="5" column="1">
            <widget class="QLabel" name="pay_restitution_to_label">
             <property name="text">
              <string>Pay Restitution To:</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="4">
+          <item row="5" column="2">
            <widget class="QLineEdit" name="pay_restitution_to_line">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="2">
+          <item row="6" column="1">
            <widget class="QLabel" name="pay_restitution_amount_label">
             <property name="text">
              <string>Pay Restitution in Amount of:</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="4">
+          <item row="6" column="2">
            <widget class="QLineEdit" name="pay_restitution_amount_line">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="9" column="0">
-           <widget class="QCheckBox" name="other_conditions_check_box">
-            <property name="text">
-             <string>Add Other Conditions</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="5">
+          <item row="1" column="0" colspan="3">
            <widget class="QLabel" name="label_28">
             <property name="font">
              <font>
@@ -605,13 +574,6 @@ background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="2" colspan="3">
-           <widget class="QTextEdit" name="other_conditions_text">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
