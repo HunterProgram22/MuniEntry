@@ -189,6 +189,7 @@ class CmsFraLoader(CmsChargeLoader):
         super().__init__(dialog)
         self.load_fra_data()
         self.hide_fra_if_criminal_case()
+        self.hide_diversion_if_traffic_case()
 
     def load_fra_data(self) -> None:
         fra_value = self.fra_value.get(self.cms_case.fra_in_file, None)
@@ -199,8 +200,16 @@ class CmsFraLoader(CmsChargeLoader):
 
     def hide_fra_if_criminal_case(self) -> None:
         """The Insurance (FRA) data is not used in criminal cases so it is hidden."""
-        if self.cms_case.case_number is None:
-            self.dialog.fra_frame.setHidden(False)
+        case_number = self.cms_case.case_number
+        if case_number is None or 'TRC' in case_number or 'TRD' in case_number:
+            self.dialog.fra_frame.show()
         else:
-            is_criminal_case = self.cms_case.case_number[2:5] == 'CRB'
-            self.dialog.fra_frame.setHidden(is_criminal_case)
+            self.dialog.fra_frame.hide()
+
+    def hide_diversion_if_traffic_case(self) -> None:
+        """Hides Diversion option for traffic cases."""
+        case_number = self.cms_case.case_number
+        if case_number is None or 'CRB' in case_number:
+            self.dialog.diversion_frame.show()
+        else:
+            self.dialog.diversion_frame.hide()

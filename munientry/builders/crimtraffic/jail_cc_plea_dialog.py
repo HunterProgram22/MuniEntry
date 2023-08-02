@@ -14,11 +14,11 @@ from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     JailCCEntryCaseInformation,
 )
+from munientry.settings.business_constants import DIVERSION_ADD_DAYS
 from munientry.settings.pyqt_constants import MAX_JAIL_TIME_VALIDATOR
 from munientry.updaters.grid_case_updaters import JailCCDialogUpdater
 from munientry.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 
-DIVERSION_ADD_DAYS = 97
 
 class JailCCDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Jail CC Plea Dialog."""

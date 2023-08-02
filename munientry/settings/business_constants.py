@@ -3,6 +3,8 @@ from types import MappingProxyType
 
 from munientry.settings.config_settings import load_config
 
+DIVERSION_ADD_DAYS = 97
+
 DAY_DICT = MappingProxyType({
     'Monday': 1,
     'Tuesday': 2,
