@@ -14,6 +14,9 @@ class DrivingPrivilegesInformation:
     suspension_type: str = None
     bmv_suspension: bool = False
     bmv_cases: str = None
+    bmv_payment_plan: bool = False
+    related_traffic_case: bool = False
+    related_traffic_case_number: str = None
     suspension_start_date: str = None
     suspension_end_date: str = None
     additional_information_ordered: bool = False
