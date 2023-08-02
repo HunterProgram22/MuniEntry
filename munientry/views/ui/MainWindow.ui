@@ -444,22 +444,6 @@ font-weight: bold;</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="5" column="0">
-                   <widget class="CrimDialogButton" name="DiversionButton">
-                    <property name="minimumSize">
-                     <size>
-                      <width>120</width>
-                      <height>30</height>
-                     </size>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(85, 170, 127);</string>
-                    </property>
-                    <property name="text">
-                     <string>Diversion</string>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="6" column="0">
                    <widget class="CrimDialogButton" name="CompetencyButton">
                     <property name="styleSheet">

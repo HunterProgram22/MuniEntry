@@ -41,7 +41,7 @@ DIALOG_BUTTON_DICT = {
     'FineOnlyPleaButton': fine_only_plea_dialog.FineOnlyPleaDialog,
     'JailCCPleaButton': jail_cc_plea_dialog.JailCCPleaDialog,
     'ArraignmentContinueButton': arraignment_continue_dialog.ArraignmentContinueDialog,
-    'DiversionButton': diversion_dialog.DiversionPleaDialog,
+    # 'DiversionButton': diversion_dialog.DiversionPleaDialog,
     'NotGuiltyBondButton': not_guilty_bond_dialog.NotGuiltyBondDialog,
     'FailureToAppearButton': failure_to_appear_dialog.FailureToAppearDialog,
     'ProbationViolationBondButton': probation_violation_bond_dialog.ProbationViolationBondDialog,

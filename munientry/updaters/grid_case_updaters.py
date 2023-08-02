@@ -20,24 +20,24 @@ from munientry.updaters.general_updaters import (
 )
 
 
-class DiversionDialogUpdater(BaseDialogUpdater):
-    """Updater for Diversion Dialog - contains a charge grid."""
-
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.update_case_information()
-        self.update_diversion_information()
-        self.update_model_with_charge_grid_data()
-
-    def update_case_information(self) -> CaseInformationUpdater:
-        return CaseInformationUpdater(self.dialog)
-
-    def update_diversion_information(self) -> None:
-        self.dialog.transfer_view_data_to_model(self.model.diversion)
-        self.model.diversion.program_name = self.model.diversion.get_program_name()
-
-    def update_model_with_charge_grid_data(self) -> DiversionGridModelUpdater:
-        return DiversionGridModelUpdater(self.dialog)
+# class DiversionDialogUpdater(BaseDialogUpdater):
+#     """Updater for Diversion Dialog - contains a charge grid."""
+#
+#     def __init__(self, dialog) -> None:
+#         super().__init__(dialog)
+#         self.update_case_information()
+#         self.update_diversion_information()
+#         self.update_model_with_charge_grid_data()
+#
+#     def update_case_information(self) -> CaseInformationUpdater:
+#         return CaseInformationUpdater(self.dialog)
+#
+#     def update_diversion_information(self) -> None:
+#         self.dialog.transfer_view_data_to_model(self.model.diversion)
+#         self.model.diversion.program_name = self.model.diversion.get_program_name()
+#
+#     def update_model_with_charge_grid_data(self) -> DiversionGridModelUpdater:
+#         return DiversionGridModelUpdater(self.dialog)
 
 
 class JailCCDialogUpdater(BaseDialogUpdater):
