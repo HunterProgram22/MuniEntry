@@ -75,16 +75,26 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
                 if isinstance(child, QWidget) and child != self.dialog.diversion_check_box:
                     child.hide()
 
-    def show_jail_details_frame(self):
+    def show_jail_reporting_frame(self):
         if self.dialog.jail_checkBox.isChecked():
-            for child in self.dialog.jail_details_frame.children():
+            for child in self.dialog.jail_reporting_frame.children():
                 if isinstance(child, QWidget) and child != self.dialog.jail_checkBox:
                     child.show()
         else:
-            for child in self.dialog.jail_details_frame.children():
+            for child in self.dialog.jail_reporting_frame.children():
                 if isinstance(child, QWidget) and child != self.dialog.jail_checkBox:
                     child.hide()
         self.show_companion_case_fields()
+
+    def show_jail_credit_frame(self):
+        if self.dialog.jail_credit_check_box.isChecked():
+            for child in self.dialog.jail_credit_frame.children():
+                if isinstance(child, QWidget) and child != self.dialog.jail_credit_check_box:
+                    child.show()
+        else:
+            for child in self.dialog.jail_credit_frame.children():
+                if isinstance(child, QWidget) and child != self.dialog.jail_credit_check_box:
+                    child.hide()
 
     def start_add_jail_report_dialog(self):
         self.dialog.update_entry_case_information()
@@ -130,7 +140,10 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
             self.dialog.functions.show_diversion_frame,
         )
         self.dialog.jail_checkBox.toggled.connect(
-            self.dialog.functions.show_jail_details_frame,
+            self.dialog.functions.show_jail_reporting_frame,
+        )
+        self.dialog.jail_credit_check_box.toggled.connect(
+            self.dialog.functions.show_jail_credit_frame,
         )
 
 
@@ -187,6 +200,7 @@ class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
             ('victim_notification_checkBox', self.entry_case_information.victim_notification),
         ]
         self.functions.show_diversion_frame()
-        self.functions.show_jail_details_frame()
+        self.functions.show_jail_reporting_frame()
+        self.functions.show_jail_credit_frame()
         if self.case_table == 'slated':
             self.in_jail_box.setCurrentText('Yes')
