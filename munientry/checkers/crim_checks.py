@@ -251,7 +251,8 @@ class JailTimeChecks(ChargeGridChecks):
         reporting is required.
         """
         if msg_response is not None:
-            return self.add_jail_report_terms(msg_response)
+            response_tuple = self.add_jail_report_terms(msg_response)
+            return response_tuple[0]
         if self.skip_jail_check():
             return True, []
         if self.jail_days_imposed > (self.jail_days_suspended + self.jail_credit):
@@ -269,8 +270,7 @@ class JailTimeChecks(ChargeGridChecks):
         """Asks user if Jail Reporting needs to be set and sets reporting if answer is Yes."""
         if msg_response == YES_BUTTON_RESPONSE:
             self.dialog.jail_checkBox.setChecked(True)
-            self.dialog.functions.start_add_jail_report_dialog()
-            return True, []
+            return False, []
         else:
             return True, []
 

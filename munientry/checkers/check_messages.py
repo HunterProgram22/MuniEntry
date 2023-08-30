@@ -116,10 +116,7 @@ Do you want to set the Jail Reporting Terms?
 
 Press Yes to set Jail Reporting Terms. 
 
-Press No to open the entry with no Jail Reporting Terms. 
-
-Press Cancel to return to the Dialog without opening an entry so that you can change the number of \
-jail days imposed/suspended/credited."""
+Press No to open the entry with no Jail Reporting Terms. """
 
 DEF_IN_JAIL_TITLE = 'Defendant is in Jail - Unset Jail Reporting?'
 DEF_IN_JAIL_MSG = """The Defendant is currently indicated as being in jail, but you set Jail \

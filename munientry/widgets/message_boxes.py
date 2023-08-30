@@ -92,8 +92,7 @@ class JailWarningBox(BaseBox):
     def set_buttons(self):
         self.setStandardButtons(
             QMessageBox.StandardButton.Yes
-            | QMessageBox.StandardButton.No
-            | QMessageBox.StandardButton.Cancel,
+            | QMessageBox.StandardButton.No,
         )
 
 
