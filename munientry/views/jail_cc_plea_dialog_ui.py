@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file './munientry/views/ui/JailCCPleaDialog.ui'
+# Form implementation generated from reading ui file 'munientry/views/ui/JailCCPleaDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -77,7 +77,7 @@ class Ui_JailCCPleaDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, -443, 1186, 1636))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, -372, 1186, 1631))
         self.scrollAreaWidgetContents_2.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.gridLayout_10 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
@@ -806,7 +806,7 @@ class Ui_JailCCPleaDialog(object):
         JailCCPleaDialog.setWindowTitle(_translate("JailCCPleaDialog", "Jail Community Control Plea Case Information"))
         self.create_entry_Button.setText(_translate("JailCCPleaDialog", "Open Entry"))
         self.close_dialog_Button.setText(_translate("JailCCPleaDialog", "Close Dialog"))
-        self.diversion_check_box.setText(_translate("JailCCPleaDialog", "Diversion Case -> Check to order diversion. Checkbox must remain checked if ordering diversion."))
+        self.diversion_check_box.setText(_translate("JailCCPleaDialog", "DIVERSION -> Check to order diversion. Checkbox must remain checked if ordering diversion."))
         self.theft_diversion_radio_btn.setText(_translate("JailCCPleaDialog", "Theft Diversion Program"))
         self.marijuana_diversion_radio_btn.setText(_translate("JailCCPleaDialog", "Marijuana Diversion Program"))
         self.other_diversion_radio_btn.setText(_translate("JailCCPleaDialog", "Other Diversion Program"))
@@ -886,7 +886,7 @@ class Ui_JailCCPleaDialog(object):
         self.label_16.setText(_translate("JailCCPleaDialog", "Apply JTC to:"))
         self.label_13.setText(_translate("JailCCPleaDialog", "Days In Jail:"))
         self.jail_time_credit_label.setText(_translate("JailCCPleaDialog", "JAIL CREDIT"))
-        self.jail_credit_check_box.setText(_translate("JailCCPleaDialog", "Jail Credit -> Check to set jail credit. Checkbox must remain checked if applying jail credit."))
+        self.jail_credit_check_box.setText(_translate("JailCCPleaDialog", "JAIL CREDIT -> Check to set jail credit. Checkbox must remain checked if applying jail credit."))
         self.companion_cases_sentence_label.setText(_translate("JailCCPleaDialog", "Companion Case Jail Time Served:"))
         self.add_companion_cases_checkBox.setText(_translate("JailCCPleaDialog", "Add Companion Cases"))
         self.report_date_label.setText(_translate("JailCCPleaDialog", "Report Date:"))
@@ -903,5 +903,5 @@ class Ui_JailCCPleaDialog(object):
         self.companion_cases_sentence_box.setItemText(0, _translate("JailCCPleaDialog", "consecutively"))
         self.companion_cases_sentence_box.setItemText(1, _translate("JailCCPleaDialog", "concurrently"))
         self.jail_report_days_notes_box.setPlaceholderText(_translate("JailCCPleaDialog", "Jail report days if not consecutive"))
-        self.jail_checkBox.setText(_translate("JailCCPleaDialog", "Jail Report Terms -> Check to set jail report terms. Checkbox must remain checked if setting jail report terms."))
+        self.jail_checkBox.setText(_translate("JailCCPleaDialog", "JAIL REPORT TERMS -> Check to set jail report terms. Checkbox must remain checked if setting jail report terms."))
         self.label_32.setText(_translate("JailCCPleaDialog", "JAIL REPORTING"))

@@ -170,9 +170,9 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-443</y>
+        <y>-372</y>
         <width>1186</width>
-        <height>1636</height>
+        <height>1631</height>
        </rect>
       </property>
       <property name="focusPolicy">
@@ -250,7 +250,7 @@ font-weight: bold;</string>
              </size>
             </property>
             <property name="text">
-             <string>Diversion Case -&gt; Check to order diversion. Checkbox must remain checked if ordering diversion.</string>
+             <string>DIVERSION -&gt; Check to order diversion. Checkbox must remain checked if ordering diversion.</string>
             </property>
            </widget>
           </item>
@@ -1402,7 +1402,7 @@ font-weight: bold;</string>
           <item row="0" column="0" colspan="4">
            <widget class="QCheckBox" name="jail_credit_check_box">
             <property name="text">
-             <string>Jail Credit -&gt; Check to set jail credit. Checkbox must remain checked if applying jail credit.</string>
+             <string>JAIL CREDIT -&gt; Check to set jail credit. Checkbox must remain checked if applying jail credit.</string>
             </property>
            </widget>
           </item>
@@ -1580,7 +1580,7 @@ background-color: rgb(255, 255, 255);</string>
           <item row="0" column="0" colspan="2">
            <widget class="QCheckBox" name="jail_checkBox">
             <property name="text">
-             <string>Jail Report Terms -&gt; Check to set jail report terms. Checkbox must remain checked if setting jail report terms.</string>
+             <string>JAIL REPORT TERMS -&gt; Check to set jail report terms. Checkbox must remain checked if setting jail report terms.</string>
             </property>
            </widget>
           </item>
