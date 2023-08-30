@@ -65,36 +65,26 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
             self.dialog.companion_cases_sentence_box.setHidden(True)
             self.dialog.companion_cases_sentence_label.setHidden(True)
 
-    def show_diversion_frame(self):
-        if self.dialog.diversion_check_box.isChecked():
-            for child in self.dialog.diversion_frame.children():
-                if isinstance(child, QWidget) and child != self.dialog.diversion_check_box:
+    def _toggle_frame(self, frame, check_box, show):
+        for child in frame.children():
+            if isinstance(child, QWidget) and child != check_box:
+                if show:
                     child.show()
-        else:
-            for child in self.dialog.diversion_frame.children():
-                if isinstance(child, QWidget) and child != self.dialog.diversion_check_box:
+                else:
                     child.hide()
 
+    def show_diversion_frame(self):
+        show = self.dialog.diversion_check_box.isChecked()
+        self._toggle_frame(self.dialog.diversion_frame, self.dialog.diversion_check_box, show)
+
     def show_jail_reporting_frame(self):
-        if self.dialog.jail_checkBox.isChecked():
-            for child in self.dialog.jail_reporting_frame.children():
-                if isinstance(child, QWidget) and child != self.dialog.jail_checkBox:
-                    child.show()
-        else:
-            for child in self.dialog.jail_reporting_frame.children():
-                if isinstance(child, QWidget) and child != self.dialog.jail_checkBox:
-                    child.hide()
+        show = self.dialog.jail_checkBox.isChecked()
+        self._toggle_frame(self.dialog.jail_reporting_frame, self.dialog.jail_checkBox, show)
         self.show_companion_case_fields()
 
     def show_jail_credit_frame(self):
-        if self.dialog.jail_credit_check_box.isChecked():
-            for child in self.dialog.jail_credit_frame.children():
-                if isinstance(child, QWidget) and child != self.dialog.jail_credit_check_box:
-                    child.show()
-        else:
-            for child in self.dialog.jail_credit_frame.children():
-                if isinstance(child, QWidget) and child != self.dialog.jail_credit_check_box:
-                    child.hide()
+        show = self.dialog.jail_credit_check_box.isChecked()
+        self._toggle_frame(self.dialog.jail_credit_frame, self.dialog.jail_credit_check_box, show)
 
     def start_add_jail_report_dialog(self):
         self.dialog.update_entry_case_information()
