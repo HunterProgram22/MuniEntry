@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1223</width>
-    <height>948</height>
+    <width>1221</width>
+    <height>941</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -170,8 +170,8 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-372</y>
-        <width>1186</width>
+        <y>-535</y>
+        <width>1180</width>
         <height>1631</height>
        </rect>
       </property>
@@ -1478,17 +1478,17 @@ font-weight: bold;</string>
             </property>
             <item>
              <property name="text">
+              <string>date set by Office of Community Control</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>future date</string>
              </property>
             </item>
             <item>
              <property name="text">
               <string>forthwith</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>date set by Office of Community Control</string>
              </property>
             </item>
            </widget>

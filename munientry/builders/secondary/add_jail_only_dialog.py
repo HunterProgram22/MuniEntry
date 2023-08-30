@@ -31,35 +31,35 @@ class AddJailOnlyDialogSlotFunctions(second.SecondarySlotFunctions):
                 self.main_dialog.entry_case_information.jail_terms,
             )
 
-    def set_report_date_boxes(self):
-        if self.dialog.report_type_box.currentText() == 'future date':
-            self.show_report_date_boxes()
-        else:
-            self.hide_report_date_boxes()
-
-    def show_report_date_boxes(self):
-        self.dialog.report_date_box.setEnabled(True)
-        self.dialog.report_date_box.setHidden(False)
-        self.dialog.report_time_box.setEnabled(True)
-        self.dialog.report_time_box.setHidden(False)
-        self.dialog.report_date_label.setHidden(False)
-        self.dialog.report_time_label.setHidden(False)
-
-    def hide_report_date_boxes(self):
-        self.dialog.report_date_box.setDisabled(True)
-        self.dialog.report_date_box.setHidden(True)
-        self.dialog.report_time_box.setDisabled(True)
-        self.dialog.report_time_box.setHidden(True)
-        self.dialog.report_date_label.setHidden(True)
-        self.dialog.report_time_label.setHidden(True)
-
-    def show_report_days_notes_box(self):
-        if self.dialog.jail_sentence_execution_type_box.currentText() == 'consecutive days':
-            self.dialog.jail_report_days_notes_box.setDisabled(True)
-            self.dialog.jail_report_days_notes_box.setHidden(True)
-        else:
-            self.dialog.jail_report_days_notes_box.setDisabled(False)
-            self.dialog.jail_report_days_notes_box.setHidden(False)
+    # def set_report_date_boxes(self):
+    #     if self.dialog.report_type_box.currentText() == 'future date':
+    #         self.show_report_date_boxes()
+    #     else:
+    #         self.hide_report_date_boxes()
+    #
+    # def show_report_date_boxes(self):
+    #     self.dialog.report_date_box.setEnabled(True)
+    #     self.dialog.report_date_box.setHidden(False)
+    #     self.dialog.report_time_box.setEnabled(True)
+    #     self.dialog.report_time_box.setHidden(False)
+    #     self.dialog.report_date_label.setHidden(False)
+    #     self.dialog.report_time_label.setHidden(False)
+    #
+    # def hide_report_date_boxes(self):
+    #     self.dialog.report_date_box.setDisabled(True)
+    #     self.dialog.report_date_box.setHidden(True)
+    #     self.dialog.report_time_box.setDisabled(True)
+    #     self.dialog.report_time_box.setHidden(True)
+    #     self.dialog.report_date_label.setHidden(True)
+    #     self.dialog.report_time_label.setHidden(True)
+    #
+    # def show_report_days_notes_box(self):
+    #     if self.dialog.jail_sentence_execution_type_box.currentText() == 'consecutive days':
+    #         self.dialog.jail_report_days_notes_box.setDisabled(True)
+    #         self.dialog.jail_report_days_notes_box.setHidden(True)
+    #     else:
+    #         self.dialog.jail_report_days_notes_box.setDisabled(False)
+    #         self.dialog.jail_report_days_notes_box.setHidden(False)
 
 
 class AddJailOnlyDialogSignalConnector(second.SecondarySignalConnector):
@@ -68,15 +68,15 @@ class AddJailOnlyDialogSignalConnector(second.SecondarySignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_condition_dialog_main_signals()
-        self.connect_jail_frame_signals()
+        # self.connect_jail_frame_signals()
 
-    def connect_jail_frame_signals(self):
-        self.dialog.report_type_box.currentTextChanged.connect(
-            self.dialog.functions.set_report_date_boxes,
-        )
-        self.dialog.jail_sentence_execution_type_box.currentTextChanged.connect(
-            self.dialog.functions.show_report_days_notes_box,
-        )
+    # def connect_jail_frame_signals(self):
+    #     self.dialog.report_type_box.currentTextChanged.connect(
+    #         self.dialog.functions.set_report_date_boxes,
+    #     )
+    #     self.dialog.jail_sentence_execution_type_box.currentTextChanged.connect(
+    #         self.dialog.functions.show_report_days_notes_box,
+    #     )
 
 
 class AddJailOnlyDialog(second.SecondaryDialogBuilder, Ui_AddJailOnly):

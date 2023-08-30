@@ -80,6 +80,7 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
     def show_jail_reporting_frame(self):
         show = self.dialog.jail_checkBox.isChecked()
         self._toggle_frame(self.dialog.jail_reporting_frame, self.dialog.jail_checkBox, show)
+        self.set_report_date_boxes()
         self.show_companion_case_fields()
 
     def show_jail_credit_frame(self):
@@ -95,6 +96,30 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AddCommunityControlDialog(self.dialog)
         self.dialog.popup_dialog.exec()
+
+    def set_report_date_boxes(self):
+        if self.dialog.report_type_box.currentText() == 'future date':
+            self.show_report_date_boxes()
+        else:
+            self.hide_report_date_boxes()
+
+    def show_report_date_boxes(self):
+        self.dialog.report_date_box.show()
+        self.dialog.report_time_box.show()
+        self.dialog.report_date_label.show()
+        self.dialog.report_time_label.show()
+
+    def hide_report_date_boxes(self):
+        self.dialog.report_date_box.hide()
+        self.dialog.report_time_box.hide()
+        self.dialog.report_date_label.hide()
+        self.dialog.report_time_label.hide()
+
+    def show_report_days_notes_box(self):
+        if self.dialog.jail_sentence_execution_type_box.currentText() == 'consecutive days':
+            self.dialog.jail_report_days_notes_box.hide()
+        else:
+            self.dialog.jail_report_days_notes_box.show()
 
 
 class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
@@ -123,9 +148,6 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.dialog.victim_notification_checkBox.toggled.connect(
             self.dialog.functions.conditions_checkbox_toggle,
         )
-        # self.dialog.add_jail_report_Button.pressed.connect(
-        #     self.dialog.functions.start_add_jail_report_dialog,
-        # )
         self.dialog.diversion_check_box.toggled.connect(
             self.dialog.functions.show_diversion_frame,
         )
@@ -134,6 +156,12 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
         self.dialog.jail_credit_check_box.toggled.connect(
             self.dialog.functions.show_jail_credit_frame,
+        )
+        self.dialog.report_type_box.currentTextChanged.connect(
+            self.dialog.functions.set_report_date_boxes,
+        )
+        self.dialog.jail_sentence_execution_type_box.currentTextChanged.connect(
+            self.dialog.functions.show_report_days_notes_box,
         )
 
 
