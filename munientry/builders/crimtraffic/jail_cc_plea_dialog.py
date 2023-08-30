@@ -57,13 +57,13 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
 
     def show_companion_case_fields(self):
         if self.dialog.add_companion_cases_checkBox.isChecked():
-            self.dialog.companion_cases_box.setHidden(False)
-            self.dialog.companion_cases_sentence_box.setHidden(False)
-            self.dialog.companion_cases_sentence_label.setHidden(False)
+            self.dialog.companion_cases_box.show()
+            self.dialog.companion_cases_sentence_box.show()
+            self.dialog.companion_cases_sentence_label.show()
         else:
-            self.dialog.companion_cases_box.setHidden(True)
-            self.dialog.companion_cases_sentence_box.setHidden(True)
-            self.dialog.companion_cases_sentence_label.setHidden(True)
+            self.dialog.companion_cases_box.hide()
+            self.dialog.companion_cases_sentence_box.hide()
+            self.dialog.companion_cases_sentence_label.hide()
 
     def _toggle_frame(self, frame, check_box, show):
         for child in frame.children():
@@ -87,10 +87,10 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
         show = self.dialog.jail_credit_check_box.isChecked()
         self._toggle_frame(self.dialog.jail_credit_frame, self.dialog.jail_credit_check_box, show)
 
-    def start_add_jail_report_dialog(self):
-        self.dialog.update_entry_case_information()
-        self.dialog.popup_dialog = AddJailOnlyDialog(self.dialog)
-        self.dialog.popup_dialog.exec()
+    # def start_add_jail_report_dialog(self):
+    #     self.dialog.update_entry_case_information()
+    #     self.dialog.popup_dialog = AddJailOnlyDialog(self.dialog)
+    #     self.dialog.popup_dialog.exec()
 
     def start_add_conditions_dialog(self):
         self.dialog.update_entry_case_information()
