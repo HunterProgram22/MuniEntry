@@ -21,6 +21,8 @@ from munientry.widgets.widget_settings import (
     WHITE_BACKGROUND_STYLE_SHEET,
 )
 
+FIRST_OVI_DESCR_LIST = ['OVI Alcohol / Drugs 1st', 'OVI 1st']
+
 
 class DailyCaseListComboBox(QComboBox):
     """Custom ComboBox used for Daily Case Lists on Main Window."""
@@ -191,8 +193,9 @@ class FindingComboBox(ChargeGridComboBox):
 
     def check_charge(self, text: str):
         """Checks the text of the Finding Box to determine the type of charge to process."""
-        if text == 'Guilty' and self.get_offense_box_text() == 'OVI Alcohol / Drugs 1st':
-            charge = 'OVI Alcohol / Drugs 1st'
+        charge = self.get_offense_box_text()
+        if text == 'Guilty' and charge in FIRST_OVI_DESCR_LIST:
+            # charge = 'OVI Alcohol / Drugs 1st'
             self.process_ovi_one_charge(charge)
 
     def get_offense_box_text(self) -> str:
