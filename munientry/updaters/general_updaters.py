@@ -112,6 +112,7 @@ class JailDataUpdater(BaseDialogUpdater):
         super().__init__(dialog)
         self.update_jail_time_credit()
         self.set_all_jail_day_totals()
+        self.update_jail_reporting()
 
     def update_jail_time_credit(self) -> None:
         self.model.jail_terms.currently_in_jail = self.dialog.in_jail_box.currentText()
@@ -125,6 +126,12 @@ class JailDataUpdater(BaseDialogUpdater):
         self.model.jail_terms.companion_cases_sentence_type = (
             self.dialog.companion_cases_sentence_box.currentText()
         )
+
+    def update_jail_reporting(self):
+        if self.dialog.jail_checkBox.isChecked():
+            self.dialog.transfer_view_data_to_model(
+                self.dialog.entry_case_information.jail_terms,
+            )
 
     def set_jail_time_credit(self) -> int:
         if self.dialog.jail_time_credit_box.text() == '':
