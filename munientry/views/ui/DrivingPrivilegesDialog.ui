@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1177</width>
+    <width>1360</width>
     <height>857</height>
    </rect>
   </property>
@@ -177,8 +177,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1120</width>
-           <height>972</height>
+           <width>1303</width>
+           <height>987</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1">
@@ -792,49 +792,65 @@ background-color: rgb(255, 255, 255);</string>
              <property name="verticalSpacing">
               <number>18</number>
              </property>
-             <item row="2" column="0">
-              <widget class="QLabel" name="bmv_cases_label">
-               <property name="text">
-                <string>BMV Cases:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
-              <widget class="QCheckBox" name="add_information_checkBox">
-               <property name="text">
-                <string>Add Additional Information:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="5">
-              <widget class="QRadioButton" name="bmv_suspension_radioButton">
-               <property name="text">
-                <string>BMV</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="NoScrollDateEdit" name="suspension_start_date">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="1" colspan="5">
-              <widget class="QTextEdit" name="add_information_textEdit">
+             <item row="2" column="1" colspan="5">
+              <widget class="QTextEdit" name="bmv_cases_textEdit">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_27">
+             <item row="1" column="3" colspan="2">
+              <widget class="QRadioButton" name="als_suspension_radioButton">
                <property name="text">
-                <string>Additional Requirements:</string>
+                <string>ALS</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="3" colspan="2">
+              <widget class="QCheckBox" name="ignition_interlock_checkBox">
+               <property name="text">
+                <string>Certified Ignition Interlock Device</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1" colspan="2">
+              <widget class="QCheckBox" name="restricted_tags_checkBox">
+               <property name="text">
+                <string>Restricted Vehicle ID Tags</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_15">
+               <property name="text">
+                <string>Begin Suspension Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="6">
+              <widget class="QLabel" name="label_5">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>GENERAL PRIVILEGES INFORMATION</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="4">
+              <widget class="QLabel" name="label_16">
+               <property name="text">
+                <string>End Suspension Date:</string>
                </property>
               </widget>
              </item>
@@ -845,7 +861,7 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="5">
+             <item row="5" column="5">
               <widget class="NoScrollDateEdit" name="suspension_end_date">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);
@@ -856,21 +872,7 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="4">
-              <widget class="QLabel" name="label_16">
-               <property name="text">
-                <string>End Suspension Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="2">
-              <widget class="QLabel" name="label_29">
-               <property name="text">
-                <string>Term of Suspension:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="3">
+             <item row="5" column="3">
               <widget class="QComboBox" name="suspension_term_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -942,79 +944,80 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="3" colspan="2">
-              <widget class="QRadioButton" name="als_suspension_radioButton">
+             <item row="5" column="2">
+              <widget class="QLabel" name="label_29">
                <property name="text">
-                <string>ALS</string>
+                <string>Term of Suspension:</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="3" colspan="2">
-              <widget class="QCheckBox" name="ignition_interlock_checkBox">
+             <item row="1" column="5">
+              <widget class="QRadioButton" name="bmv_suspension_radioButton">
                <property name="text">
-                <string>Certified Ignition Interlock Device</string>
+                <string>BMV</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="1" colspan="2">
-              <widget class="QCheckBox" name="restricted_tags_checkBox">
+             <item row="2" column="0">
+              <widget class="QLabel" name="bmv_cases_label">
                <property name="text">
-                <string>Restricted Vehicle ID Tags</string>
+                <string>BMV Cases:</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_15">
+             <item row="8" column="0">
+              <widget class="QCheckBox" name="add_information_checkBox">
                <property name="text">
-                <string>Begin Suspension Date:</string>
+                <string>Add Additional Information:</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="0" colspan="6">
-              <widget class="QLabel" name="label_5">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>GENERAL PRIVILEGES INFORMATION</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1" colspan="5">
-              <widget class="QTextEdit" name="bmv_cases_textEdit">
+             <item row="8" column="1" colspan="5">
+              <widget class="QTextEdit" name="add_information_textEdit">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="0" colspan="2">
-              <widget class="QCheckBox" name="related_case_checkBox">
-               <property name="text">
-                <string>Related Traffic Case Jurisdiction</string>
+             <item row="5" column="1">
+              <widget class="NoScrollDateEdit" name="suspension_start_date">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
-             <item row="3" column="4" colspan="2">
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_27">
+               <property name="text">
+                <string>Additional Requirements:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
               <widget class="QCheckBox" name="bmv_payment_plan_checkBox">
                <property name="text">
                 <string>BMV Reinstatement Fees Payment Plan</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="2" colspan="2">
+             <item row="3" column="1">
+              <widget class="QCheckBox" name="related_case_checkBox">
+               <property name="text">
+                <string>Related Traffic Case Jurisdiction</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2" colspan="4">
               <widget class="QLineEdit" name="related_case_lineEdit">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="placeholderText">
+                <string>Related Traffic Case Number</string>
                </property>
               </widget>
              </item>
