@@ -207,9 +207,18 @@ class CmsFraLoader(CmsChargeLoader):
             self.dialog.fra_frame.hide()
 
     def hide_diversion_if_traffic_case(self) -> None:
-        """Hides Diversion option for traffic only cases."""
+        """Hides Diversion option for traffic only cases.
+
+        Try blocks added to allow Trial sentencing to open - eventually will be unnecessary.
+        """
         case_number = self.cms_case.case_number
         if case_number is None or 'CRB' in case_number:
-            self.dialog.diversion_frame.show()
+            try:
+                self.dialog.diversion_frame.show()
+            except AttributeError as err:
+                logger.warning(err)
         else:
-            self.dialog.diversion_frame.hide()
+            try:
+                self.dialog.diversion_frame.hide()
+            except AttributeError as err2:
+                logger.warning(err2)
