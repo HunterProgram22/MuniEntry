@@ -1,7 +1,7 @@
 """Module containing custom widget Message Boxes."""
 from loguru import logger
 from PyQt6 import QtGui
-from PyQt6.QtWidgets import QMessageBox, QPushButton
+from PyQt6.QtWidgets import QMessageBox, QPushButton, QInputDialog, QDateEdit, QVBoxLayout
 
 from munientry.settings.paths import GAVEL_PATH
 
@@ -103,3 +103,10 @@ class MinimumsQuestionBox(BaseBox):
         self.min_dismiss_button = self.addButton('Yes - Dismiss Other Charges', QMessageBox.ButtonRole.ActionRole)
         self.min_no_dismiss_button = self.addButton('Yes - Do Not Dismiss Other Charges', QMessageBox.ButtonRole.ActionRole)
         self.no_mins_button = self.addButton('No', QMessageBox.ButtonRole.ActionRole)
+
+
+class DateInputDialog(QInputDialog):
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle('Select a date')

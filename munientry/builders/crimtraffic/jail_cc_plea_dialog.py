@@ -1,6 +1,6 @@
 """Builder module for the Jail CC Plea Dialog."""
 from PyQt6.QtCore import QDate
-from PyQt6.QtWidgets import QWidget
+from PyQt6.QtWidgets import QWidget, QDialog, QInputDialog
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
@@ -8,6 +8,7 @@ from munientry.builders.secondary.add_community_control_dialog import (
     AddCommunityControlDialog,
 )
 from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
+from munientry.widgets.message_boxes import DateInputDialog
 from munientry.checkers.crim_checks import JailTimeChecks
 from munientry.helper_functions import set_future_date
 from munientry.loaders.cms_case_loaders import CmsFraLoader
@@ -87,6 +88,19 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
         show = self.dialog.jail_credit_check_box.isChecked()
         self._toggle_frame(self.dialog.jail_credit_frame, self.dialog.jail_credit_check_box, show)
 
+    def check_appearance_reason(self):
+        if self.dialog.appearance_reason_box.currentText() == 'sentencing only (already plead)':
+            self.get_plea_date()
+
+    def get_plea_date(self):
+        date_dialog = DateInputDialog(self.dialog)
+        plea_date, ok_input = date_dialog.getText(self.dialog, 'Plea Date', 'Enter Plea Date:')
+        if ok_input:
+            self.dialog.entry_case_information.plea_date = plea_date
+            logger.debug(self.dialog.entry_case_information.plea_date)
+
+
+
     # def start_add_jail_report_dialog(self):
     #     self.dialog.update_entry_case_information()
     #     self.dialog.popup_dialog = AddJailOnlyDialog(self.dialog)
@@ -162,6 +176,9 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
         self.dialog.jail_sentence_execution_type_box.currentTextChanged.connect(
             self.dialog.functions.show_report_days_notes_box,
+        )
+        self.dialog.appearance_reason_box.currentTextChanged.connect(
+            self.dialog.functions.check_appearance_reason,
         )
 
 
