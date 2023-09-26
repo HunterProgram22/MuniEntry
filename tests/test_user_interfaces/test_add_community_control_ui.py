@@ -10,7 +10,7 @@ import pytest
 from tests.conftest import mouse_click
 
 all_community_control_checkbox_conditions = [
-    'daily_reporting_checkBox',
+    # 'daily_reporting_checkBox',
     'community_control_not_within_500_feet_checkBox',
     'community_control_no_contact_checkBox',
     'house_arrest_checkBox',

@@ -40,6 +40,7 @@ def general_case_search_query(case_number: str) -> str:
         cm.CaseNumber = '{case_number}'
         AND sc.IsDeleted = '0' 
         AND cp.PersonTypeID = '1'
+        AND (vd.EndDate is NULL OR vd.EndDate >= sc.ViolationDate)
 
     Select * from #MuniEntrySelect
     WHERE RowNumber = 1

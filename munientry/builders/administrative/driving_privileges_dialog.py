@@ -85,7 +85,6 @@ class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
             self.dialog.bmv_cases_textEdit,
             self.dialog.related_case_checkBox,
             self.dialog.related_case_lineEdit,
-            self.dialog.bmv_payment_plan_checkBox,
         ]
 
     def create_entry_process(self) -> None:
