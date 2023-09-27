@@ -14,7 +14,7 @@ class CriminalCaseInformation(object):
     case_number: str = None
     judicial_officer: object = None
     plea_trial_date: str = None
-    plea_date: str = None  # This is used for sentencing only TODO: rename plea_trial_date
+    plea_date: str = 'None'  # This is used for sentencing only TODO: rename plea_trial_date
     appearance_reason: str = None
     plaintiff: str = 'State of Ohio'
     defendant: object = field(default_factory=Defendant)
