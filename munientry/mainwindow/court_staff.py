@@ -102,13 +102,13 @@ class CourtStaffManager(object):
             self.mw.mag_3_radio_btn: JudicialOfficer('Justin', 'Kudela', MAGISTRATE),
 
             self.mw.assn_comm_1_radio_btn: JudicialOfficer('Pat', 'Dattilo', ASSN_COMM),
-            self.mw.assn_comm_2_radio_btn: JudicialOfficer('Kathryn', 'Patterson', ASSN_COMM),
+            self.mw.assn_comm_2_radio_btn: JudicialOfficer('Blythe', 'Boger', ASSN_COMM),
             self.mw.no_assn_comm_radio_btn: JudicialOfficer('None', 'Assigned', ASSN_COMM),
 
             self.mw.assn_comm_1_admin_radio_btn: JudicialOfficer('Pat', 'Dattilo', ASSN_COMM),
-            self.mw.assn_comm_2_admin_radio_btn: JudicialOfficer('Kathryn', 'Patterson', ASSN_COMM),
+            self.mw.assn_comm_2_admin_radio_btn: JudicialOfficer('Blythe', 'Boger', ASSN_COMM),
             self.mw.court_admin_admin_radio_btn: JudicialOfficer('Justin', 'Kudela', CT_ADMIN),
-            self.mw.jury_comm_1_admin_radio_btn: JudicialOfficer('Kathryn', 'Patterson', JURY),
+            self.mw.jury_comm_1_admin_radio_btn: JudicialOfficer('Blythe', 'Boger', JURY),
             self.mw.none_admin_radio_btn: JudicialOfficer('None', 'Assigned', ADMIN),
             self.mw.mag_1_admin_radio_btn: JudicialOfficer('Amanda', 'Bunner', MAGISTRATE),
             self.mw.mag_2_admin_radio_btn: JudicialOfficer('Kevin', 'Pelanda', MAGISTRATE),
@@ -117,9 +117,9 @@ class CourtStaffManager(object):
             self.mw.chief_prob_officer_radio_btn: JudicialOfficer('Lindsey', 'Blue', CHIEF_CCO),
             self.mw.dep_chief_prob_officer_radio_btn: JudicialOfficer('Kurt', 'Olson', DEP_CCCO),
             self.mw.prob_officer_1_radio_btn: JudicialOfficer('Andrew', 'Conway', CCO),
-            self.mw.prob_officer_2_radio_btn: JudicialOfficer('None', 'None', CCO),
+            self.mw.prob_officer_2_radio_btn: JudicialOfficer('Nathaniel', 'Elliott', CCO),
             self.mw.prob_officer_3_radio_btn: JudicialOfficer('Jessica', 'Scholz', CCO),
-            self.mw.prob_officer_4_radio_btn: JudicialOfficer('LeAnn', 'Taylor', CCO),
+            self.mw.prob_officer_4_radio_btn: JudicialOfficer('Adam', 'Garloch', CCO),
             self.mw.prob_officer_5_radio_btn: JudicialOfficer('Zachary', 'Slater', CCO),
             self.mw.bond_intake_officer_radio_btn: JudicialOfficer('Carrie', 'Mattox', BOND_CCO),
         }
