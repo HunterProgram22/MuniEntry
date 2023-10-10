@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/MainWindow.ui'
+# Form implementation generated from reading ui file './munientry/views/ui/MainWindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -39,7 +39,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1285, 432))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1285, 429))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_33 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_33.setObjectName("gridLayout_33")
@@ -137,11 +137,6 @@ class Ui_MainWindow(object):
         self.label_7.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_7.setObjectName("label_7")
         self.gridLayout_2.addWidget(self.label_7, 7, 2, 1, 1)
-        self.SentencingOnlyButton = CrimDialogButton(self.crim_traffic_tab)
-        self.SentencingOnlyButton.setMinimumSize(QtCore.QSize(120, 30))
-        self.SentencingOnlyButton.setStyleSheet("background-color: rgb(85, 170, 127);")
-        self.SentencingOnlyButton.setObjectName("SentencingOnlyButton")
-        self.gridLayout_2.addWidget(self.SentencingOnlyButton, 8, 1, 1, 1)
         self.LeapSentencingButton = CrimDialogButton(self.crim_traffic_tab)
         self.LeapSentencingButton.setMinimumSize(QtCore.QSize(120, 30))
         self.LeapSentencingButton.setStyleSheet("background-color: rgb(85, 170, 127);")
@@ -1094,7 +1089,6 @@ class Ui_MainWindow(object):
         self.FailureToAppearButton.setText(_translate("MainWindow", "Failed to Appear / Issue Warrant"))
         self.label_8.setText(_translate("MainWindow", "LEAP Entries"))
         self.label_7.setText(_translate("MainWindow", "General / Warrant Entries"))
-        self.SentencingOnlyButton.setText(_translate("MainWindow", "Sentencing Only - Already Plead"))
         self.LeapSentencingButton.setText(_translate("MainWindow", "LEAP Sentencing"))
         self.LeapAdmissionValidButton.setText(_translate("MainWindow", "LEAP Admission - Already Valid"))
         self.label_5.setText(_translate("MainWindow", "Sentencing Only Entries"))
