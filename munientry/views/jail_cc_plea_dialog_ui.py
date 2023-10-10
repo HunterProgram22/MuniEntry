@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/JailCCPleaDialog.ui'
+# Form implementation generated from reading ui file './munientry/views/ui/JailCCPleaDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -192,16 +192,16 @@ class Ui_JailCCPleaDialog(object):
         self.label_20.setFont(font)
         self.label_20.setObjectName("label_20")
         self.charges_gridLayout.addWidget(self.label_20, 2, 0, 1, 1)
-        self.label_14 = QtWidgets.QLabel(self.frame)
+        self.finding_label = QtWidgets.QLabel(self.frame)
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(10)
         font.setBold(True)
         font.setItalic(False)
         font.setWeight(75)
-        self.label_14.setFont(font)
-        self.label_14.setObjectName("label_14")
-        self.charges_gridLayout.addWidget(self.label_14, 6, 0, 1, 1)
+        self.finding_label.setFont(font)
+        self.finding_label.setObjectName("finding_label")
+        self.charges_gridLayout.addWidget(self.finding_label, 6, 0, 1, 1)
         self.label_8 = QtWidgets.QLabel(self.frame)
         self.label_8.setObjectName("label_8")
         self.charges_gridLayout.addWidget(self.label_8, 9, 0, 1, 1)
@@ -818,7 +818,7 @@ class Ui_JailCCPleaDialog(object):
         self.label_19.setText(_translate("JailCCPleaDialog", "Statute:"))
         self.plea_label.setText(_translate("JailCCPleaDialog", "Plea:"))
         self.label_20.setText(_translate("JailCCPleaDialog", "Degree:"))
-        self.label_14.setText(_translate("JailCCPleaDialog", "Finding:"))
+        self.finding_label.setText(_translate("JailCCPleaDialog", "Finding:"))
         self.label_8.setText(_translate("JailCCPleaDialog", "Jail Days:"))
         self.label_17.setText(_translate("JailCCPleaDialog", "Fines:"))
         self.offense_label_1.setText(_translate("JailCCPleaDialog", "Offense:"))

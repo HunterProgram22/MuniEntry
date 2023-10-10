@@ -98,6 +98,7 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
         if ok_input:
             self.dialog.entry_case_information.plea_date = plea_date
             self.dialog.plea_label.setText(f'Plead on {plea_date}:')
+            self.dialog.finding_label.setText(f'Finding on {plea_date}:')
 
 
     # def start_add_jail_report_dialog(self):
