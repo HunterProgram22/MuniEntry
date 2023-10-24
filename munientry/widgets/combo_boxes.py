@@ -22,7 +22,7 @@ from munientry.widgets.widget_settings import (
 )
 
 FIRST_OVI_DESCR_LIST = ['OVI Alcohol / Drugs 1st', 'OVI 1st']
-TEXT_DESCR_LIST = ['Driving while texting', 'Text or Access Internet while Driving']
+TEXT_DESCR_LIST = ['Driving While Texting', 'Text or Access Internet while Driving']
 
 
 class DailyCaseListComboBox(QComboBox):
@@ -196,7 +196,6 @@ class FindingComboBox(ChargeGridComboBox):
         """Checks the text of the Finding Box to determine the type of charge to process."""
         charge = self.get_offense_box_text()
         if text == 'Guilty' and charge in FIRST_OVI_DESCR_LIST:
-            # charge = 'OVI Alcohol / Drugs 1st'
             self.process_ovi_one_charge(charge)
         elif text == 'Guilty' and charge in TEXT_DESCR_LIST:
             self.process_distracted_driving_charge(charge)
