@@ -22,6 +22,7 @@ from munientry.widgets.widget_settings import (
 )
 
 FIRST_OVI_DESCR_LIST = ['OVI Alcohol / Drugs 1st', 'OVI 1st']
+TEXT_DESCR_LIST = ['Driving while texting', 'Text or Access Internet while Driving']
 
 
 class DailyCaseListComboBox(QComboBox):
@@ -197,6 +198,8 @@ class FindingComboBox(ChargeGridComboBox):
         if text == 'Guilty' and charge in FIRST_OVI_DESCR_LIST:
             # charge = 'OVI Alcohol / Drugs 1st'
             self.process_ovi_one_charge(charge)
+        elif text == 'Guilty' and charge in TEXT_DESCR_LIST:
+            self.process_distracted_driving_charge(charge)
 
     def get_offense_box_text(self) -> str:
         """Returns the text of an offense box as a string."""
@@ -204,7 +207,7 @@ class FindingComboBox(ChargeGridComboBox):
             self.charge_grid.row_offense, self.column,
         ).widget().text()
 
-    def process_ovi_one_charge(self, charge):
+    def process_ovi_one_charge(self, charge: str):
         """Runs the process for asking the user if they one to set 1st OVI minimums.
 
         The ovi_one_mins returns one of 3 options. Yes set mins and dismiss other charges returns 0;
@@ -224,6 +227,9 @@ class FindingComboBox(ChargeGridComboBox):
         self.update_grid()
         if msg_response == 0:
             self.charge_grid.dismiss_other_charges(charge)
+
+    def process_distracted_driving_charge(self, charge: str):
+        logger.debug('Distracted Driving Course Language')
 
     def update_grid(self) -> None:
         """Updates the UI if the user choses to set the OVI Mins.
