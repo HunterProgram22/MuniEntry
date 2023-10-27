@@ -1,6 +1,7 @@
 """Module for creating the dialog dictionary."""
 from munientry.builders.administrative import (
     admin_fiscal_dialog,
+    deny_privileges_dialog,
     driving_privileges_dialog,
     jury_payment_dialog,
     time_to_pay_dialog,
@@ -76,6 +77,7 @@ DIALOG_BUTTON_DICT = {
 
     # Admin
     'limited_driving_privilegesButton': driving_privileges_dialog.DrivingPrivilegesDialog,
+    'deny_driving_privilegesButton': deny_privileges_dialog.DrivingPrivilegesDialog,
     'juror_paymentButton': jury_payment_dialog.JuryPaymentDialog,
     'fiscal_entriesButton': admin_fiscal_dialog.AdminFiscalDialog,
     'time_to_pay_orderButton': time_to_pay_dialog.TimeToPayDialog,
