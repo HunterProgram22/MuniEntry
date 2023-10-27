@@ -323,7 +323,7 @@ class Ui_MainWindow(object):
         self.juror_paymentButton.setStyleSheet("background-color: rgb(85, 170, 255);")
         self.juror_paymentButton.setObjectName("juror_paymentButton")
         self.gridLayout_15.addWidget(self.juror_paymentButton, 2, 1, 1, 1)
-        self.deny_driving_privilegesButton = QtWidgets.QPushButton(self.administrative_tab)
+        self.deny_driving_privilegesButton = AdminDrivingDialogButton(self.administrative_tab)
         self.deny_driving_privilegesButton.setStyleSheet("background-color: rgb(85, 170, 255);")
         self.deny_driving_privilegesButton.setObjectName("deny_driving_privilegesButton")
         self.gridLayout_15.addWidget(self.deny_driving_privilegesButton, 1, 0, 1, 1)
