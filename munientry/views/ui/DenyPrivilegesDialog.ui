@@ -280,7 +280,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="QCheckBox" name="prohibited_actitivies_check_box">
+              <widget class="QCheckBox" name="prohibited_activities_check_box">
                <property name="text">
                 <string>Petition requests privileges for activities not permitted by this Court</string>
                </property>

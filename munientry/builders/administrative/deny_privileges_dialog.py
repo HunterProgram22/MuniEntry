@@ -1,4 +1,4 @@
-"""Contains classes for building the Driving Privileges Dialog."""
+"""Contains classes for building the Deny Privileges Dialog."""
 from loguru import logger
 from PyQt6.QtCore import QDate
 
@@ -11,7 +11,7 @@ from munientry.views.deny_privileges_dialog_ui import Ui_DenyPrivilegesDialog
 
 
 class DenyPrivilegesViewModifier(admin.AdminViewModifier):
-    """View class that creates and modifies the view for the Driving Privileges Dialog."""
+    """View class that creates and modifies the view for the Deny Privileges Dialog."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
@@ -27,6 +27,13 @@ class DenyPrivilegesSignalConnector(admin.AdminSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
+        self.connect_other_dialog_signals()
+
+    def connect_other_dialog_signals(self):
+        self.dialog.deny_privileges_radio_btn.toggled.connect(
+            self.dialog.functions.show_hide_deny_reasons_checkboxes,
+        )
+
 
 
 class DenyPrivilegesSlotFunctions(admin.AdminSlotFunctions):
@@ -34,6 +41,28 @@ class DenyPrivilegesSlotFunctions(admin.AdminSlotFunctions):
 
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.deny_reasons_checkboxes = [
+            self.dialog.hard_time_check_box,
+            self.dialog.no_insurance_check_box,
+            self.dialog.no_jurisdiction_check_box,
+            self.dialog.petition_incomplete_check_box,
+            self.dialog.prohibited_activities_check_box,
+            self.dialog.no_employer_info_check_box,
+        ]
+
+    def show_hide_deny_reasons_checkboxes(self):
+        if self.dialog.deny_privileges_radio_btn.isChecked():
+            self.show_deny_reasons_checkboxes()
+        else:
+            self.hide_deny_reasons_checkboxes()
+
+    def show_deny_reasons_checkboxes(self):
+        for element in self.deny_reasons_checkboxes:
+            element.show()
+
+    def hide_deny_reasons_checkboxes(self):
+        for element in self.deny_reasons_checkboxes:
+            element.hide()
 
 
 class DenyPrivilegesCaseInformationUpdater(CaseInformationUpdater):
@@ -70,3 +99,4 @@ class DenyPrivilegesDialog(admin.AdminDialogBuilder, Ui_DenyPrivilegesDialog):
 
     def additional_setup(self):
         self.setWindowTitle(f'{self.dialog_name} Case Information')
+        self.functions.show_hide_deny_reasons_checkboxes()
