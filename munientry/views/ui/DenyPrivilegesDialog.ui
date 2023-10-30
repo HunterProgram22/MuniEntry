@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1360</width>
+    <width>1209</width>
     <height>725</height>
    </rect>
   </property>
@@ -177,12 +177,119 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1320</width>
+           <width>1169</width>
            <height>685</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,0">
-          <item row="3" column="1">
+         <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0">
+          <item row="1" column="0" colspan="2">
+           <widget class="QFrame" name="frame">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(240, 240, 240);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>2</number>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="1" column="0">
+              <widget class="QRadioButton" name="deny_privileges_radio_btn">
+               <property name="text">
+                <string>Deny Driving Privileges</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QRadioButton" name="permit_test_radio_btn">
+               <property name="text">
+                <string>Permit Defendant to Test and/or Renew</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QRadioButton" name="permit_renew_radio_btn">
+               <property name="text">
+                <string>Permit Defendant to Renew upon Expiration</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="hard_time_check_box">
+               <property name="text">
+                <string>Not Eligible - Hard Time has not passed</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="2">
+              <widget class="QLabel" name="label_4">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>DRIVING PRIVILEGES ENTRY TYPE</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="petition_incomplete_check_box">
+               <property name="text">
+                <string>Petition is Incomplete and/or Illegible</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QCheckBox" name="no_employer_info_check_box">
+               <property name="text">
+                <string>Court could not verify employer information</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="no_insurance_check_box">
+               <property name="text">
+                <string>Failed to Provide Proof of Insurance</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QCheckBox" name="no_jurisdiction_check_box">
+               <property name="text">
+                <string>License not subject to suspension for which this court may grant privileges</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QCheckBox" name="prohibited_actitivies_check_box">
+               <property name="text">
+                <string>Petition requests privileges for activities not permitted by this Court</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="3" column="0">
            <widget class="QPushButton" name="close_dialog_Button">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 96, 82);
@@ -191,6 +298,21 @@ font-weight: bold;</string>
             </property>
             <property name="text">
              <string>Close Dialog</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QPushButton" name="create_entry_Button">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 255, 0);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+            </property>
+            <property name="text">
+             <string>Open Entry</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -214,35 +336,91 @@ font-weight: bold;</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout" columnstretch="1,3,1,1,1">
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_3">
+            <layout class="QGridLayout" name="gridLayout" columnstretch="0,2,0,1,1">
+             <item row="4" column="0">
+              <widget class="QLabel" name="label">
                <property name="text">
-                <string>Case Number:</string>
+                <string>Def. First Name:</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="case_number_lineEdit">
-               <property name="maximumSize">
-                <size>
-                 <width>500</width>
-                 <height>16777215</height>
-                </size>
+             <item row="4" column="4">
+              <widget class="QPushButton" name="clear_fields_case_Button">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
+               </property>
+               <property name="text">
+                <string>Clear Fields</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="defendant_first_name_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QLineEdit" name="defendant_last_name_lineEdit">
+               <property name="enabled">
+                <bool>true</bool>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="2">
-              <widget class="QLabel" name="label_26">
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_2">
                <property name="text">
-                <string>Entry Date:</string>
+                <string>Def. Last Name:</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="3">
+             <item row="0" column="0" colspan="5">
+              <widget class="QLabel" name="label_6">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>CASE INFORMATION</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="4">
+              <widget class="QPushButton" name="cancel_Button">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
+               </property>
+               <property name="text">
+                <string>Cancel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="4">
               <widget class="NoScrollDateEdit" name="plea_trial_date">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
@@ -270,186 +448,37 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="4">
-              <widget class="QPushButton" name="cancel_Button">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="case_number_lineEdit">
+               <property name="maximumSize">
+                <size>
+                 <width>750</width>
+                 <height>16777215</height>
+                </size>
                </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);</string>
-               </property>
-               <property name="text">
-                <string>Cancel</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Def. First Name:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="defendant_first_name_lineEdit">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2">
-              <widget class="QLabel" name="label_8">
-               <property name="text">
-                <string>Def. DOB:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="3">
-              <widget class="QLineEdit" name="defendant_dob_lineEdit">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="4">
-              <widget class="QPushButton" name="clear_fields_case_Button">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);</string>
-               </property>
-               <property name="text">
-                <string>Clear Fields</string>
                </property>
               </widget>
              </item>
              <item row="3" column="0">
-              <widget class="QLabel" name="label_2">
+              <widget class="QLabel" name="label_3">
                <property name="text">
-                <string>Def. Last Name:</string>
+                <string>Case Number:</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="1">
-              <widget class="QLineEdit" name="defendant_last_name_lineEdit">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="2">
-              <widget class="QLabel" name="label_9">
+             <item row="3" column="2" colspan="2">
+              <widget class="QLabel" name="label_26">
                <property name="text">
-                <string>Def. Driver License Number:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="3">
-              <widget class="QLineEdit" name="defendant_driver_license_lineEdit">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_11">
-               <property name="text">
-                <string>Address:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QLineEdit" name="defendant_address_lineEdit">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="2">
-              <widget class="QLabel" name="label_13">
-               <property name="text">
-                <string>State:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="3">
-              <widget class="QLineEdit" name="defendant_state_lineEdit">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_12">
-               <property name="text">
-                <string>City:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QLineEdit" name="defendant_city_lineEdit">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="2">
-              <widget class="QLabel" name="label_14">
-               <property name="text">
-                <string>ZIP Code:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="3">
-              <widget class="QLineEdit" name="defendant_zipcode_lineEdit">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="5">
-              <widget class="QLabel" name="label_6">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>CASE INFORMATION</string>
+                <string>Entry Date:</string>
                </property>
                <property name="alignment">
-                <set>Qt::AlignCenter</set>
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                </property>
               </widget>
              </item>
             </layout>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QPushButton" name="create_entry_Button">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(0, 255, 0);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-            </property>
-            <property name="text">
-             <string>Open Entry</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
            </widget>
           </item>
          </layout>
@@ -469,17 +498,8 @@ font-weight: bold;</string>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>case_number_lineEdit</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
-  <tabstop>defendant_dob_lineEdit</tabstop>
-  <tabstop>defendant_driver_license_lineEdit</tabstop>
-  <tabstop>defendant_address_lineEdit</tabstop>
-  <tabstop>defendant_city_lineEdit</tabstop>
-  <tabstop>defendant_state_lineEdit</tabstop>
-  <tabstop>defendant_zipcode_lineEdit</tabstop>
-  <tabstop>create_entry_Button</tabstop>
-  <tabstop>close_dialog_Button</tabstop>
  </tabstops>
  <resources/>
  <connections/>
