@@ -182,113 +182,6 @@ font-weight: bold;</string>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0">
-          <item row="1" column="0" colspan="2">
-           <widget class="QFrame" name="frame">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(240, 240, 240);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::Box</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>2</number>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_3">
-             <item row="1" column="0">
-              <widget class="QRadioButton" name="deny_privileges_radio_btn">
-               <property name="text">
-                <string>Deny Driving Privileges</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QRadioButton" name="permit_test_radio_btn">
-               <property name="text">
-                <string>Permit Defendant to Test and/or Renew</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QRadioButton" name="permit_renew_radio_btn">
-               <property name="text">
-                <string>Permit Defendant to Renew upon Expiration</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QCheckBox" name="hard_time_check_box">
-               <property name="text">
-                <string>Not Eligible - Hard Time has not passed</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="2">
-              <widget class="QLabel" name="label_4">
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>50</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>DRIVING PRIVILEGES ENTRY TYPE</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QCheckBox" name="petition_incomplete_check_box">
-               <property name="text">
-                <string>Petition is Incomplete and/or Illegible</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QCheckBox" name="no_employer_info_check_box">
-               <property name="text">
-                <string>Court could not verify employer information</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QCheckBox" name="no_insurance_check_box">
-               <property name="text">
-                <string>Failed to Provide Proof of Insurance</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QCheckBox" name="no_jurisdiction_check_box">
-               <property name="text">
-                <string>License not subject to suspension for which this court may grant privileges</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QCheckBox" name="prohibited_activities_check_box">
-               <property name="text">
-                <string>Petition requests privileges for activities not permitted by this Court</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
           <item row="3" column="0">
            <widget class="QPushButton" name="close_dialog_Button">
             <property name="styleSheet">
@@ -407,16 +300,20 @@ font-weight: bold;</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="4">
-              <widget class="QPushButton" name="cancel_Button">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);</string>
-               </property>
+             <item row="3" column="2" colspan="2">
+              <widget class="QLabel" name="label_26">
                <property name="text">
-                <string>Cancel</string>
+                <string>Entry Date:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Case Number:</string>
                </property>
               </widget>
              </item>
@@ -448,6 +345,19 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
+             <item row="5" column="4">
+              <widget class="QPushButton" name="cancel_Button">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
+               </property>
+               <property name="text">
+                <string>Cancel</string>
+               </property>
+              </widget>
+             </item>
              <item row="3" column="1">
               <widget class="QLineEdit" name="case_number_lineEdit">
                <property name="maximumSize">
@@ -461,20 +371,152 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_3">
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QFrame" name="frame">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(240, 240, 240);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>2</number>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="1" column="0">
+              <widget class="QRadioButton" name="deny_privileges_radio_btn">
                <property name="text">
-                <string>Case Number:</string>
+                <string>Deny Driving Privileges</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="2" colspan="2">
-              <widget class="QLabel" name="label_26">
+             <item row="6" column="0">
+              <widget class="QRadioButton" name="permit_test_radio_btn">
                <property name="text">
-                <string>Entry Date:</string>
+                <string>Permit Defendant to Test and/or Renew</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="0">
+              <widget class="QRadioButton" name="permit_renew_radio_btn">
+               <property name="text">
+                <string>Permit Defendant to Renew upon Expiration</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="hard_time_check_box">
+               <property name="text">
+                <string>Not Eligible - Hard Time has not passed</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="2">
+              <widget class="QLabel" name="label_4">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>DRIVING PRIVILEGES ENTRY TYPE</string>
                </property>
                <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="petition_incomplete_check_box">
+               <property name="text">
+                <string>Petition is Incomplete and/or Illegible</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QCheckBox" name="no_employer_info_check_box">
+               <property name="text">
+                <string>Court could not verify employer information</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="no_insurance_check_box">
+               <property name="text">
+                <string>Failed to Provide Proof of Insurance</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QCheckBox" name="no_jurisdiction_check_box">
+               <property name="text">
+                <string>License not subject to suspension for which this court may grant privileges</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QCheckBox" name="prohibited_activities_check_box">
+               <property name="text">
+                <string>Petition requests privileges for activities not permitted by this Court</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="license_exp_date_label">
+               <property name="text">
+                <string>Defendant Driver License Expiration Date:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0">
+              <widget class="QDateEdit" name="license_exp_date_field">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0" colspan="2">
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0" colspan="2">
+              <widget class="Line" name="line_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <widget class="QCheckBox" name="permanent_id_check_box">
+               <property name="text">
+                <string>Check if defendant has permanent ID card instead of expired license</string>
                </property>
               </widget>
              </item>

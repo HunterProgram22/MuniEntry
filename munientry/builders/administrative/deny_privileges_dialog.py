@@ -33,7 +33,9 @@ class DenyPrivilegesSignalConnector(admin.AdminSignalConnector):
         self.dialog.deny_privileges_radio_btn.toggled.connect(
             self.dialog.functions.show_hide_deny_reasons_checkboxes,
         )
-
+        self.dialog.permit_test_radio_btn.toggled.connect(
+            self.dialog.functions.show_hide_test_reasons_fields,
+        )
 
 
 class DenyPrivilegesSlotFunctions(admin.AdminSlotFunctions):
@@ -49,19 +51,30 @@ class DenyPrivilegesSlotFunctions(admin.AdminSlotFunctions):
             self.dialog.prohibited_activities_check_box,
             self.dialog.no_employer_info_check_box,
         ]
+        self.test_reasons_fields = [
+            self.dialog.license_exp_date_label,
+            self.dialog.license_exp_date_field,
+            self.dialog.permanent_id_check_box,
+        ]
+
+    def show_hide_test_reasons_fields(self):
+        if self.dialog.permit_test_radio_btn.isChecked():
+            self.show_fields(self.test_reasons_fields)
+        else:
+            self.hide_fields(self.test_reasons_fields)
 
     def show_hide_deny_reasons_checkboxes(self):
         if self.dialog.deny_privileges_radio_btn.isChecked():
-            self.show_deny_reasons_checkboxes()
+            self.show_fields(self.deny_reasons_checkboxes)
         else:
-            self.hide_deny_reasons_checkboxes()
+            self.hide_fields(self.deny_reasons_checkboxes)
 
-    def show_deny_reasons_checkboxes(self):
-        for element in self.deny_reasons_checkboxes:
+    def show_fields(self, field_list):
+        for element in field_list:
             element.show()
 
-    def hide_deny_reasons_checkboxes(self):
-        for element in self.deny_reasons_checkboxes:
+    def hide_fields(self, field_list):
+        for element in field_list:
             element.hide()
 
 
@@ -100,3 +113,4 @@ class DenyPrivilegesDialog(admin.AdminDialogBuilder, Ui_DenyPrivilegesDialog):
     def additional_setup(self):
         self.setWindowTitle(f'{self.dialog_name} Case Information')
         self.functions.show_hide_deny_reasons_checkboxes()
+        self.functions.show_hide_test_reasons_fields()
