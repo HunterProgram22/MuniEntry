@@ -41,6 +41,7 @@ TEMPLATE_LIST = (
     Template('Time To Pay Entry', 'Time_To_Pay_Template.docx'),
     Template('Admin Fiscal Entry', 'Admin_Fiscal_Template.docx'),
     Template('Driving Privileges Entry', 'Driving_Privileges_Template.docx'),
+    Template('Deny Privileges Entry', 'Deny_Privileges_Template.docx'),
     Template('Leap Admission Plea Entry', 'Leap_Admission_Plea_Template.docx'),
     Template('Leap Admission Plea Valid Entry', 'Leap_Admission_Plea_Valid_Template.docx'),
     Template('Leap Sentencing Judgment Entry', 'Leap_Sentencing_Template.docx'),

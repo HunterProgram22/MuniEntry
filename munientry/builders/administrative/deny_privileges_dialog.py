@@ -5,7 +5,7 @@ from PyQt6.QtCore import QDate
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecks
 from munientry.loaders.cms_case_loaders import CmsDrivingInfoLoader
-from munientry.models.privileges_models import DrivingPrivilegesInformation
+from munientry.models.privileges_models import DenyPrivilegesInformation
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.deny_privileges_dialog_ui import Ui_DenyPrivilegesDialog
 
@@ -83,6 +83,18 @@ class DenyPrivilegesCaseInformationUpdater(CaseInformationUpdater):
 
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.set_case_number_and_date()
+        self.set_privileges_info()
+
+    def set_case_number_and_date(self):
+        self.model.judicial_officer = self.dialog.judicial_officer
+        self.model.case_number = self.dialog.case_number_lineEdit.text()
+        self.model.plea_trial_date = self.dialog.plea_trial_date.date().toString('MMMM dd, yyyy')
+
+    def set_privileges_info(self):
+        self.model.deny_privileges = self.dialog.deny_privileges_radio_btn.isChecked()
+        self.model.permit_test_or_renew = self.dialog.permit_test_radio_btn.isChecked()
+        self.model.permit_renew_expired = self.dialog.permit_renew_radio_btn.isChecked()
 
 
 class DenyPrivilegesDialogInfoChecks(BaseChecks):
@@ -101,7 +113,7 @@ class DenyPrivilegesDialog(admin.AdminDialogBuilder, Ui_DenyPrivilegesDialog):
     The judicial_officer for this entry is the selected Assignment Commissioner.
     """
 
-    _case_information_model = DrivingPrivilegesInformation
+    _case_information_model = DenyPrivilegesInformation
     _case_loader = CmsDrivingInfoLoader
     _info_checker = DenyPrivilegesDialogInfoChecks
     _model_updater = DenyPrivilegesCaseInformationUpdater
