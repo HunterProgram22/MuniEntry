@@ -6,6 +6,7 @@ from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecks
 from munientry.loaders.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import DenyPrivilegesInformation
+from munientry.models.party_types import JudicialOfficer
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.deny_privileges_dialog_ui import Ui_DenyPrivilegesDialog
 
@@ -87,14 +88,30 @@ class DenyPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.set_privileges_info()
 
     def set_case_number_and_date(self):
-        self.model.judicial_officer = self.dialog.judicial_officer
+        self.model.judicial_officer = self.set_judicial_officer()
         self.model.case_number = self.dialog.case_number_lineEdit.text()
         self.model.plea_trial_date = self.dialog.plea_trial_date.date().toString('MMMM dd, yyyy')
+
+    def set_judicial_officer(self):
+        """This method sets the judicial officer for the case information model.
+
+        It overrides the selected officer for denial of driving privileges because they are prepared
+        by an assignment commissioner for the signature of a judge and judges are not available
+        options for staff on the Administrative entries tab. This is not ideal.
+        """
+        judicial_officer = self.dialog.judicial_officer
+        if judicial_officer.last_name == 'Boger':
+            return JudicialOfficer('Marianne', 'Hemmeter', 'Judge')
+        elif judicial_officer.last_name == 'Dattilo':
+            return JudicialOfficer('Kyle', 'Rohrer', 'Judge')
+        else:
+            return judicial_officer
 
     def set_privileges_info(self):
         self.model.deny_privileges = self.dialog.deny_privileges_radio_btn.isChecked()
         self.model.permit_test_or_renew = self.dialog.permit_test_radio_btn.isChecked()
         self.model.permit_renew_expired = self.dialog.permit_renew_radio_btn.isChecked()
+        self.model.hard_time = self.dialog.hard_time_check_box.isChecked()
 
 
 class DenyPrivilegesDialogInfoChecks(BaseChecks):

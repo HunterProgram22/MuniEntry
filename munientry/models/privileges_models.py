@@ -42,6 +42,15 @@ class DenyPrivilegesInformation(DrivingPrivilegesInformation):
     deny_privileges: bool = False
     permit_test_or_renew: bool = False
     permit_renew_expired: bool = False
+    hard_time: bool = False
+    no_insurance: bool = False
+    petition_incomplete: bool = False
+    no_jurisdiction: bool = False
+    no_employer_info: bool = False
+    prohibited_activities: bool = False
+    permanent_id: bool = False
+
+
 
 
 
