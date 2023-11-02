@@ -119,6 +119,8 @@ class DenyPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.model.no_employer_info = self.dialog.no_employer_info_check_box.isChecked()
         self.model.prohibited_activities = self.dialog.prohibited_activities_check_box.isChecked()
         self.model.out_of_state_license = self.dialog.out_of_state_license_check_box.isChecked()
+        self.model.license_expiration_date = self.dialog.license_exp_date_field.get_date_as_string()
+        self.model.permanent_id = self.dialog.permanent_id_check_box.isChecked()
 
 
 class DenyPrivilegesDialogInfoChecks(BaseChecks):

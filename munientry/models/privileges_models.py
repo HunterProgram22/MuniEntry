@@ -50,6 +50,7 @@ class DenyPrivilegesInformation(DrivingPrivilegesInformation):
     prohibited_activities: bool = False
     out_of_state_license: bool = False
     permanent_id: bool = False
+    license_expiration_date: str = None
 
 
 @dataclass

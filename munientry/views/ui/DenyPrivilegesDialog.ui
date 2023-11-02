@@ -479,7 +479,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="10" column="0">
-              <widget class="QDateEdit" name="license_exp_date_field">
+              <widget class="NoScrollDateEdit" name="license_exp_date_field">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);</string>
@@ -496,13 +496,6 @@ color: rgb(0, 0, 0);</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="1">
-              <widget class="QCheckBox" name="permanent_id_check_box">
-               <property name="text">
-                <string>Check if defendant has permanent ID card instead of expired license</string>
                </property>
               </widget>
              </item>
@@ -524,6 +517,13 @@ color: rgb(0, 0, 0);</string>
               <widget class="QCheckBox" name="out_of_state_license_check_box">
                <property name="text">
                 <string>Out of State License - Needs Certified Abstract</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QCheckBox" name="permanent_id_check_box">
+               <property name="text">
+                <string>Check if defendant has permanent ID card instead of expired license</string>
                </property>
               </widget>
              </item>
