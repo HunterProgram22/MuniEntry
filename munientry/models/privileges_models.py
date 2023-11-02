@@ -48,10 +48,8 @@ class DenyPrivilegesInformation(DrivingPrivilegesInformation):
     no_jurisdiction: bool = False
     no_employer_info: bool = False
     prohibited_activities: bool = False
+    out_of_state_license: bool = False
     permanent_id: bool = False
-
-
-
 
 
 @dataclass

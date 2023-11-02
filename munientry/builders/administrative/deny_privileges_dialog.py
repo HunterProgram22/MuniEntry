@@ -51,6 +51,7 @@ class DenyPrivilegesSlotFunctions(admin.AdminSlotFunctions):
             self.dialog.petition_incomplete_check_box,
             self.dialog.prohibited_activities_check_box,
             self.dialog.no_employer_info_check_box,
+            self.dialog.out_of_state_license_check_box,
         ]
         self.test_reasons_fields = [
             self.dialog.license_exp_date_label,
@@ -112,6 +113,12 @@ class DenyPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.model.permit_test_or_renew = self.dialog.permit_test_radio_btn.isChecked()
         self.model.permit_renew_expired = self.dialog.permit_renew_radio_btn.isChecked()
         self.model.hard_time = self.dialog.hard_time_check_box.isChecked()
+        self.model.no_insurance = self.dialog.no_insurance_check_box.isChecked()
+        self.model.petition_incomplete = self.dialog.petition_incomplete_check_box.isChecked()
+        self.model.no_jurisdiction = self.dialog.no_jurisdiction_check_box.isChecked()
+        self.model.no_employer_info = self.dialog.no_employer_info_check_box.isChecked()
+        self.model.prohibited_activities = self.dialog.prohibited_activities_check_box.isChecked()
+        self.model.out_of_state_license = self.dialog.out_of_state_license_check_box.isChecked()
 
 
 class DenyPrivilegesDialogInfoChecks(BaseChecks):
