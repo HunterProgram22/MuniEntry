@@ -34,6 +34,26 @@ class DrivingPrivilegesInformation:
 
 
 @dataclass
+class DenyPrivilegesInformation(DrivingPrivilegesInformation):
+    """Stores information used for denying driving privileges or other entries not granting driving
+    privileges.
+    """
+
+    deny_privileges: bool = False
+    permit_test_or_renew: bool = False
+    permit_renew_expired: bool = False
+    hard_time: bool = False
+    no_insurance: bool = False
+    petition_incomplete: bool = False
+    no_jurisdiction: bool = False
+    no_employer_info: bool = False
+    prohibited_activities: bool = False
+    out_of_state_license: bool = False
+    permanent_id: bool = False
+    license_expiration_date: str = None
+
+
+@dataclass
 class EmployerSchoolInformation:
     """Stores employer or school information used for driving privileges."""
 
