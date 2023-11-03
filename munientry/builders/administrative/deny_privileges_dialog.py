@@ -4,6 +4,7 @@ from PyQt6.QtCore import QDate
 
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecks
+from munientry.entrycreators.entry_creator import DrivingPrivilegesEntryCreator
 from munientry.loaders.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import DenyPrivilegesInformation
 from munientry.models.party_types import JudicialOfficer
@@ -78,6 +79,9 @@ class DenyPrivilegesSlotFunctions(admin.AdminSlotFunctions):
     def hide_fields(self, field_list):
         for element in field_list:
             element.hide()
+
+    def create_entry_process(self) -> None:
+        DrivingPrivilegesEntryCreator(self.dialog).create_entry_process()
 
 
 class DenyPrivilegesCaseInformationUpdater(CaseInformationUpdater):
