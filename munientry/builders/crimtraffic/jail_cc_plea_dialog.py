@@ -74,31 +74,9 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
                 else:
                     child.hide()
 
-    def show_diversion_frame(self):
-        show = self.dialog.diversion_check_box.isChecked()
-        self._toggle_frame(self.dialog.diversion_frame, self.dialog.diversion_check_box, show)
-
-    def show_jail_reporting_frame(self):
-        show = self.dialog.jail_check_box.isChecked()
-        self._toggle_frame(self.dialog.jail_reporting_frame, self.dialog.jail_check_box, show)
-        self.set_report_date_boxes()
-        self.show_companion_case_fields()
-
-    def show_jail_credit_frame(self):
-        show = self.dialog.jail_credit_check_box.isChecked()
-        self._toggle_frame(self.dialog.jail_credit_frame, self.dialog.jail_credit_check_box, show)
-
-    def show_community_control_frame(self):
-        show = self.dialog.community_control_check_box.isChecked()
-        self._toggle_frame(
-            self.dialog.community_control_frame, self.dialog.community_control_check_box, show
-        )
-
-    def show_license_suspension_frame(self):
-        show = self.dialog.license_suspension_check_box.isChecked()
-        self._toggle_frame(
-            self.dialog.license_suspension_frame, self.dialog.license_suspension_check_box, show
-        )
+    def toggle_specific_frame(self, frame, check_box):
+        show = check_box.isChecked()
+        self._toggle_frame(frame,check_box, show)
 
     def check_appearance_reason(self):
         """Checks the appearance reason that is selected and triggers action to update UI."""
@@ -164,38 +142,30 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_fra_signals()
         self.connect_court_cost_signals()
         # self.connect_main_dialog_add_condition_signals()
+        self.checkbox_frame_pairs = [
+            (self.dialog.diversion_frame, self.dialog.diversion_check_box),
+            (self.dialog.license_suspension_frame, self.dialog.license_suspension_check_box),
+            (self.dialog.jail_reporting_frame, self.dialog.jail_reporting_check_box),
+            (self.dialog.jail_credit_frame, self.dialog.jail_credit_check_box),
+            (self.dialog.community_control_frame, self.dialog.community_control_check_box),
+            (self.dialog.impoundment_frame, self.dialog.impoundment_check_box),
+            (self.dialog.victim_notification_frame, self.dialog.victim_notification_check_box),
+            (self.dialog.community_service_frame, self.dialog.community_service_check_box),
+            (self.dialog.other_conditions_frame, self.dialog.other_conditions_check_box),
+        ]
         self.connect_dialog_specific_signals()
 
     def connect_dialog_specific_signals(self):
-        self.dialog.jail_check_box.toggled.connect(self.dialog.functions.conditions_checkbox_toggle)
         self.dialog.add_companion_cases_checkBox.toggled.connect(
             self.dialog.functions.show_companion_case_fields,
         )
-        # self.dialog.community_control_checkBox.toggled.connect(
-        #     self.dialog.functions.conditions_checkbox_toggle,
-        # )
-        # self.dialog.impoundment_checkBox.toggled.connect(
-        #     self.dialog.functions.conditions_checkbox_toggle,
-        # )
-        # self.dialog.victim_notification_checkBox.toggled.connect(
-        #     self.dialog.functions.conditions_checkbox_toggle,
-        # )
 
-        self.dialog.diversion_check_box.toggled.connect(
-            self.dialog.functions.show_diversion_frame,
-        )
-        self.dialog.jail_check_box.toggled.connect(
-            self.dialog.functions.show_jail_reporting_frame,
-        )
-        self.dialog.jail_credit_check_box.toggled.connect(
-            self.dialog.functions.show_jail_credit_frame,
-        )
-        self.dialog.license_suspension_check_box.toggled.connect(
-            self.dialog.functions.show_license_suspension_frame,
-        )
-        self.dialog.community_control_check_box.toggled.connect(
-            self.dialog.functions.show_community_control_frame,
-        )
+        for frame, checkbox in self.checkbox_frame_pairs:
+            checkbox.toggled.connect(
+                lambda checked, f=frame, cb=checkbox: self.dialog.functions.toggle_specific_frame(
+                    f, cb,
+                )
+            )
 
         self.dialog.report_type_box.currentTextChanged.connect(
             self.dialog.functions.set_report_date_boxes,
@@ -248,22 +218,33 @@ class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
     dialog_name = 'Jail CC Judgment Entry'
 
     def additional_setup(self):
-        """TODO: same refactor for all additional conditions list should be made."""
+        """TODO: Remove additional conditions list at some point as it is not going to be used.
+
+        TODO: Refactor frames_list as it is also in slot connections.
+        """
         validator = MAX_JAIL_TIME_VALIDATOR
         self.jail_time_credit_box.setValidator(validator)
         self.additional_conditions_list = [
-            # ('community_control_checkBox', self.entry_case_information.community_control),
-            # ('license_suspension_check_box', self.entry_case_information.license_suspension),
+            ('community_control_checkBox', self.entry_case_information.community_control),
+            ('license_suspension_check_box', self.entry_case_information.license_suspension),
             ('community_service_checkBox', self.entry_case_information.community_service),
             ('other_conditions_checkBox', self.entry_case_information.other_conditions),
             ('jail_check_box', self.entry_case_information.jail_terms),
             ('impoundment_checkBox', self.entry_case_information.impoundment),
             ('victim_notification_checkBox', self.entry_case_information.victim_notification),
         ]
-        self.functions.show_diversion_frame()
-        self.functions.show_jail_reporting_frame()
-        self.functions.show_jail_credit_frame()
-        self.functions.show_license_suspension_frame()
-        self.functions.show_community_control_frame()
+        self.frames_list = [
+            (self.license_suspension_frame, self.license_suspension_check_box),
+            (self.diversion_frame, self.diversion_check_box),
+            (self.jail_reporting_frame, self.jail_reporting_check_box),
+            (self.jail_credit_frame, self.jail_credit_check_box),
+            (self.community_control_frame, self.community_control_check_box),
+            (self.impoundment_frame, self.impoundment_check_box),
+            (self.victim_notification_frame, self.victim_notification_check_box),
+            (self.community_service_frame, self.community_service_check_box),
+            (self.other_conditions_frame, self.other_conditions_check_box),
+        ]
+        for frame_tuple in self.frames_list:
+            self.functions.toggle_specific_frame(frame_tuple[0], frame_tuple[1])
         if self.case_table == 'slated':
             self.in_jail_box.setCurrentText('Yes')

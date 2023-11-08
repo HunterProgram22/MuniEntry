@@ -12,6 +12,7 @@ from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboB
 from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit, NoScrollTimeEdit
 from munientry.widgets.charges_grids import JailChargesGrid
 
+
 class Ui_JailCCPleaDialog(object):
     def setupUi(self, JailCCPleaDialog):
         JailCCPleaDialog.setObjectName("JailCCPleaDialog")
@@ -77,7 +78,7 @@ class Ui_JailCCPleaDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, -940, 1481, 3297))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, -129, 1481, 3297))
         self.scrollAreaWidgetContents_2.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.gridLayout_10 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
@@ -539,9 +540,9 @@ class Ui_JailCCPleaDialog(object):
         self.jail_report_days_notes_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.jail_report_days_notes_box.setObjectName("jail_report_days_notes_box")
         self.gridLayout_11.addWidget(self.jail_report_days_notes_box, 10, 1, 1, 1)
-        self.jail_check_box = QtWidgets.QCheckBox(self.jail_reporting_frame)
-        self.jail_check_box.setObjectName("jail_check_box")
-        self.gridLayout_11.addWidget(self.jail_check_box, 0, 0, 1, 2)
+        self.jail_reporting_check_box = QtWidgets.QCheckBox(self.jail_reporting_frame)
+        self.jail_reporting_check_box.setObjectName("jail_reporting_check_box")
+        self.gridLayout_11.addWidget(self.jail_reporting_check_box, 0, 0, 1, 2)
         self.label_32 = QtWidgets.QLabel(self.jail_reporting_frame)
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
@@ -1464,7 +1465,7 @@ class Ui_JailCCPleaDialog(object):
         self.companion_cases_sentence_box.setItemText(0, _translate("JailCCPleaDialog", "consecutively"))
         self.companion_cases_sentence_box.setItemText(1, _translate("JailCCPleaDialog", "concurrently"))
         self.jail_report_days_notes_box.setPlaceholderText(_translate("JailCCPleaDialog", "Jail report days if not consecutive"))
-        self.jail_check_box.setText(_translate("JailCCPleaDialog", "JAIL REPORT TERMS -> Check to set jail report terms. Checkbox must remain checked if setting jail report terms."))
+        self.jail_reporting_check_box.setText(_translate("JailCCPleaDialog", "JAIL REPORT TERMS -> Check to set jail report terms. Checkbox must remain checked if setting jail report terms."))
         self.label_32.setText(_translate("JailCCPleaDialog", "JAIL REPORTING"))
         self.label_2.setText(_translate("JailCCPleaDialog", "Def. Last Name:"))
         self.clear_fields_case_Button.setText(_translate("JailCCPleaDialog", "Clear Fields"))

@@ -171,7 +171,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-940</y>
+        <y>-129</y>
         <width>1481</width>
         <height>3297</height>
        </rect>
@@ -1151,7 +1151,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="jail_check_box">
+           <widget class="QCheckBox" name="jail_reporting_check_box">
             <property name="text">
              <string>JAIL REPORT TERMS -&gt; Check to set jail report terms. Checkbox must remain checked if setting jail report terms.</string>
             </property>
