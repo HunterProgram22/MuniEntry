@@ -4,9 +4,9 @@ from PyQt6.QtWidgets import QWidget, QDialog, QInputDialog
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.builders.secondary.add_community_control_dialog import (
-    AddCommunityControlDialog,
-)
+# from munientry.builders.secondary.add_community_control_dialog import (
+#     AddCommunityControlDialog,
+# )
 from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
 from munientry.widgets.message_boxes import DateInputDialog
 from munientry.checkers.crim_checks import JailTimeChecks
@@ -96,17 +96,6 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
     def set_trial_to_court(self):
         self.dialog.plea_label.setText('Tried To:')
 
-
-    # def start_add_jail_report_dialog(self):
-    #     self.dialog.update_entry_case_information()
-    #     self.dialog.popup_dialog = AddJailOnlyDialog(self.dialog)
-    #     self.dialog.popup_dialog.exec()
-
-    def start_add_conditions_dialog(self):
-        self.dialog.update_entry_case_information()
-        self.dialog.popup_dialog = AddCommunityControlDialog(self.dialog)
-        self.dialog.popup_dialog.exec()
-
     def set_report_date_boxes(self):
         if self.dialog.report_type_box.currentText() == 'future date':
             self.show_report_date_boxes()
@@ -141,7 +130,6 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_plea_all_button_signals()
         self.connect_fra_signals()
         self.connect_court_cost_signals()
-        # self.connect_main_dialog_add_condition_signals()
         self.checkbox_frame_pairs = [
             (self.dialog.diversion_frame, self.dialog.diversion_check_box),
             (self.dialog.license_suspension_frame, self.dialog.license_suspension_check_box),
