@@ -4,17 +4,12 @@ from PyQt6.QtWidgets import QWidget, QDialog, QInputDialog
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-# from munientry.builders.secondary.add_community_control_dialog import (
-#     AddCommunityControlDialog,
-# )
 from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
 from munientry.widgets.message_boxes import DateInputDialog
 from munientry.checkers.crim_checks import JailTimeChecks
 from munientry.helper_functions import set_future_date
 from munientry.loaders.cms_case_loaders import CmsFraLoader
-from munientry.models.case_information.sentencing_entries import (
-    JailCCEntryCaseInformation,
-)
+from munientry.models.case_information.sentencing_entries import JailCCEntryCaseInformation
 from munientry.settings.business_constants import DIVERSION_ADD_DAYS
 from munientry.settings.pyqt_constants import MAX_JAIL_TIME_VALIDATOR
 from munientry.updaters.grid_case_updaters import JailCCDialogUpdater
