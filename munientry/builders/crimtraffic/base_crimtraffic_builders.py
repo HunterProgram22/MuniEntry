@@ -237,9 +237,9 @@ class CrimTrafficSignalConnector(base.BaseDialogSignalConnector):
         )
 
     def connect_main_dialog_add_condition_signals(self):
-        # self.dialog.license_suspension_checkBox.toggled.connect(
-        #     self.dialog.functions.conditions_checkbox_toggle,
-        # )
+        self.dialog.license_suspension_checkBox.toggled.connect(
+            self.dialog.functions.conditions_checkbox_toggle,
+        )
         self.dialog.community_service_checkBox.toggled.connect(
             self.dialog.functions.conditions_checkbox_toggle,
         )

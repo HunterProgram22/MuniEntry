@@ -79,14 +79,20 @@ class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMix
         self._toggle_frame(self.dialog.diversion_frame, self.dialog.diversion_check_box, show)
 
     def show_jail_reporting_frame(self):
-        show = self.dialog.jail_checkBox.isChecked()
-        self._toggle_frame(self.dialog.jail_reporting_frame, self.dialog.jail_checkBox, show)
+        show = self.dialog.jail_check_box.isChecked()
+        self._toggle_frame(self.dialog.jail_reporting_frame, self.dialog.jail_check_box, show)
         self.set_report_date_boxes()
         self.show_companion_case_fields()
 
     def show_jail_credit_frame(self):
         show = self.dialog.jail_credit_check_box.isChecked()
         self._toggle_frame(self.dialog.jail_credit_frame, self.dialog.jail_credit_check_box, show)
+
+    def show_community_control_frame(self):
+        show = self.dialog.community_control_check_box.isChecked()
+        self._toggle_frame(
+            self.dialog.community_control_frame, self.dialog.community_control_check_box, show
+        )
 
     def show_license_suspension_frame(self):
         show = self.dialog.license_suspension_check_box.isChecked()
@@ -157,28 +163,28 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_plea_all_button_signals()
         self.connect_fra_signals()
         self.connect_court_cost_signals()
-        self.connect_main_dialog_add_condition_signals()
+        # self.connect_main_dialog_add_condition_signals()
         self.connect_dialog_specific_signals()
 
     def connect_dialog_specific_signals(self):
-        self.dialog.jail_checkBox.toggled.connect(self.dialog.functions.conditions_checkbox_toggle)
+        self.dialog.jail_check_box.toggled.connect(self.dialog.functions.conditions_checkbox_toggle)
         self.dialog.add_companion_cases_checkBox.toggled.connect(
             self.dialog.functions.show_companion_case_fields,
         )
-        self.dialog.community_control_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.impoundment_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.victim_notification_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
+        # self.dialog.community_control_checkBox.toggled.connect(
+        #     self.dialog.functions.conditions_checkbox_toggle,
+        # )
+        # self.dialog.impoundment_checkBox.toggled.connect(
+        #     self.dialog.functions.conditions_checkbox_toggle,
+        # )
+        # self.dialog.victim_notification_checkBox.toggled.connect(
+        #     self.dialog.functions.conditions_checkbox_toggle,
+        # )
 
         self.dialog.diversion_check_box.toggled.connect(
             self.dialog.functions.show_diversion_frame,
         )
-        self.dialog.jail_checkBox.toggled.connect(
+        self.dialog.jail_check_box.toggled.connect(
             self.dialog.functions.show_jail_reporting_frame,
         )
         self.dialog.jail_credit_check_box.toggled.connect(
@@ -186,6 +192,9 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
         self.dialog.license_suspension_check_box.toggled.connect(
             self.dialog.functions.show_license_suspension_frame,
+        )
+        self.dialog.community_control_check_box.toggled.connect(
+            self.dialog.functions.show_community_control_frame,
         )
 
         self.dialog.report_type_box.currentTextChanged.connect(
@@ -243,11 +252,11 @@ class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
         validator = MAX_JAIL_TIME_VALIDATOR
         self.jail_time_credit_box.setValidator(validator)
         self.additional_conditions_list = [
-            ('community_control_checkBox', self.entry_case_information.community_control),
+            # ('community_control_checkBox', self.entry_case_information.community_control),
             # ('license_suspension_check_box', self.entry_case_information.license_suspension),
             ('community_service_checkBox', self.entry_case_information.community_service),
             ('other_conditions_checkBox', self.entry_case_information.other_conditions),
-            ('jail_checkBox', self.entry_case_information.jail_terms),
+            ('jail_check_box', self.entry_case_information.jail_terms),
             ('impoundment_checkBox', self.entry_case_information.impoundment),
             ('victim_notification_checkBox', self.entry_case_information.victim_notification),
         ]
@@ -255,5 +264,6 @@ class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
         self.functions.show_jail_reporting_frame()
         self.functions.show_jail_credit_frame()
         self.functions.show_license_suspension_frame()
+        self.functions.show_community_control_frame()
         if self.case_table == 'slated':
             self.in_jail_box.setCurrentText('Yes')
