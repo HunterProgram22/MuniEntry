@@ -139,6 +139,9 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_dialog_specific_signals()
 
     def connect_dialog_specific_signals(self):
+        self.dialog.jail_reporting_check_box.toggled.connect(
+            self.dialog.functions.conditions_checkbox_toggle
+        ) # TODO: This is used to set jail reporting to True - Should be moved?
         self.dialog.add_companion_cases_checkBox.toggled.connect(
             self.dialog.functions.show_companion_case_fields,
         )
@@ -212,7 +215,7 @@ class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
             ('license_suspension_check_box', self.entry_case_information.license_suspension),
             ('community_service_checkBox', self.entry_case_information.community_service),
             ('other_conditions_checkBox', self.entry_case_information.other_conditions),
-            ('jail_check_box', self.entry_case_information.jail_terms),
+            ('jail_reporting_check_box', self.entry_case_information.jail_terms),
             ('impoundment_checkBox', self.entry_case_information.impoundment),
             ('victim_notification_checkBox', self.entry_case_information.victim_notification),
         ]

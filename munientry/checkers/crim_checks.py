@@ -269,7 +269,7 @@ class JailTimeChecks(ChargeGridChecks):
     def add_jail_report_terms(self, msg_response: int) -> tuple[bool, list[Any]]:
         """Asks user if Jail Reporting needs to be set and sets reporting if answer is Yes."""
         if msg_response == YES_BUTTON_RESPONSE:
-            self.dialog.jail_checkBox.setChecked(True)
+            self.dialog.jail_reporting_check_box.setChecked(True)
             return False, []
         else:
             return True, []
@@ -296,7 +296,7 @@ class JailTimeChecks(ChargeGridChecks):
 
     def handle_jail_message(self, msg_response: int) -> bool:
         if msg_response == NO_BUTTON_RESPONSE:
-            self.dialog.jail_checkBox.setChecked(False)
+            self.dialog.jail_reporting_check_box.setChecked(False)
             return True
         return msg_response == YES_BUTTON_RESPONSE
 

@@ -128,7 +128,7 @@ class JailDataUpdater(BaseDialogUpdater):
         )
 
     def update_jail_reporting(self):
-        if self.dialog.jail_checkBox.isChecked():
+        if self.dialog.jail_reporting_check_box.isChecked():
             self.dialog.transfer_view_data_to_model(
                 self.dialog.entry_case_information.jail_terms,
             )
