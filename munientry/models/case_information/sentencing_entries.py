@@ -18,6 +18,7 @@ class CriminalSentencingCaseInformation(CriminalCaseInformation):
     fra_in_file: bool = None
     fra_in_court: bool = None
     court_costs: object = field(default_factory=cm.CourtCosts)
+    distracted_driving: bool = None
 
 
 @dataclass
