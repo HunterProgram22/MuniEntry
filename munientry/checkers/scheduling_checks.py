@@ -51,17 +51,18 @@ class SchedulingChecks(BaseChecks):
         Judge Hemmeter is Tuesday, Judge Rohrer is Thursday.
 
         Returns:
-            bool: True is final pretrial day matches Judge set day, False otherwise.
+            bool: True if final pretrial day matches Judge set day, False otherwise.
         """
         fpt_date = self.dialog.final_pretrial_date.date().toPyDate()
         fpt_date_index = fpt_date.weekday()
         day_of_week = DAYS[fpt_date_index]
         if msg_response is not None:
             return self.handle_day_check(msg_response)
-        if self.dialog.dialog_name == 'Rohrer Scheduling Entry':
+        judge = self.get_judge()
+        if judge == 'Rohrer':
             if day_of_week != 'Thursday':
                 return False
-        if self.dialog.dialog_name == 'Hemmeter Scheduling Entry':
+        if judge == 'Hemmeter':
             if day_of_week != 'Tuesday':
                 return False
         return True
@@ -73,20 +74,36 @@ class SchedulingChecks(BaseChecks):
         Judge Hemmeter is Thursday, Judge Rohrer is Tuesday.
 
         Returns:
-            bool: True is final pretrial day matches Judge set day, False otherwise.
+            bool: True if trial day matches Judge set day, False otherwise.
         """
         trial_date = self.dialog.trial_date.date().toPyDate()
         trial_date_index = trial_date.weekday()
         day_of_week = DAYS[trial_date_index]
         if msg_response is not None:
             return self.handle_day_check(msg_response)
-        if self.dialog.dialog_name == 'Rohrer Scheduling Entry':
+        judge = self.get_judge()
+        if judge == 'Rohrer':
             if day_of_week != 'Tuesday':
                 return False
-        if self.dialog.dialog_name == 'Hemmeter Scheduling Entry':
+        if judge == 'Hemmeter':
             if day_of_week != 'Thursday':
                 return False
         return True
+
+    def get_judge(self):
+        if self.dialog.dialog_name == 'Rohrer Scheduling Entry':
+            return 'Rohrer'
+        elif self.dialog.dialog_name == 'Hemmeter Scheduling Entry':
+            return 'Hemmeter'
+        else:
+            try:
+                if self.dialog.assigned_judge == 'Judge Marianne T. Hemmeter':
+                    return 'Hemmeter'
+                if self.dialog.assigned_judge == 'Judge Kyle E. Rohrer':
+                    return 'Rohrer'
+            except AttributeError as err:
+                logger.warning(err)
+
 
     def handle_day_check(self, msg_response: int) -> bool:
         if msg_response == NO_BUTTON_RESPONSE:
