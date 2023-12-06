@@ -180,8 +180,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1027</width>
-           <height>728</height>
+           <width>1031</width>
+           <height>731</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
@@ -549,7 +549,7 @@ background-color: rgb(255, 255, 255);</string>
                 <string>Pretrial 4 weeks before trial</string>
                </property>
                <property name="checked">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
                <attribute name="buttonGroup">
                 <string notr="true">buttonGroup</string>
@@ -760,6 +760,9 @@ background-color: rgb(255, 255, 255);</string>
               <widget class="QRadioButton" name="no_pretrial_radio_btn">
                <property name="text">
                 <string>No Pretrial</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
                </property>
                <attribute name="buttonGroup">
                 <string notr="true">buttonGroup</string>

@@ -281,3 +281,4 @@ class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDia
         self.setWindowTitle(f'{self.dialog_name} Case Information')
         self.functions.set_speedy_trial_date_label()
         self.functions.update_all_scheduled_dates()
+        self.functions.set_pretrial_scheduled()
