@@ -1,11 +1,23 @@
 """Module for checking scheduling-related dialogs."""
-from munientry.checkers.base_checks import BaseChecks, required_check
+from datetime import date, datetime
+
+from PyQt6.QtCore import QDate
+from loguru import logger
+
+from munientry.checkers.base_checks import BaseChecks, required_check, warning_check
+from munientry.settings.pyqt_constants import NO_BUTTON_RESPONSE, YES_BUTTON_RESPONSE
 from munientry.checkers.check_messages import (
+    FINAL_DAY_TITLE,
+    FINAL_DAY_MSG,
     FINAL_FUTURE_MSG,
     FINAL_FUTURE_TITLE,
     TRIAL_FUTURE_MSG,
     TRIAL_FUTURE_TITLE,
+    TRIAL_DAY_MSG,
+    TRIAL_DAY_TITLE,
 )
+
+DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 
 class SchedulingChecks(BaseChecks):
@@ -31,3 +43,53 @@ class SchedulingChecks(BaseChecks):
             if self.dialog.jury_trial_only_no_radio_btn.isChecked():
                 return self.dialog.final_pretrial_date.date() > self.today
         return True
+
+    @warning_check(FINAL_DAY_TITLE, FINAL_DAY_MSG)
+    def check_day_of_final_pretrial(self, msg_response: int = None) -> bool:
+        """Check if the Final Pretrial is set for the correct day of the week.
+
+        Judge Hemmeter is Tuesday, Judge Rohrer is Thursday.
+
+        Returns:
+            bool: True is final pretrial day matches Judge set day, False otherwise.
+        """
+        fpt_date = self.dialog.final_pretrial_date.date().toPyDate()
+        fpt_date_index = fpt_date.weekday()
+        day_of_week = DAYS[fpt_date_index]
+        if msg_response is not None:
+            return self.handle_day_check(msg_response)
+        if self.dialog.dialog_name == 'Rohrer Scheduling Entry':
+            if day_of_week != 'Thursday':
+                return False
+        if self.dialog.dialog_name == 'Hemmeter Scheduling Entry':
+            if day_of_week != 'Tuesday':
+                return False
+        return True
+
+    @warning_check(TRIAL_DAY_TITLE, TRIAL_DAY_MSG)
+    def check_day_of_trial(self, msg_response: int = None) -> bool:
+        """Check if the Trial is set for the correct day of the week.
+
+        Judge Hemmeter is Thursday, Judge Rohrer is Tuesday.
+
+        Returns:
+            bool: True is final pretrial day matches Judge set day, False otherwise.
+        """
+        trial_date = self.dialog.trial_date.date().toPyDate()
+        trial_date_index = trial_date.weekday()
+        day_of_week = DAYS[trial_date_index]
+        if msg_response is not None:
+            return self.handle_day_check(msg_response)
+        if self.dialog.dialog_name == 'Rohrer Scheduling Entry':
+            if day_of_week != 'Tuesday':
+                return False
+        if self.dialog.dialog_name == 'Hemmeter Scheduling Entry':
+            if day_of_week != 'Thursday':
+                return False
+        return True
+
+    def handle_day_check(self, msg_response: int) -> bool:
+        if msg_response == NO_BUTTON_RESPONSE:
+            return False
+        elif msg_response == YES_BUTTON_RESPONSE:
+            return True

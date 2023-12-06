@@ -148,3 +148,17 @@ OVI_ONE_MSG = """You have found the defendant guilty of a 1st OVI. Do you want t
 \nCourt Suspension: One Year from {0}\nTerminate ALS.
 \nFingerprinting is Ordered.
 """
+
+FINAL_DAY_TITLE = 'Final Pretrial Day May Be Incorrect'
+FINAL_DAY_MSG = """The day of the Final Pretrial is not set to either a Tuesday for Judge Hemmeter
+or a Thursday for Judge Rohrer.
+
+Do you want to proceed?
+"""
+
+TRIAL_DAY_TITLE = 'Trial Day May Be Incorrect'
+TRIAL_DAY_MSG = """The day of the Trial is not set to either a Thursday for Judge Hemmeter
+or a Tueseday for Judge Rohrer.
+
+Do you want to proceed?
+"""
