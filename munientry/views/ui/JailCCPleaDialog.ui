@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1098</width>
-    <height>815</height>
+    <width>1110</width>
+    <height>839</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -171,8 +171,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1073</width>
-        <height>879</height>
+        <width>1128</width>
+        <height>877</height>
        </rect>
       </property>
       <property name="focusPolicy">
@@ -425,8 +425,8 @@ background-color: rgb(255, 255, 255);</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_5" columnstretch="1,2">
-          <item row="4" column="1">
+         <layout class="QGridLayout" name="gridLayout_5" columnstretch="1,0">
+          <item row="3" column="1">
            <widget class="NoScrollDateEdit" name="balance_due_date">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
@@ -440,14 +440,7 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="checkBox">
-            <property name="text">
-             <string>Add Distracted Driving Course Language</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="2">
+          <item row="4" column="0" colspan="2">
            <widget class="QPushButton" name="costs_and_fines_Button">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -469,21 +462,21 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="1" column="0">
            <widget class="QLabel" name="label_11">
             <property name="text">
              <string>Court Costs:</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="2" column="0">
            <widget class="QLabel" name="label_9">
             <property name="text">
              <string>Time to pay:</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="2" column="1">
            <widget class="NoScrollComboBox" name="ability_to_pay_box">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
@@ -533,7 +526,7 @@ background-color: rgb(255, 255, 255);</string>
             </item>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="1" column="1">
            <widget class="NoScrollComboBox" name="court_costs_box">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
@@ -563,23 +556,10 @@ background-color: rgb(255, 255, 255);</string>
             </item>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="label_18">
             <property name="text">
              <string>Due date:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="Line" name="line_4">
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <property name="lineWidth">
-             <number>2</number>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
@@ -906,14 +886,14 @@ font-weight: bold;</string>
           <number>2</number>
          </property>
          <layout class="QFormLayout" name="formLayout_2">
-          <item row="0" column="0">
+          <item row="1" column="0">
            <widget class="QLabel" name="label_21">
             <property name="text">
              <string>FRA shown in complaint:</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
+          <item row="1" column="1">
            <widget class="NoScrollComboBox" name="fra_in_file_box">
             <property name="minimumSize">
              <size>
@@ -944,14 +924,14 @@ font-weight: bold;</string>
             </item>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="2" column="0">
            <widget class="QLabel" name="label_22">
             <property name="text">
              <string>FRA shown in court:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="2" column="1">
            <widget class="NoScrollComboBox" name="fra_in_court_box">
             <property name="minimumSize">
              <size>
@@ -980,6 +960,13 @@ font-weight: bold;</string>
               <string>No</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="distracted_driving_checkBox">
+            <property name="text">
+             <string>Add Distracted Driving Course Language</string>
+            </property>
            </widget>
           </item>
          </layout>
