@@ -19,6 +19,11 @@ from munientry.checkers.check_messages import (
 
 DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
+JUDGE_DAYS = {
+    'Hemmeter': {'final_pretrial': 'Tuesday', 'trial': 'Thursday'},
+    'Rohrer': {'final_pretrial': 'Thursday', 'trial': 'Tuesday'}
+}
+
 
 class SchedulingChecks(BaseChecks):
     """A class for checks related to scheduling dialogs."""
@@ -46,67 +51,56 @@ class SchedulingChecks(BaseChecks):
 
     @warning_check(FINAL_DAY_TITLE, FINAL_DAY_MSG)
     def check_day_of_final_pretrial(self, msg_response: int = None) -> bool:
-        """Check if the Final Pretrial is set for the correct day of the week.
+        """Check if the day of the final pretrial based on Judge.
 
         Judge Hemmeter is Tuesday, Judge Rohrer is Thursday.
 
         Returns:
-            bool: True if final pretrial day matches Judge set day, False otherwise.
+            bool: True if the final pretrial day matches Judge day, False otherwise.
         """
-        fpt_date = self.dialog.final_pretrial_date.date().toPyDate()
-        fpt_date_index = fpt_date.weekday()
-        day_of_week = DAYS[fpt_date_index]
         if msg_response is not None:
             return self.handle_day_check(msg_response)
-        judge = self.get_judge()
-        if judge == 'Rohrer':
-            if day_of_week != 'Thursday':
-                return False
-        if judge == 'Hemmeter':
-            if day_of_week != 'Tuesday':
-                return False
-        return True
+        fpt_date = self.dialog.final_pretrial_date.date().toPyDate()
+        return self.check_day(fpt_date, 'final_pretrial')
 
     @warning_check(TRIAL_DAY_TITLE, TRIAL_DAY_MSG)
     def check_day_of_trial(self, msg_response: int = None) -> bool:
-        """Check if the Trial is set for the correct day of the week.
+        """Check if the day of the final pretrial based on Judge.
 
         Judge Hemmeter is Thursday, Judge Rohrer is Tuesday.
 
         Returns:
-            bool: True if trial day matches Judge set day, False otherwise.
+            bool: True if the trial day matches Judge day, False otherwise.
         """
-        trial_date = self.dialog.trial_date.date().toPyDate()
-        trial_date_index = trial_date.weekday()
-        day_of_week = DAYS[trial_date_index]
         if msg_response is not None:
             return self.handle_day_check(msg_response)
+        trial_date = self.dialog.trial_date.date().toPyDate()
+        return self.check_day(trial_date, 'trial')
+
+    def check_day(self, date, event_type):
+        day_of_week = DAYS[date.weekday()]
         judge = self.get_judge()
-        if judge == 'Rohrer':
-            if day_of_week != 'Tuesday':
-                return False
-        if judge == 'Hemmeter':
-            if day_of_week != 'Thursday':
-                return False
-        return True
+        expected_day = JUDGE_DAYS.get(judge, {}).get(event_type)
+        if expected_day is None:
+            # Handle the case where the judge or event type is not found
+            logger.warning('No Event or Judge found.')
+            return True
+        return day_of_week == expected_day
 
     def get_judge(self):
-        if self.dialog.dialog_name == 'Rohrer Scheduling Entry':
-            return 'Rohrer'
-        elif self.dialog.dialog_name == 'Hemmeter Scheduling Entry':
-            return 'Hemmeter'
-        else:
-            try:
-                if self.dialog.assigned_judge == 'Judge Marianne T. Hemmeter':
-                    return 'Hemmeter'
-                if self.dialog.assigned_judge == 'Judge Kyle E. Rohrer':
-                    return 'Rohrer'
-            except AttributeError as err:
-                logger.warning(err)
-
+        dialog_name_map = {
+            'Rohrer Scheduling Entry': 'Rohrer',
+            'Hemmeter Scheduling Entry': 'Hemmeter'
+        }
+        judge = dialog_name_map.get(self.dialog.dialog_name)
+        if judge:
+            return judge
+        assigned_judge_map = {
+            'Judge Marianne T. Hemmeter': 'Hemmeter',
+            'Judge Kyle E. Rohrer': 'Rohrer'
+        }
+        return assigned_judge_map.get(self.dialog.assigned_judge, 'Unknown')
 
     def handle_day_check(self, msg_response: int) -> bool:
-        if msg_response == NO_BUTTON_RESPONSE:
-            return False
-        elif msg_response == YES_BUTTON_RESPONSE:
-            return True
+        return msg_response == YES_BUTTON_RESPONSE
+
