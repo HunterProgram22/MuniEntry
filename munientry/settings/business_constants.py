@@ -37,7 +37,8 @@ SPEEDY_TRIAL_TIME_DICT = MappingProxyType({
     'M3': 45,
     'M4': 45,
     'MM': 30,
-    'UCM': 30,
+    'UCM': 45,
+    'UCM - 3rd OVI': 90,
 })
 
 config = load_config()

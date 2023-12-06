@@ -76,6 +76,7 @@ class SchedulingEntryDialogSignalConnector(sched.SchedulingSignalConnector):
     def connect_speedy_trial_items(self):
         arrest = self.dialog.arrest_summons_date
         charge = self.dialog.highest_charge_box
+        in_jail = self.dialog.no_in_jail_radio_btn
         jail_days = self.dialog.days_in_jail_line
         continuance_days = self.dialog.continuance_days_line
 
@@ -87,6 +88,8 @@ class SchedulingEntryDialogSignalConnector(sched.SchedulingSignalConnector):
         continuance_days.textChanged.connect(self.dialog.functions.update_all_scheduled_dates)
         jail_days.textChanged.connect(self.dialog.functions.set_speedy_trial_date_label)
         jail_days.textChanged.connect(self.dialog.functions.update_all_scheduled_dates)
+        in_jail.toggled.connect(self.dialog.functions.set_speedy_trial_date_label)
+        in_jail.toggled.connect(self.dialog.functions.hide_jail_days)
 
     def connect_scheduling_date_fields(self):
         self.dialog.final_pretrial_date.dateChanged.connect(
@@ -192,6 +195,8 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
 
     def get_speedy_trial_date(self) -> 'QDate':
         speedy_trial_days = self.get_speedy_trial_days()
+        if self.dialog.yes_in_jail_radio_btn.isChecked():
+            speedy_trial_days = int(speedy_trial_days / 3)
         days_in_jail = self.get_days_in_jail()
         continuance_days = self.get_continuance_days()
         speedy_trial_days = (speedy_trial_days + continuance_days) - days_in_jail
@@ -220,6 +225,14 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
         else:
             continuance_days = int(self.dialog.continuance_days_line.text())
         return continuance_days
+
+    def hide_jail_days(self):
+        if self.dialog.no_in_jail_radio_btn.isChecked():
+            self.dialog.days_in_jail_line.show()
+            self.dialog.days_in_jail_label.show()
+        else:
+            self.dialog.days_in_jail_line.hide()
+            self.dialog.days_in_jail_label.hide()
 
 
 class SchedulingEntryModelUpdater(SchedulingModelUpdater):

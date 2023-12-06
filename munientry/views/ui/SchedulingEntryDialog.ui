@@ -181,7 +181,7 @@ font-weight: bold;</string>
            <x>0</x>
            <y>0</y>
            <width>1031</width>
-           <height>731</height>
+           <height>816</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
@@ -372,53 +372,32 @@ background-color: rgb(255, 255, 255);</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout_6" columnstretch="1,1">
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_12">
+            <layout class="QGridLayout" name="gridLayout_6" columnstretch="1,1,1">
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_8">
                <property name="text">
-                <string>Arrest or Summons Date:</string>
+                <string>Defendant in Jail:</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="0" colspan="2">
-              <widget class="QLabel" name="label_11">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
+             <item row="10" column="1" colspan="2">
+              <widget class="QLabel" name="speedy_trial_date_label">
                <property name="text">
-                <string>SPEEDY TRIAL CALCULATOR</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
+                <string>Speedy Trial Date</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="NoScrollDateEdit" name="arrest_summons_date">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
+             <item row="6" column="1">
+              <widget class="QRadioButton" name="no_in_jail_radio_btn">
+               <property name="text">
+                <string>No</string>
                </property>
-               <property name="calendarPopup">
+               <property name="checked">
                 <bool>true</bool>
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_10">
-               <property name="text">
-                <string>Days Spent in Jail (reduces speedy trial date 3 days per day in jail):</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
+             <item row="2" column="1" colspan="2">
               <widget class="NoScrollComboBox" name="highest_charge_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -453,6 +432,80 @@ background-color: rgb(255, 255, 255);</string>
                  <string>UCM</string>
                 </property>
                </item>
+               <item>
+                <property name="text">
+                 <string>UCM - 3rd OVI</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="6" column="2">
+              <widget class="QRadioButton" name="yes_in_jail_radio_btn">
+               <property name="text">
+                <string>Yes</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1" colspan="2">
+              <widget class="QLineEdit" name="days_in_jail_line">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1" colspan="2">
+              <widget class="QLineEdit" name="continuance_days_line">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="3">
+              <widget class="QLabel" name="label_11">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>SPEEDY TRIAL CALCULATOR</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QLabel" name="label_13">
+               <property name="text">
+                <string>Defendant must be brought to trial no later than:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_15">
+               <property name="text">
+                <string>Continuance Days (increases speedy trial date 1 day per continuance day):</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_12">
+               <property name="text">
+                <string>Arrest or Summons Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="days_in_jail_label">
+               <property name="text">
+                <string>Days Spent in Jail Before Release (reduces speedy trial date 3 days per day in jail):</string>
+               </property>
               </widget>
              </item>
              <item row="2" column="0">
@@ -462,45 +515,48 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="0" colspan="2">
+             <item row="4" column="0" colspan="3">
+              <widget class="QLabel" name="label_17">
+               <property name="text">
+                <string>INSTRUCTIONS: If Defendant is in Jail but an OR Bond is set, select No for Defendant in Jail and enter number of days Defendant was in Jail before relase.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0" colspan="3">
               <widget class="Line" name="line">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_13">
-               <property name="text">
-                <string>Defendant must be brought to trial no later than:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="1">
-              <widget class="QLabel" name="speedy_trial_date_label">
-               <property name="text">
-                <string>Speedy Trial Date</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QLineEdit" name="days_in_jail_line">
+             <item row="1" column="1" colspan="2">
+              <widget class="NoScrollDateEdit" name="arrest_summons_date">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_15">
+             <item row="3" column="0" colspan="3">
+              <widget class="Line" name="line_2">
+               <property name="frameShadow">
+                <enum>QFrame::Plain</enum>
+               </property>
+               <property name="lineWidth">
+                <number>2</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0" colspan="3">
+              <widget class="QLabel" name="label_18">
                <property name="text">
-                <string>Continuance Days (increases speedy trial date 1 day per continuance day):</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QLineEdit" name="continuance_days_line">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
+                <string> If a Cash, Surety or 10% Bond is set, then select Yes for Defendant in Jail and speedy trial time will be set at 1/3 of time (example 30 days for an M1 instead of 90).</string>
                </property>
               </widget>
              </item>
