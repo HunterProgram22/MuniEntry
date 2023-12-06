@@ -150,15 +150,19 @@ OVI_ONE_MSG = """You have found the defendant guilty of a 1st OVI. Do you want t
 """
 
 FINAL_DAY_TITLE = 'Final Pretrial Day May Be Incorrect'
-FINAL_DAY_MSG = """The day of the Final Pretrial is not set to either a Tuesday for Judge Hemmeter
-or a Thursday for Judge Rohrer.
+FINAL_DAY_MSG = """You are setting the day of the Final Pretrial to {0} for Judge {1}. 
+
+Judge Hemmeter Standard Final Pretrial day is Tuesday.
+Judge Rohrer Standard Final Pretrial day is Thursday.
 
 Do you want to proceed?
 """
 
 TRIAL_DAY_TITLE = 'Trial Day May Be Incorrect'
-TRIAL_DAY_MSG = """The day of the Trial is not set to either a Thursday for Judge Hemmeter
-or a Tueseday for Judge Rohrer.
+TRIAL_DAY_MSG = """You are setting the day of the Trial to {0} for Judge {1}.
+
+Judge Hemmeter Standard Trial day is Thursday.
+Judge Rohrer Standard Trial day is Tuesday.
 
 Do you want to proceed?
 """

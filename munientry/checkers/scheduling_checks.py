@@ -77,7 +77,7 @@ class SchedulingChecks(BaseChecks):
         trial_date = self.dialog.trial_date.date().toPyDate()
         return self.check_day(trial_date, 'trial')
 
-    def check_day(self, date, event_type):
+    def check_day(self, date, event_type) -> bool:
         day_of_week = DAYS[date.weekday()]
         judge = self.get_judge()
         expected_day = JUDGE_DAYS.get(judge, {}).get(event_type)
@@ -85,7 +85,7 @@ class SchedulingChecks(BaseChecks):
             # Handle the case where the judge or event type is not found
             logger.warning('No Event or Judge found.')
             return True
-        return day_of_week == expected_day
+        return day_of_week == expected_day, [day_of_week, judge]
 
     def get_judge(self):
         dialog_name_map = {
