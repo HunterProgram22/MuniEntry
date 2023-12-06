@@ -50,6 +50,7 @@ class JailCCDialogUpdater(BaseDialogUpdater):
         self.update_court_costs()
         self.update_fines()
         self.update_jail_data()
+        self.update_distracted_driving()
 
     def update_case_information(self) -> CaseInformationUpdater:
         self.model.victim_statements = self.dialog.victim_statements_checkBox.isChecked()
@@ -67,6 +68,9 @@ class JailCCDialogUpdater(BaseDialogUpdater):
 
     def update_jail_data(self) -> JailDataUpdater:
         return JailDataUpdater(self.dialog)
+
+    def update_distracted_driving(self):
+        self.model.distracted_driving = self.dialog.distracted_driving_checkBox.isChecked()
 
 
 class SentencingOnlyDialogUpdater(JailCCDialogUpdater):
@@ -103,6 +107,7 @@ class FineOnlyDialogUpdater(BaseDialogUpdater):
         self.update_court_costs()
         self.update_fines()
         self.update_jail_time_credit_for_fines()
+        self.update_distracted_driving()
 
     def update_case_information(self) -> CaseInformationUpdater:
         return CaseInformationUpdater(self.dialog)
@@ -120,6 +125,8 @@ class FineOnlyDialogUpdater(BaseDialogUpdater):
         self.model.fines_and_costs_jail_credit = self.dialog.credit_for_jail_checkBox.isChecked()
         self.model.fine_jail_days = self.dialog.jail_time_credit_box.text()
 
+    def update_distracted_driving(self):
+        self.model.distracted_driving = self.dialog.distracted_driving_checkBox.isChecked()
 
 class LeapSentencingDialogUpdater(BaseDialogUpdater):
     """Updater for Leap Sentencing Dialog - contains a charge grid."""

@@ -27,11 +27,19 @@ def warning_check(title: str, message: str) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
             func_result = func(*args, **kwargs)
-            if func_result is False:
-                msg_response = WarningBox(message, title).exec()
+            if isinstance(func_result, tuple):
+                status, msg_insert = func_result
+            else:
+                status = func_result
+                msg_insert = None
+            if status is False:
+                if msg_insert is not None:
+                    formatted_msg = message.format(*msg_insert)
+                else:
+                    formatted_msg = message
+                msg_response = WarningBox(formatted_msg, title).exec()
                 kwargs['msg_response'] = msg_response
-                return func(*args, **kwargs)
-            return func_result
+            return func(*args, **kwargs)
         return wrapper
     return decorator
 

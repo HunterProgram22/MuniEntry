@@ -8,6 +8,15 @@ from munientry.settings.business_constants import MOVING_COURT_COSTS, CRIMINAL_C
 from munientry.updaters.base_updaters import BaseDialogUpdater
 
 
+### WARNING - FRA (INSURANCE) - fra_in_court and fra_in_file
+### NOTICE - the FRA (insurance) is updated through the base_crimtraffic_builders.py method
+### set_fra_in_court and set_fra_in_file which is triggered to run any time one of the fields
+### is changed/updated.
+### TODO: This should be moved to an updater.
+### Alternative is wholesale rewrite to somehow trigger model updates on any UI change - but that
+### is a lot more work.
+
+
 class CaseInformationUpdater(BaseDialogUpdater):
     """Updates the model data with the case information fram (top frame on dialogs)."""
 

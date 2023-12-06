@@ -126,6 +126,8 @@ class FinalJuryNoticeCheckList(SchedulingChecks):
     check_list = [
         'check_final_pretrial_date',
         'check_trial_date',
+        'check_day_of_final_pretrial',
+        'check_day_of_trial',
     ]
 
 
