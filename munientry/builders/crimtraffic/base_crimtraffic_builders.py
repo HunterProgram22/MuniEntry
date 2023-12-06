@@ -155,8 +155,8 @@ class CrimTrafficSlotFunctions(base.BaseDialogSlotFunctions):
             self.dialog.entry_case_information.fra_in_file = None
 
     def set_fra_in_court(self, current_text: str) -> None:
-    """Sets the FRA (proof of insurance) to true if the view indicates 'Yes'."""
-    if current_text == 'Yes':
+        """Sets the FRA (proof of insurance) to true if the view indicates 'Yes'."""
+        if current_text == 'Yes':
             self.dialog.entry_case_information.fra_in_court = True
         elif current_text == 'No':
             self.dialog.entry_case_information.fra_in_court = False
