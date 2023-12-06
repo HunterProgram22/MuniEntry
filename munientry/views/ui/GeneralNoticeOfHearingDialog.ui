@@ -180,8 +180,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1131</width>
-           <height>773</height>
+           <width>1144</width>
+           <height>774</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
@@ -437,7 +437,22 @@ background-color: rgb(255, 255, 255);</string>
                  </property>
                  <item>
                   <property name="text">
-                   <string>Plea Hearing</string>
+                   <string/>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Competency Hearing</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Final Community Control Violation Hearing</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Motion Hearing</string>
                   </property>
                  </item>
                  <item>
@@ -447,7 +462,22 @@ background-color: rgb(255, 255, 255);</string>
                  </item>
                  <item>
                   <property name="text">
-                   <string>Oral Hearing</string>
+                   <string>Motion to Modify Bond</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Oral Hearing on</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Plea Hearing</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Preliminary Community Control Violation Hearing</string>
                   </property>
                  </item>
                  <item>
@@ -457,7 +487,12 @@ background-color: rgb(255, 255, 255);</string>
                  </item>
                  <item>
                   <property name="text">
-                   <string>Motion Hearing</string>
+                   <string>Status Hearing</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Surety Hearing</string>
                   </property>
                  </item>
                 </widget>
