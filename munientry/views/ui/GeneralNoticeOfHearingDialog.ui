@@ -433,7 +433,7 @@ background-color: rgb(255, 255, 255);</string>
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                  <property name="editable">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <item>
                   <property name="text">
@@ -457,6 +457,11 @@ background-color: rgb(255, 255, 255);</string>
                  </item>
                  <item>
                   <property name="text">
+                   <string>Motion for Competency Evaluation</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
                    <string>Motion to Suppress Hearing</string>
                   </property>
                  </item>
@@ -472,17 +477,17 @@ background-color: rgb(255, 255, 255);</string>
                  </item>
                  <item>
                   <property name="text">
+                   <string>Oral Hearing to Seal Record</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
                    <string>Plea Hearing</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
                    <string>Preliminary Community Control Violation Hearing</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Seal Record</string>
                   </property>
                  </item>
                  <item>
