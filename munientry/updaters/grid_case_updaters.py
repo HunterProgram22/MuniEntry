@@ -70,7 +70,10 @@ class JailCCDialogUpdater(BaseDialogUpdater):
         return JailDataUpdater(self.dialog)
 
     def update_distracted_driving(self):
-        self.model.distracted_driving = self.dialog.distracted_driving_checkBox.isChecked()
+        try:
+            self.model.distracted_driving = self.dialog.distracted_driving_checkBox.isChecked()
+        except AttributeError as err:
+            logger.warning(err)
 
 
 class SentencingOnlyDialogUpdater(JailCCDialogUpdater):
@@ -126,7 +129,10 @@ class FineOnlyDialogUpdater(BaseDialogUpdater):
         self.model.fine_jail_days = self.dialog.jail_time_credit_box.text()
 
     def update_distracted_driving(self):
-        self.model.distracted_driving = self.dialog.distracted_driving_checkBox.isChecked()
+        try:
+            self.model.distracted_driving = self.dialog.distracted_driving_checkBox.isChecked()
+        except AttributeError as err:
+            logger.warning(err)
 
 class LeapSentencingDialogUpdater(BaseDialogUpdater):
     """Updater for Leap Sentencing Dialog - contains a charge grid."""
