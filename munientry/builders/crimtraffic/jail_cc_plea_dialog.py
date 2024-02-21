@@ -142,6 +142,7 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.dialog.jail_reporting_check_box.toggled.connect(
             self.dialog.functions.conditions_checkbox_toggle
         ) # TODO: This is used to set jail reporting to True - Should be moved?
+
         self.dialog.add_companion_cases_checkBox.toggled.connect(
             self.dialog.functions.show_companion_case_fields,
         )
@@ -161,6 +162,12 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
         self.dialog.appearance_reason_box.currentTextChanged.connect(
             self.dialog.functions.check_appearance_reason,
+        )
+        self.dialog.jail_reporting_check_box.toggled.connect(
+            self.dialog.functions.set_report_date_boxes,
+        )
+        self.dialog.jail_reporting_check_box.toggled.connect(
+            self.dialog.functions.show_companion_case_fields,
         )
 
 
