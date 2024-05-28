@@ -93,7 +93,7 @@ class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
     def update_end_suspension_date(self) -> None:
         suspension_days_dict = {
             '90 Days': 90,
-            '6 Months': 183,
+            '6 Months': 180,
             '1 Year': 365,
             '18 Months': 547,
             '2 Years': 730,
