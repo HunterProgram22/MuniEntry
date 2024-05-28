@@ -32,7 +32,7 @@ environment.
 
 In the root directory of the application run the following command:
 
-    pyinstaller --hidden-imports lxml._elementpath --splash ./resources/icons/gavel_splash.png MuniEntry_app.py
+    pyinstaller --hidden-import lxml._elementpath --splash ./resources/icons/gavel_splash.png MuniEntry_app.py
 
 The --hidden-imports parameter requires pyinstaller to specifically install the lxml module, which is necessary, 
 but not automatically included if not explictly added to the install without calling for it as a hidden-import
