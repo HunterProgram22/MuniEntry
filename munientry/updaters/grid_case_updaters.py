@@ -134,6 +134,7 @@ class FineOnlyDialogUpdater(BaseDialogUpdater):
         except AttributeError as err:
             logger.warning(err)
 
+
 class LeapSentencingDialogUpdater(BaseDialogUpdater):
     """Updater for Leap Sentencing Dialog - contains a charge grid."""
 
