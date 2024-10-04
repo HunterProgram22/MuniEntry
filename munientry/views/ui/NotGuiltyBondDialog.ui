@@ -12,7 +12,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1045</width>
+    <width>1042</width>
     <height>791</height>
    </rect>
   </property>
@@ -180,7 +180,7 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>984</width>
+           <width>985</width>
            <height>792</height>
           </rect>
          </property>
@@ -977,9 +977,9 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="ConditionCheckbox" name="alcohol_test_kiosk_checkBox">
+              <widget class="ConditionCheckbox" name="fingerprint_in_court_checkBox">
                <property name="text">
-                <string> Alcohol Kiosk testing                                         </string>
+                <string>Fingerprinted by court staff prior to leaving</string>
                </property>
               </widget>
              </item>
