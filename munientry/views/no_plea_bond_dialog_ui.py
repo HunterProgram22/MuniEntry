@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/NoPleaBondDialog.ui'
+# Form implementation generated from reading ui file './munientry/views/ui/NoPleaBondDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -7,9 +7,6 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
 
 
 class Ui_NoPleaBondDialog(object):
@@ -452,7 +449,7 @@ class Ui_NoPleaBondDialog(object):
         self.specialized_docket_checkBox.setText(_translate("NoPleaBondDialog", "Screen for Specialized Dockets:                           "))
         self.monitoring_checkBox.setText(_translate("NoPleaBondDialog", "Monitoring (GPS/Scram/Smart Start):                    "))
         self.mental_health_assessment_checkBox.setText(_translate("NoPleaBondDialog", " Obtain mental health assessment                         "))
-        self.alcohol_test_kiosk_checkBox.setText(_translate("NoPleaBondDialog", " Alcohol Kiosk testing                                         "))
+        self.alcohol_test_kiosk_checkBox.setText(_translate("NoPleaBondDialog", "Fingerprinted by court staff prior to leaving"))
         self.comply_protection_order_checkBox.setText(_translate("NoPleaBondDialog", " Comply with Terms of Protection Order"))
         self.public_safety_suspension_checkBox.setText(_translate("NoPleaBondDialog", "Public Safety Suspension imposed pursuant to R.C. 4511.196(B)"))
         self.label_9.setText(_translate("NoPleaBondDialog", "Bond Amount:"))
@@ -471,3 +468,5 @@ class Ui_NoPleaBondDialog(object):
         self.bond_amount_box.setItemText(8, _translate("NoPleaBondDialog", "$7,500"))
         self.bond_amount_box.setItemText(9, _translate("NoPleaBondDialog", "$10,000"))
         self.label_5.setText(_translate("NoPleaBondDialog", "BOND"))
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit

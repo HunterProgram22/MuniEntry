@@ -690,7 +690,7 @@ font-weight: bold;</string>
              <item row="2" column="1">
               <widget class="ConditionCheckbox" name="alcohol_test_kiosk_checkBox">
                <property name="text">
-                <string> Alcohol Kiosk testing                                         </string>
+                <string>Fingerprinted by court staff prior to leaving</string>
                </property>
               </widget>
              </item>
