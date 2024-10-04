@@ -397,7 +397,7 @@ class BondConditions:
     no_alcohol_drugs: bool = False
     alcohol_drugs_assessment: bool = False
     mental_health_assessment: bool = False
-    alcohol_test_kiosk: bool = False
+    fingerprint_in_court: bool = False
     specialized_docket: bool = False
     specialized_docket_type: str = None
     monitoring: bool = False
@@ -410,7 +410,7 @@ class BondConditions:
         ("no_alcohol_drugs", "no_alcohol_drugs_checkBox"),
         ("alcohol_drugs_assessment", "alcohol_drugs_assessment_checkBox"),
         ("mental_health_assessment", "mental_health_assessment_checkBox"),
-        ("alcohol_test_kiosk", "alcohol_test_kiosk_checkBox"),
+        ("fingerprint_in_court", "fingerprint_in_court_checkBox"),
         ("specialized_docket", "specialized_docket_checkBox"),
         ("specialized_docket_type", "specialized_docket_type_box"),
         ("monitoring", "monitoring_checkBox"),

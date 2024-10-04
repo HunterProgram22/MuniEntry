@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/BondHearingDialog.ui'
+# Form implementation generated from reading ui file './views/ui/BondHearingDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -7,9 +7,6 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
 
 
 class Ui_BondHearingDialog(object):
@@ -142,9 +139,9 @@ class Ui_BondHearingDialog(object):
         self.mental_health_assessment_checkBox = ConditionCheckbox(self.bond_conditions_frame)
         self.mental_health_assessment_checkBox.setObjectName("mental_health_assessment_checkBox")
         self.gridLayout_2.addWidget(self.mental_health_assessment_checkBox, 3, 1, 1, 1)
-        self.alcohol_test_kiosk_checkBox = ConditionCheckbox(self.bond_conditions_frame)
-        self.alcohol_test_kiosk_checkBox.setObjectName("alcohol_test_kiosk_checkBox")
-        self.gridLayout_2.addWidget(self.alcohol_test_kiosk_checkBox, 2, 1, 1, 1)
+        self.fingerprint_in_court_checkBox = ConditionCheckbox(self.bond_conditions_frame)
+        self.fingerprint_in_court_checkBox.setObjectName("fingerprint_in_court_checkBox")
+        self.gridLayout_2.addWidget(self.fingerprint_in_court_checkBox, 2, 1, 1, 1)
         self.comply_protection_order_checkBox = ConditionCheckbox(self.bond_conditions_frame)
         self.comply_protection_order_checkBox.setObjectName("comply_protection_order_checkBox")
         self.gridLayout_2.addWidget(self.comply_protection_order_checkBox, 8, 0, 1, 1)
@@ -438,7 +435,7 @@ class Ui_BondHearingDialog(object):
         self.specialized_docket_checkBox.setText(_translate("BondHearingDialog", "Screen for Specialized Dockets:                           "))
         self.monitoring_checkBox.setText(_translate("BondHearingDialog", "Monitoring (GPS/Scram/Smart Start):                    "))
         self.mental_health_assessment_checkBox.setText(_translate("BondHearingDialog", " Obtain mental health assessment                         "))
-        self.alcohol_test_kiosk_checkBox.setText(_translate("BondHearingDialog", " Alcohol Kiosk testing                                         "))
+        self.fingerprint_in_court_checkBox.setText(_translate("BondHearingDialog", "Fingerprinted by court staff prior to leaving                          "))
         self.comply_protection_order_checkBox.setText(_translate("BondHearingDialog", " Comply with Terms of Protection Order"))
         self.public_safety_suspension_checkBox.setText(_translate("BondHearingDialog", "Public Safety Suspension imposed pursuant to R.C. 4511.196(B)"))
         self.label_8.setText(_translate("BondHearingDialog", "Bond Type:"))
@@ -485,3 +482,5 @@ class Ui_BondHearingDialog(object):
         self.defense_counsel_waived_checkBox.setText(_translate("BondHearingDialog", "Defendant appeared without counsel"))
         self.close_dialog_Button.setText(_translate("BondHearingDialog", "Close Dialog"))
         self.create_entry_Button.setText(_translate("BondHearingDialog", "Open Entry"))
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit

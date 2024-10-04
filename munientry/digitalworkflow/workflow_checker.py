@@ -40,8 +40,6 @@ class WorkflowCheck(object):
                 return (True, SCRAM_PATH)
             if self.case_information.bond_conditions.mental_health_assessment is True:
                 return (True, SCRAM_PATH)
-            if self.case_information.bond_conditions.alcohol_test_kiosk is True:
-                return (True, SCRAM_PATH)
             if self.case_information.bond_conditions.specialized_docket is True:
                 return (True, SCRAM_PATH)
         if self.case_information.__class__.__name__ in self.comm_control_entries:
