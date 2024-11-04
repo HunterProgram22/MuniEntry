@@ -404,7 +404,7 @@ font-weight: bold;</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout_6" rowstretch="0,0,0,0,0,0,0,0,0,0,0">
+            <layout class="QGridLayout" name="gridLayout_6" rowstretch="0,0,0,0,0,0,0,0,0,0">
              <item row="0" column="0" colspan="4">
               <widget class="QLabel" name="label_4">
                <property name="font">
@@ -560,7 +560,12 @@ color: rgb(0, 0, 0);</string>
                </item>
                <item>
                 <property name="text">
-                 <string>expungment of conviction by victim of human trafficking pursuant to R.C. 2935.36</string>
+                 <string>expungment of conviction by victim of human trafficking pursuant to R.C. 2953.36</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>expungement of record of not guilty finding or dismissed charges by vicitim of human trafficking pursuant to R.C. 2953.521</string>
                 </property>
                </item>
               </widget>
@@ -568,7 +573,7 @@ color: rgb(0, 0, 0);</string>
              <item row="6" column="0">
               <widget class="QLabel" name="label_11">
                <property name="text">
-                <string>Motion to seal type:</string>
+                <string>Motion type:</string>
                </property>
               </widget>
              </item>
