@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/CriminalSealingDialog.ui'
+# Form implementation generated from reading ui file './views/ui/CriminalSealingDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -14,7 +14,7 @@ class Ui_CriminalSealingEntryDialog(object):
         CriminalSealingEntryDialog.setObjectName("CriminalSealingEntryDialog")
         CriminalSealingEntryDialog.setWindowModality(QtCore.Qt.WindowModality.NonModal)
         CriminalSealingEntryDialog.setEnabled(True)
-        CriminalSealingEntryDialog.resize(988, 725)
+        CriminalSealingEntryDialog.resize(1149, 835)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -79,7 +79,7 @@ class Ui_CriminalSealingEntryDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 948, 685))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1109, 795))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -216,12 +216,14 @@ class Ui_CriminalSealingEntryDialog(object):
         self.label_6.setObjectName("label_6")
         self.gridLayout_6.addWidget(self.label_6, 7, 0, 1, 1)
         self.state_response_box = NoScrollComboBox(self.frame)
+        self.state_response_box.setMinimumSize(QtCore.QSize(0, 25))
         self.state_response_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.state_response_box.setObjectName("state_response_box")
         self.state_response_box.addItem("")
         self.state_response_box.addItem("")
         self.gridLayout_6.addWidget(self.state_response_box, 7, 1, 1, 1)
         self.seal_decision_box = NoScrollComboBox(self.frame)
+        self.seal_decision_box.setMinimumSize(QtCore.QSize(0, 25))
         self.seal_decision_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.seal_decision_box.setObjectName("seal_decision_box")
         self.seal_decision_box.addItem("")
@@ -248,8 +250,10 @@ class Ui_CriminalSealingEntryDialog(object):
         self.bci_number_line_edit.setObjectName("bci_number_line_edit")
         self.gridLayout_6.addWidget(self.bci_number_line_edit, 3, 1, 1, 1)
         self.sealing_type_box = NoScrollComboBox(self.frame)
+        self.sealing_type_box.setMinimumSize(QtCore.QSize(0, 30))
         self.sealing_type_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.sealing_type_box.setObjectName("sealing_type_box")
+        self.sealing_type_box.addItem("")
         self.sealing_type_box.addItem("")
         self.sealing_type_box.addItem("")
         self.sealing_type_box.addItem("")
@@ -312,9 +316,9 @@ class Ui_CriminalSealingEntryDialog(object):
         self.create_entry_Button.setText(_translate("CriminalSealingEntryDialog", "Open Entry"))
         self.close_dialog_Button.setText(_translate("CriminalSealingEntryDialog", "Close Dialog"))
         self.label_4.setText(_translate("CriminalSealingEntryDialog", "DECISION"))
-        self.label_5.setText(_translate("CriminalSealingEntryDialog", "Motion to seal is:"))
+        self.label_5.setText(_translate("CriminalSealingEntryDialog", "Motion is:"))
         self.label_8.setText(_translate("CriminalSealingEntryDialog", "Offense Date:"))
-        self.label_6.setText(_translate("CriminalSealingEntryDialog", "State of Ohio response to motion to seal:"))
+        self.label_6.setText(_translate("CriminalSealingEntryDialog", "State of Ohio response to motion:"))
         self.state_response_box.setItemText(0, _translate("CriminalSealingEntryDialog", "did not oppose"))
         self.state_response_box.setItemText(1, _translate("CriminalSealingEntryDialog", "opposed"))
         self.seal_decision_box.setItemText(0, _translate("CriminalSealingEntryDialog", "Granted"))
@@ -326,8 +330,9 @@ class Ui_CriminalSealingEntryDialog(object):
         self.sealing_type_box.setItemText(0, _translate("CriminalSealingEntryDialog", "sealing of a conviction or bail forfeiture record pursuant to R.C. 2953.32"))
         self.sealing_type_box.setItemText(1, _translate("CriminalSealingEntryDialog", "sealing after a not guilty finding or dismissal pursuant to R.C. 2953.33"))
         self.sealing_type_box.setItemText(2, _translate("CriminalSealingEntryDialog", "expungement of firearms conviction pursuant to R.C. 2953.35"))
-        self.sealing_type_box.setItemText(3, _translate("CriminalSealingEntryDialog", "expungment of conviction by victim of human trafficking pursuant to R.C. 2935.36"))
-        self.label_11.setText(_translate("CriminalSealingEntryDialog", "Motion to seal type:"))
+        self.sealing_type_box.setItemText(3, _translate("CriminalSealingEntryDialog", "expungement of conviction by victim of human trafficking pursuant to R.C. 2953.36"))
+        self.sealing_type_box.setItemText(4, _translate("CriminalSealingEntryDialog", "expungement of record of not guilty finding or dismissed charges by victim of human trafficking pursuant to R.C. 2953.521"))
+        self.label_11.setText(_translate("CriminalSealingEntryDialog", "Motion type:"))
         self.denial_reasons_label.setText(_translate("CriminalSealingEntryDialog", "Denial reasons:"))
 from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
 from munientry.widgets.custom_widgets import NoScrollDateEdit

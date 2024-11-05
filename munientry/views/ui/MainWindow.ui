@@ -416,7 +416,7 @@ font-weight: bold;</string>
                      <string notr="true">background-color: rgb(160, 160, 160);</string>
                     </property>
                     <property name="text">
-                     <string>Criminal Sealing</string>
+                     <string>Criminal Sealing / Expungement</string>
                     </property>
                    </widget>
                   </item>
