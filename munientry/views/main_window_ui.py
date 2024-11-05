@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file './munientry/views/ui/MainWindow.ui'
+# Form implementation generated from reading ui file './views/ui/MainWindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -1120,7 +1120,7 @@ class Ui_MainWindow(object):
         self.ArraignmentContinueButton.setText(_translate("MainWindow", "Arraignment Continuance"))
         self.TrialSentencingButton.setText(_translate("MainWindow", "Jury Trial / Trial to Court Sentencing"))
         self.FineOnlyPleaButton.setText(_translate("MainWindow", "Fine Only"))
-        self.CriminalSealingButton.setText(_translate("MainWindow", "Criminal Sealing"))
+        self.CriminalSealingButton.setText(_translate("MainWindow", "Criminal Sealing / Expungement"))
         self.label_21.setText(_translate("MainWindow", "Sealing Entry"))
         self.label_4.setText(_translate("MainWindow", "Plea Only Entries"))
         self.NoPleaBondButton.setText(_translate("MainWindow", "Appear on Warrant (No Plea) / Bond"))
