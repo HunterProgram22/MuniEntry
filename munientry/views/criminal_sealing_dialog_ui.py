@@ -277,15 +277,6 @@ class Ui_CriminalSealingEntryDialog(object):
         self.denial_reasons_text_box.setLineWidth(2)
         self.denial_reasons_text_box.setObjectName("denial_reasons_text_box")
         self.gridLayout_6.addWidget(self.denial_reasons_text_box, 9, 1, 1, 3)
-        self.date_of_birth = NoScrollDateEdit(self.frame)
-        self.date_of_birth.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"color: rgb(0, 0, 0);")
-        self.date_of_birth.setCalendarPopup(True)
-        self.date_of_birth.setObjectName("date_of_birth")
-        self.gridLayout_6.addWidget(self.date_of_birth, 1, 3, 1, 1)
-        self.label_12 = QtWidgets.QLabel(self.frame)
-        self.label_12.setObjectName("label_12")
-        self.gridLayout_6.addWidget(self.label_12, 1, 2, 1, 1)
         self.gridLayout_2.addWidget(self.frame, 1, 0, 1, 2)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.gridLayout_4.addWidget(self.scrollArea, 0, 0, 1, 1)
@@ -340,9 +331,8 @@ class Ui_CriminalSealingEntryDialog(object):
         self.sealing_type_box.setItemText(1, _translate("CriminalSealingEntryDialog", "sealing after a not guilty finding or dismissal pursuant to R.C. 2953.33"))
         self.sealing_type_box.setItemText(2, _translate("CriminalSealingEntryDialog", "expungement of firearms conviction pursuant to R.C. 2953.35"))
         self.sealing_type_box.setItemText(3, _translate("CriminalSealingEntryDialog", "expungement of conviction by victim of human trafficking pursuant to R.C. 2953.36"))
-        self.sealing_type_box.setItemText(4, _translate("CriminalSealingEntryDialog", "expungement of record of not guilty finding or dismissed charges by vicitim of human trafficking pursuant to R.C. 2953.521"))
+        self.sealing_type_box.setItemText(4, _translate("CriminalSealingEntryDialog", "expungement of record of not guilty finding or dismissed charges by victim of human trafficking pursuant to R.C. 2953.521"))
         self.label_11.setText(_translate("CriminalSealingEntryDialog", "Motion type:"))
         self.denial_reasons_label.setText(_translate("CriminalSealingEntryDialog", "Denial reasons:"))
-        self.label_12.setText(_translate("CriminalSealingEntryDialog", "Date of Birth:"))
 from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
 from munientry.widgets.custom_widgets import NoScrollDateEdit
