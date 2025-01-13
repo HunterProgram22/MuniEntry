@@ -573,6 +573,11 @@ color: rgb(0, 0, 0);</string>
                </item>
                <item>
                 <property name="text">
+                 <string>expungment of a confiction or bail forfeiture record pursuant to R.C. 2353.32</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
                  <string>expungement of firearms conviction pursuant to R.C. 2953.35</string>
                 </property>
                </item>
