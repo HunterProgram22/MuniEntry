@@ -94,7 +94,7 @@ class CourtStaffManager(object):
 
     def create_court_staff_buttons_dict(self) -> dict:
         return {
-            self.mw.judge_1_radio_btn: JudicialOfficer('Marianne', 'TEST', JUDGE),
+            self.mw.judge_1_radio_btn: JudicialOfficer('Future', 'Judge', JUDGE),
             self.mw.judge_2_radio_btn: JudicialOfficer('Kyle', 'Rohrer', JUDGE),
             self.mw.visiting_judge_radio_btn: JudicialOfficer('None', 'Assigned', JUDGE),
             self.mw.mag_1_radio_btn: JudicialOfficer('Amanda', 'Bunner', MAGISTRATE),

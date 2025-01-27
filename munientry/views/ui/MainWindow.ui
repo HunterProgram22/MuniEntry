@@ -527,7 +527,7 @@ font-weight: bold;</string>
                      <string notr="true">background-color: rgb(85, 170, 255);</string>
                     </property>
                     <property name="text">
-                     <string>Hemmeter - Scheduling Entry</string>
+                     <string>Future Judge - Scheduling Entry</string>
                     </property>
                    </widget>
                   </item>
@@ -559,7 +559,7 @@ font-weight: bold;</string>
                      <string notr="true">background-color: rgb(85, 170, 255);</string>
                     </property>
                     <property name="text">
-                     <string>Hemmeter - Final/Jury Notice of Hearing</string>
+                     <string>Future Judge - Final/Jury Notice of Hearing</string>
                     </property>
                    </widget>
                   </item>
@@ -665,7 +665,7 @@ font-weight: bold;</string>
                      <string notr="true">background-color: rgb(85, 170, 255);</string>
                     </property>
                     <property name="text">
-                     <string>Hemmeter - Trial To Court Notice of Hearing</string>
+                     <string>Future Judge- Trial To Court Notice of Hearing</string>
                     </property>
                    </widget>
                   </item>
@@ -681,7 +681,7 @@ font-weight: bold;</string>
                      <string notr="true">background-color: rgb(85, 170, 255);</string>
                     </property>
                     <property name="text">
-                     <string>Hemmeter - General Notice of Hearing</string>
+                     <string>Future Judge - General Notice of Hearing</string>
                     </property>
                    </widget>
                   </item>
@@ -881,7 +881,7 @@ font-weight: bold;</string>
                  <item row="1" column="0">
                   <widget class="QRadioButton" name="judge_1_radio_btn">
                    <property name="text">
-                    <string>Judge Hemmeter</string>
+                    <string>Judge F</string>
                    </property>
                   </widget>
                  </item>
