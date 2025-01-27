@@ -38,7 +38,7 @@ def next_court_day(future_date: date, weekday_due_date: str) -> date:
 
 def set_random_judge() -> tuple[str, str]:
     """Returns a random judge and the time the judge was assigned."""
-    judge_list = ['Judge Hemmeter', 'Judge Rohrer']
+    judge_list = ['Future Judge - Judge R - A Track', 'Judge Rohrer - B Track']
     assigned_judge = random.choice(judge_list)
     now = datetime.now()
     time_now = now.strftime('%B %d, %Y at %H:%M:%S %p')
@@ -47,13 +47,15 @@ def set_random_judge() -> tuple[str, str]:
 
 def set_assigned_judge(sender: 'QPushButton') -> str:
     """Returns the judge name as a string based on the button that is pressed."""
+    TUESDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - Courtroom B Track'
+    THURSDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - Courtroom A Track'
     assigned_judge_dict = {
-        'rohrer_final_jury_hearingButton': 'Judge Kyle E. Rohrer',
-        'rohrer_general_hearingButton': 'Judge Kyle E. Rohrer',
-        'rohrer_trial_court_hearingButton': 'Judge Kyle E. Rohrer',
-        'hemmeter_final_jury_hearingButton': 'Judge Marianne T. Hemmeter',
-        'hemmeter_general_hearingButton': 'Judge Marianne T. Hemmeter',
-        'hemmeter_trial_court_hearingButton': 'Judge Marianne T. Hemmeter',
+        'rohrer_final_jury_hearingButton': TUESDAY_TRIAL_JUDGE,
+        'rohrer_general_hearingButton': TUESDAY_TRIAL_JUDGE,
+        'rohrer_trial_court_hearingButton': TUESDAY_TRIAL_JUDGE,
+        'hemmeter_final_jury_hearingButton': THURSDAY_TRIAL_JUDGE,
+        'hemmeter_general_hearingButton': THURSDAY_TRIAL_JUDGE,
+        'hemmeter_trial_court_hearingButton': THURSDAY_TRIAL_JUDGE,
     }
     return assigned_judge_dict.get(sender.objectName(), '')
 
@@ -65,11 +67,11 @@ def set_courtroom(sender: 'QPushButton') -> str:
     courtroom. This allows the user to manually enter courtroom in the Word doc.
     """
     courtroom_dict = {
-        'rohrer_final_jury_hearingButton': 'Courtroom A',
-        'rohrer_general_hearingButton': 'Courtroom A',
+        'rohrer_final_jury_hearingButton': 'Courtroom B',
+        'rohrer_general_hearingButton': 'Courtroom B',
         'rohrer_trial_court_hearingButton': 'Courtroom C',
-        'hemmeter_final_jury_hearingButton': 'Courtroom B',
-        'hemmeter_general_hearingButton': 'Courtroom B',
+        'hemmeter_final_jury_hearingButton': 'Courtroom A',
+        'hemmeter_general_hearingButton': 'Courtroom A',
         'hemmeter_trial_court_hearingButton': 'Courtroom C',
     }
     return courtroom_dict.get(sender.objectName(), '')
