@@ -47,8 +47,8 @@ def set_random_judge() -> tuple[str, str]:
 
 def set_assigned_judge(sender: 'QPushButton') -> str:
     """Returns the judge name as a string based on the button that is pressed."""
-    TUESDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - Courtroom B Track'
-    THURSDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - Courtroom A Track'
+    TUESDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - B Track'
+    THURSDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - A Track'
     assigned_judge_dict = {
         'rohrer_final_jury_hearingButton': TUESDAY_TRIAL_JUDGE,
         'rohrer_general_hearingButton': TUESDAY_TRIAL_JUDGE,
@@ -71,7 +71,7 @@ def set_courtroom(sender: 'QPushButton') -> str:
         'rohrer_general_hearingButton': 'Courtroom B',
         'rohrer_trial_court_hearingButton': 'Courtroom C',
         'hemmeter_final_jury_hearingButton': 'Courtroom A',
-        'hemmeter_general_hearingButton': 'Courtroom A',
+        'hemmeter_general_hearingButton': 'Courtroom B',
         'hemmeter_trial_court_hearingButton': 'Courtroom C',
     }
     return courtroom_dict.get(sender.objectName(), '')

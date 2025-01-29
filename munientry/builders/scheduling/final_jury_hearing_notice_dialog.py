@@ -12,8 +12,8 @@ from munientry.updaters.scheduling_updaters import SchedulingModelUpdater
 from munientry.views.final_jury_notice_of_hearing_dialog_ui import Ui_FinalJuryNoticeOfHearingDialog
 
 
-THURSDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - Courtroom A Track'
-TUESDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - Courtroom B Track'
+THURSDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - A Track'
+TUESDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - B Track'
 
 
 class FinalJuryNoticeHearingViewModifier(sched.SchedulingViewModifier):
