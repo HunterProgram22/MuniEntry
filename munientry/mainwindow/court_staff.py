@@ -117,9 +117,9 @@ class CourtStaffManager(object):
             self.mw.chief_prob_officer_radio_btn: JudicialOfficer('Lindsey', 'Blue', CHIEF_CCO),
             self.mw.dep_chief_prob_officer_radio_btn: JudicialOfficer('Kurt', 'Olson', DEP_CCCO),
             self.mw.prob_officer_1_radio_btn: JudicialOfficer('Andrew', 'Conway', CCO),
-            self.mw.prob_officer_2_radio_btn: JudicialOfficer('Nathaniel', 'Elliott', CCO),
+            self.mw.prob_officer_2_radio_btn: JudicialOfficer('Elliot', 'Lagendyk', CCO),
             self.mw.prob_officer_3_radio_btn: JudicialOfficer('Jessica', 'Scholz', CCO),
             self.mw.prob_officer_4_radio_btn: JudicialOfficer('Adam', 'Garloch', CCO),
-            self.mw.prob_officer_5_radio_btn: JudicialOfficer('Zachary', 'Slater', CCO),
-            self.mw.bond_intake_officer_radio_btn: JudicialOfficer('Carrie', 'Mattox', BOND_CCO),
+            self.mw.prob_officer_5_radio_btn: JudicialOfficer('Kara', 'Moore', CCO),
+            self.mw.bond_intake_officer_radio_btn: JudicialOfficer('Sheryl', 'Titus', BOND_CCO),
         }
