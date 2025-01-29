@@ -1046,7 +1046,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.main_TabWidget.setCurrentIndex(0)
-        self.entries_tab_widget.setCurrentIndex(0)
+        self.entries_tab_widget.setCurrentIndex(1)
         self.court_staff_widget.setCurrentIndex(0)
         self.cases_tab_widget.setCurrentIndex(0)
         self.workflows_person_tab.setCurrentIndex(1)
@@ -1135,7 +1135,7 @@ class Ui_MainWindow(object):
         self.assign_judge_label.setText(_translate("MainWindow", "Assigned Judge Name"))
         self.last_judge_assigned_label.setText(_translate("MainWindow", "The Last Judge Assigned was None."))
         self.rohrer_trial_court_hearingButton.setText(_translate("MainWindow", "Rohrer - Trial To Court Notice of Hearing"))
-        self.hemmeter_trial_court_hearingButton.setText(_translate("MainWindow", "Future Judge- Trial To Court Notice of Hearing"))
+        self.hemmeter_trial_court_hearingButton.setText(_translate("MainWindow", "Future Judge - Trial To Court Notice of Hearing"))
         self.hemmeter_general_hearingButton.setText(_translate("MainWindow", "Future Judge - General Notice of Hearing"))
         self.not_guilty_report_Button.setText(_translate("MainWindow", "Run Not Guilty Report"))
         self.entries_tab_widget.setTabText(self.entries_tab_widget.indexOf(self.scheduling_tab), _translate("MainWindow", "Scheduling"))
