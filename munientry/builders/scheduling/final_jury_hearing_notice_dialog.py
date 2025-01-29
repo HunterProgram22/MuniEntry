@@ -2,7 +2,8 @@
 from loguru import logger
 from PyQt6.QtCore import QDate
 
-from munientry.settings.business_constants import DAY_DICT, EVENT_DICT
+from munientry.settings.business_constants import (DAY_DICT, EVENT_DICT, TUESDAY_TRIAL_JUDGE,
+                                                   THURSDAY_TRIAL_JUDGE)
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.scheduling_checks import SchedulingChecks
 from munientry.helper_functions import set_assigned_judge, set_courtroom
@@ -11,9 +12,6 @@ from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.updaters.scheduling_updaters import SchedulingModelUpdater
 from munientry.views.final_jury_notice_of_hearing_dialog_ui import Ui_FinalJuryNoticeOfHearingDialog
 
-
-THURSDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - A Track'
-TUESDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - B Track'
 
 
 class FinalJuryNoticeHearingViewModifier(sched.SchedulingViewModifier):

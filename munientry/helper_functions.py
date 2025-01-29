@@ -7,6 +7,8 @@ from typing import Any
 
 from loguru import logger
 
+from munientry.settings.business_constants import TUESDAY_TRIAL_JUDGE, THURSDAY_TRIAL_JUDGE
+
 
 def set_future_date(days_to_add: int, weekday_due_date: str) -> int:
     """Adds days to a date and sets a future weekday date.
@@ -47,8 +49,6 @@ def set_random_judge() -> tuple[str, str]:
 
 def set_assigned_judge(sender: 'QPushButton') -> str:
     """Returns the judge name as a string based on the button that is pressed."""
-    TUESDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - B Track'
-    THURSDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - A Track'
     assigned_judge_dict = {
         'rohrer_final_jury_hearingButton': TUESDAY_TRIAL_JUDGE,
         'rohrer_general_hearingButton': TUESDAY_TRIAL_JUDGE,
