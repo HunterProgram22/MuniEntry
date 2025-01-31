@@ -2,7 +2,8 @@
 from loguru import logger
 from PyQt6.QtCore import QDate
 
-from munientry.settings.business_constants import DAY_DICT, EVENT_DICT
+from munientry.settings.business_constants import (DAY_DICT, EVENT_DICT, TUESDAY_TRIAL_JUDGE,
+                                                   THURSDAY_TRIAL_JUDGE)
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.scheduling_checks import SchedulingChecks
 from munientry.helper_functions import set_assigned_judge, set_courtroom
@@ -65,9 +66,9 @@ class FinalJuryNoticeHearingSlotFunctions(sched.SchedulingSlotFunctions):
         self.dialog.speedy_trial_date_label.setText(new_speedy_trial_date)
 
     def update_trial_date(self) -> None:
-        if self.dialog.assigned_judge == 'Judge Kyle E. Rohrer':
+        if self.dialog.assigned_judge == TUESDAY_TRIAL_JUDGE:
             trial_date = self.set_trial_date('Tuesday', 'Trial')
-        if self.dialog.assigned_judge == 'Judge Marianne T. Hemmeter':
+        if self.dialog.assigned_judge == THURSDAY_TRIAL_JUDGE:
             trial_date = self.set_trial_date('Thursday', 'Trial')
         try:
             self.dialog.trial_date.setDate(trial_date)
@@ -151,6 +152,7 @@ class FinalJuryNoticeHearingDialog(
     dialog_name = 'Final And Jury Notice Hearing Entry'
 
     def additional_setup(self):
+        logger.debug(self.sender())
         self.assigned_judge = set_assigned_judge(self.sender())
         self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
         self.courtroom = set_courtroom(self.sender())
@@ -159,12 +161,12 @@ class FinalJuryNoticeHearingDialog(
         self.functions.update_trial_date()
 
     def set_instructions_label(self) -> None:
-        if self.assigned_judge == 'Judge Marianne T. Hemmeter':
+        if self.assigned_judge == THURSDAY_TRIAL_JUDGE:
             self.instructions_label.setText(
                 'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
                 + ' automatically update to the next Thursday.',
             )
-        if self.assigned_judge == 'Judge Kyle E. Rohrer':
+        if self.assigned_judge == TUESDAY_TRIAL_JUDGE:
             self.instructions_label.setText(
                 'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
                 + ' automatically update to the next Tuesday.',

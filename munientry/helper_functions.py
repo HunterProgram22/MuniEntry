@@ -7,6 +7,8 @@ from typing import Any
 
 from loguru import logger
 
+from munientry.settings.business_constants import TUESDAY_TRIAL_JUDGE, THURSDAY_TRIAL_JUDGE
+
 
 def set_future_date(days_to_add: int, weekday_due_date: str) -> int:
     """Adds days to a date and sets a future weekday date.
@@ -38,7 +40,7 @@ def next_court_day(future_date: date, weekday_due_date: str) -> date:
 
 def set_random_judge() -> tuple[str, str]:
     """Returns a random judge and the time the judge was assigned."""
-    judge_list = ['Judge Hemmeter', 'Judge Rohrer']
+    judge_list = ['Future Judge - A Track', 'Judge Rohrer - B Track']
     assigned_judge = random.choice(judge_list)
     now = datetime.now()
     time_now = now.strftime('%B %d, %Y at %H:%M:%S %p')
@@ -48,12 +50,12 @@ def set_random_judge() -> tuple[str, str]:
 def set_assigned_judge(sender: 'QPushButton') -> str:
     """Returns the judge name as a string based on the button that is pressed."""
     assigned_judge_dict = {
-        'rohrer_final_jury_hearingButton': 'Judge Kyle E. Rohrer',
-        'rohrer_general_hearingButton': 'Judge Kyle E. Rohrer',
-        'rohrer_trial_court_hearingButton': 'Judge Kyle E. Rohrer',
-        'hemmeter_final_jury_hearingButton': 'Judge Marianne T. Hemmeter',
-        'hemmeter_general_hearingButton': 'Judge Marianne T. Hemmeter',
-        'hemmeter_trial_court_hearingButton': 'Judge Marianne T. Hemmeter',
+        'rohrer_final_jury_hearingButton': TUESDAY_TRIAL_JUDGE,
+        'rohrer_general_hearingButton': TUESDAY_TRIAL_JUDGE,
+        'rohrer_trial_court_hearingButton': TUESDAY_TRIAL_JUDGE,
+        'hemmeter_final_jury_hearingButton': THURSDAY_TRIAL_JUDGE,
+        'hemmeter_general_hearingButton': THURSDAY_TRIAL_JUDGE,
+        'hemmeter_trial_court_hearingButton': THURSDAY_TRIAL_JUDGE,
     }
     return assigned_judge_dict.get(sender.objectName(), '')
 
@@ -65,10 +67,10 @@ def set_courtroom(sender: 'QPushButton') -> str:
     courtroom. This allows the user to manually enter courtroom in the Word doc.
     """
     courtroom_dict = {
-        'rohrer_final_jury_hearingButton': 'Courtroom A',
-        'rohrer_general_hearingButton': 'Courtroom A',
+        'rohrer_final_jury_hearingButton': 'Courtroom B',
+        'rohrer_general_hearingButton': 'Courtroom B',
         'rohrer_trial_court_hearingButton': 'Courtroom C',
-        'hemmeter_final_jury_hearingButton': 'Courtroom B',
+        'hemmeter_final_jury_hearingButton': 'Courtroom A',
         'hemmeter_general_hearingButton': 'Courtroom B',
         'hemmeter_trial_court_hearingButton': 'Courtroom C',
     }
