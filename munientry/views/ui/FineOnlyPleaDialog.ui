@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1020</width>
-    <height>722</height>
+    <width>1055</width>
+    <height>764</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -165,8 +165,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1021</width>
-        <height>685</height>
+        <width>1035</width>
+        <height>744</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,2,0" columnstretch="1,1,1,1">
@@ -530,17 +530,12 @@ background-color: rgb(255, 255, 255);</string>
             </item>
             <item>
              <property name="text">
-              <string>within 30 days</string>
+              <string>monthly pay</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>within 60 days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>within 90 days</string>
+              <string>partial forthwith then monthly pay</string>
              </property>
             </item>
            </widget>

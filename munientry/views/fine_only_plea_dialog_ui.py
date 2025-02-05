@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/FineOnlyPleaDialog.ui'
+# Form implementation generated from reading ui file './views/ui/FineOnlyPleaDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -18,7 +18,7 @@ class Ui_FineOnlyPleaDialog(object):
         FineOnlyPleaDialog.setObjectName("FineOnlyPleaDialog")
         FineOnlyPleaDialog.setWindowModality(QtCore.Qt.WindowModality.NonModal)
         FineOnlyPleaDialog.setEnabled(True)
-        FineOnlyPleaDialog.resize(1020, 722)
+        FineOnlyPleaDialog.resize(1055, 764)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -75,7 +75,7 @@ class Ui_FineOnlyPleaDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1021, 685))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1035, 744))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -268,7 +268,6 @@ class Ui_FineOnlyPleaDialog(object):
         self.ability_to_pay_box = NoScrollComboBox(self.frame_5)
         self.ability_to_pay_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.ability_to_pay_box.setObjectName("ability_to_pay_box")
-        self.ability_to_pay_box.addItem("")
         self.ability_to_pay_box.addItem("")
         self.ability_to_pay_box.addItem("")
         self.ability_to_pay_box.addItem("")
@@ -522,9 +521,8 @@ class Ui_FineOnlyPleaDialog(object):
         self.court_costs_box.setItemText(3, _translate("FineOnlyPleaDialog", "No"))
         self.label_9.setText(_translate("FineOnlyPleaDialog", "Time to pay:"))
         self.ability_to_pay_box.setItemText(0, _translate("FineOnlyPleaDialog", "forthwith"))
-        self.ability_to_pay_box.setItemText(1, _translate("FineOnlyPleaDialog", "within 30 days"))
-        self.ability_to_pay_box.setItemText(2, _translate("FineOnlyPleaDialog", "within 60 days"))
-        self.ability_to_pay_box.setItemText(3, _translate("FineOnlyPleaDialog", "within 90 days"))
+        self.ability_to_pay_box.setItemText(1, _translate("FineOnlyPleaDialog", "monthly pay"))
+        self.ability_to_pay_box.setItemText(2, _translate("FineOnlyPleaDialog", "partial forthwith then monthly pay"))
         self.label_11.setText(_translate("FineOnlyPleaDialog", "Court Costs:"))
         self.label.setText(_translate("FineOnlyPleaDialog", "Def. First Name:"))
         self.cancel_Button.setText(_translate("FineOnlyPleaDialog", "Cancel"))
