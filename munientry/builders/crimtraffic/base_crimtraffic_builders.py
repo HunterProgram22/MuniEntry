@@ -85,6 +85,8 @@ class FineCostsMixin(object):
             self.show_balance_today()
         elif days_to_add in SPECIAL_DOCKETS_COSTS:
             self.hide_monthly_pay()
+            self.hide_pay_today()
+            self.hide_balance_today()
         elif days_to_add == 'monthly pay':
             self.hide_balance_today()
             self.hide_pay_today()
@@ -94,14 +96,13 @@ class FineCostsMixin(object):
             self.show_monthly_pay()
             self.show_pay_today()
 
-        else:
+        # else:
             # self.dialog.balance_due_date.setHidden(False)
             # days_to_add = self.get_days_to_add(days_to_add)
             # total_days_to_add = set_future_date(days_to_add, 'Tuesday')
             # self.dialog.balance_due_date.setDate(
             #     today.addDays(total_days_to_add),
             # )
-            return
 
     def show_balance_today(self) -> None:
         today = QDate.currentDate()
