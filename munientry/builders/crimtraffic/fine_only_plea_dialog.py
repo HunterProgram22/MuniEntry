@@ -90,4 +90,5 @@ class FineOnlyPleaDialog(crim.CrimTrafficDialogBuilder, Ui_FineOnlyPleaDialog):
             ('other_conditions_checkBox', self.entry_case_information.other_conditions),
         ]
         self.functions.set_fines_credit_for_jail_field()  # Hides credit_for_jail field on load
+        self.functions.set_fines_costs_pay_date()  # Sets the fines and costs pay fields
 
