@@ -86,3 +86,4 @@ class LeapSentencingDialog(crim.CrimTrafficDialogBuilder, Ui_LeapSentencingDialo
             ('other_conditions_checkBox', self.entry_case_information.other_conditions),
         ]
         self.functions.set_fines_credit_for_jail_field()
+        self.functions.set_fines_costs_pay_date()  # Sets the fines and costs pay fields
