@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/SentencingOnlyDialog.ui'
+# Form implementation generated from reading ui file './views/ui/SentencingOnlyDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -605,15 +605,38 @@ class Ui_SentencingOnlyDialog(object):
         self.retranslateUi(SentencingOnlyDialog)
         QtCore.QMetaObject.connectSlotsByName(SentencingOnlyDialog)
         SentencingOnlyDialog.setTabOrder(self.defendant_first_name_lineEdit, self.defendant_last_name_lineEdit)
-        SentencingOnlyDialog.setTabOrder(self.defendant_last_name_lineEdit, self.appearance_reason_box)
-        SentencingOnlyDialog.setTabOrder(self.appearance_reason_box, self.fra_in_file_box)
+        SentencingOnlyDialog.setTabOrder(self.defendant_last_name_lineEdit, self.case_number_lineEdit)
+        SentencingOnlyDialog.setTabOrder(self.case_number_lineEdit, self.defense_counsel_name_box)
+        SentencingOnlyDialog.setTabOrder(self.defense_counsel_name_box, self.defense_counsel_type_box)
+        SentencingOnlyDialog.setTabOrder(self.defense_counsel_type_box, self.defense_counsel_waived_checkBox)
+        SentencingOnlyDialog.setTabOrder(self.defense_counsel_waived_checkBox, self.appearance_reason_box)
+        SentencingOnlyDialog.setTabOrder(self.appearance_reason_box, self.plea_date)
+        SentencingOnlyDialog.setTabOrder(self.plea_date, self.offense_of_violence_checkBox)
+        SentencingOnlyDialog.setTabOrder(self.offense_of_violence_checkBox, self.victim_statements_checkBox)
+        SentencingOnlyDialog.setTabOrder(self.victim_statements_checkBox, self.add_charge_Button)
+        SentencingOnlyDialog.setTabOrder(self.add_charge_Button, self.court_costs_box)
+        SentencingOnlyDialog.setTabOrder(self.court_costs_box, self.ability_to_pay_box)
+        SentencingOnlyDialog.setTabOrder(self.ability_to_pay_box, self.balance_due_date)
+        SentencingOnlyDialog.setTabOrder(self.balance_due_date, self.pay_today_box)
+        SentencingOnlyDialog.setTabOrder(self.pay_today_box, self.monthly_pay_box)
+        SentencingOnlyDialog.setTabOrder(self.monthly_pay_box, self.fra_in_file_box)
         SentencingOnlyDialog.setTabOrder(self.fra_in_file_box, self.fra_in_court_box)
         SentencingOnlyDialog.setTabOrder(self.fra_in_court_box, self.community_control_checkBox)
-        SentencingOnlyDialog.setTabOrder(self.community_control_checkBox, self.in_jail_box)
+        SentencingOnlyDialog.setTabOrder(self.community_control_checkBox, self.community_service_checkBox)
+        SentencingOnlyDialog.setTabOrder(self.community_service_checkBox, self.license_suspension_checkBox)
+        SentencingOnlyDialog.setTabOrder(self.license_suspension_checkBox, self.victim_notification_checkBox)
+        SentencingOnlyDialog.setTabOrder(self.victim_notification_checkBox, self.impoundment_checkBox)
+        SentencingOnlyDialog.setTabOrder(self.impoundment_checkBox, self.other_conditions_checkBox)
+        SentencingOnlyDialog.setTabOrder(self.other_conditions_checkBox, self.add_conditions_Button)
+        SentencingOnlyDialog.setTabOrder(self.add_conditions_Button, self.in_jail_box)
         SentencingOnlyDialog.setTabOrder(self.in_jail_box, self.jail_time_credit_box)
         SentencingOnlyDialog.setTabOrder(self.jail_time_credit_box, self.jail_time_credit_apply_box)
-        SentencingOnlyDialog.setTabOrder(self.jail_time_credit_apply_box, self.add_conditions_Button)
-        SentencingOnlyDialog.setTabOrder(self.add_conditions_Button, self.add_charge_Button)
+        SentencingOnlyDialog.setTabOrder(self.jail_time_credit_apply_box, self.add_companion_cases_checkBox)
+        SentencingOnlyDialog.setTabOrder(self.add_companion_cases_checkBox, self.companion_cases_box)
+        SentencingOnlyDialog.setTabOrder(self.companion_cases_box, self.companion_cases_sentence_box)
+        SentencingOnlyDialog.setTabOrder(self.companion_cases_sentence_box, self.jail_checkBox)
+        SentencingOnlyDialog.setTabOrder(self.jail_checkBox, self.add_jail_report_Button)
+        SentencingOnlyDialog.setTabOrder(self.add_jail_report_Button, self.close_dialog_Button)
 
     def retranslateUi(self, SentencingOnlyDialog):
         _translate = QtCore.QCoreApplication.translate

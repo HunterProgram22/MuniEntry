@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/TrialSentencingDialog.ui'
+# Form implementation generated from reading ui file './views/ui/TrialSentencingDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -77,7 +77,7 @@ class Ui_TrialSentencingDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, -20, 1189, 877))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1189, 877))
         self.scrollAreaWidgetContents_2.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
@@ -591,15 +591,36 @@ class Ui_TrialSentencingDialog(object):
         QtCore.QMetaObject.connectSlotsByName(TrialSentencingDialog)
         TrialSentencingDialog.setTabOrder(self.defendant_first_name_lineEdit, self.defendant_last_name_lineEdit)
         TrialSentencingDialog.setTabOrder(self.defendant_last_name_lineEdit, self.case_number_lineEdit)
-        TrialSentencingDialog.setTabOrder(self.case_number_lineEdit, self.appearance_reason_box)
-        TrialSentencingDialog.setTabOrder(self.appearance_reason_box, self.fra_in_file_box)
+        TrialSentencingDialog.setTabOrder(self.case_number_lineEdit, self.defense_counsel_name_box)
+        TrialSentencingDialog.setTabOrder(self.defense_counsel_name_box, self.defense_counsel_type_box)
+        TrialSentencingDialog.setTabOrder(self.defense_counsel_type_box, self.defense_counsel_waived_checkBox)
+        TrialSentencingDialog.setTabOrder(self.defense_counsel_waived_checkBox, self.appearance_reason_box)
+        TrialSentencingDialog.setTabOrder(self.appearance_reason_box, self.victim_statements_checkBox)
+        TrialSentencingDialog.setTabOrder(self.victim_statements_checkBox, self.add_charge_Button)
+        TrialSentencingDialog.setTabOrder(self.add_charge_Button, self.court_costs_box)
+        TrialSentencingDialog.setTabOrder(self.court_costs_box, self.ability_to_pay_box)
+        TrialSentencingDialog.setTabOrder(self.ability_to_pay_box, self.balance_due_date)
+        TrialSentencingDialog.setTabOrder(self.balance_due_date, self.pay_today_box)
+        TrialSentencingDialog.setTabOrder(self.pay_today_box, self.monthly_pay_box)
+        TrialSentencingDialog.setTabOrder(self.monthly_pay_box, self.distracted_driving_checkBox)
+        TrialSentencingDialog.setTabOrder(self.distracted_driving_checkBox, self.fra_in_file_box)
         TrialSentencingDialog.setTabOrder(self.fra_in_file_box, self.fra_in_court_box)
         TrialSentencingDialog.setTabOrder(self.fra_in_court_box, self.community_control_checkBox)
-        TrialSentencingDialog.setTabOrder(self.community_control_checkBox, self.in_jail_box)
+        TrialSentencingDialog.setTabOrder(self.community_control_checkBox, self.community_service_checkBox)
+        TrialSentencingDialog.setTabOrder(self.community_service_checkBox, self.license_suspension_checkBox)
+        TrialSentencingDialog.setTabOrder(self.license_suspension_checkBox, self.victim_notification_checkBox)
+        TrialSentencingDialog.setTabOrder(self.victim_notification_checkBox, self.impoundment_checkBox)
+        TrialSentencingDialog.setTabOrder(self.impoundment_checkBox, self.other_conditions_checkBox)
+        TrialSentencingDialog.setTabOrder(self.other_conditions_checkBox, self.add_conditions_Button)
+        TrialSentencingDialog.setTabOrder(self.add_conditions_Button, self.in_jail_box)
         TrialSentencingDialog.setTabOrder(self.in_jail_box, self.jail_time_credit_box)
         TrialSentencingDialog.setTabOrder(self.jail_time_credit_box, self.jail_time_credit_apply_box)
-        TrialSentencingDialog.setTabOrder(self.jail_time_credit_apply_box, self.add_conditions_Button)
-        TrialSentencingDialog.setTabOrder(self.add_conditions_Button, self.add_charge_Button)
+        TrialSentencingDialog.setTabOrder(self.jail_time_credit_apply_box, self.add_companion_cases_checkBox)
+        TrialSentencingDialog.setTabOrder(self.add_companion_cases_checkBox, self.companion_cases_box)
+        TrialSentencingDialog.setTabOrder(self.companion_cases_box, self.companion_cases_sentence_box)
+        TrialSentencingDialog.setTabOrder(self.companion_cases_sentence_box, self.jail_checkBox)
+        TrialSentencingDialog.setTabOrder(self.jail_checkBox, self.add_jail_report_Button)
+        TrialSentencingDialog.setTabOrder(self.add_jail_report_Button, self.close_dialog_Button)
 
     def retranslateUi(self, TrialSentencingDialog):
         _translate = QtCore.QCoreApplication.translate

@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1055</width>
-    <height>764</height>
+    <width>1246</width>
+    <height>853</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -165,8 +165,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1046</width>
-        <height>732</height>
+        <width>1226</width>
+        <height>833</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,2,0" columnstretch="1,1,1,1">
@@ -1039,15 +1039,27 @@ font-weight: bold;</string>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
   <tabstop>case_number_lineEdit</tabstop>
+  <tabstop>defense_counsel_name_box</tabstop>
+  <tabstop>defense_counsel_type_box</tabstop>
+  <tabstop>defense_counsel_waived_checkBox</tabstop>
+  <tabstop>appearance_reason_box</tabstop>
+  <tabstop>add_charge_Button</tabstop>
   <tabstop>court_costs_box</tabstop>
   <tabstop>ability_to_pay_box</tabstop>
   <tabstop>balance_due_date</tabstop>
+  <tabstop>pay_today_box</tabstop>
+  <tabstop>monthly_pay_box</tabstop>
+  <tabstop>credit_for_jail_checkBox</tabstop>
+  <tabstop>jail_time_credit_box</tabstop>
+  <tabstop>distracted_driving_checkBox</tabstop>
+  <tabstop>fra_in_file_box</tabstop>
+  <tabstop>fra_in_court_box</tabstop>
   <tabstop>license_suspension_checkBox</tabstop>
   <tabstop>community_service_checkBox</tabstop>
   <tabstop>other_conditions_checkBox</tabstop>
   <tabstop>add_conditions_Button</tabstop>
   <tabstop>create_entry_Button</tabstop>
-  <tabstop>close_dialog_Button</tabstop>
+  <tabstop>scrollArea</tabstop>
  </tabstops>
  <resources/>
  <connections/>

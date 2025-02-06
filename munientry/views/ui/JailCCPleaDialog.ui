@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1110</width>
-    <height>839</height>
+    <width>1374</width>
+    <height>912</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -171,7 +171,7 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1279</width>
+        <width>1337</width>
         <height>930</height>
        </rect>
       </property>
@@ -1284,15 +1284,37 @@ background-color: rgb(255, 255, 255);</string>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
   <tabstop>case_number_lineEdit</tabstop>
+  <tabstop>defense_counsel_name_box</tabstop>
+  <tabstop>defense_counsel_type_box</tabstop>
+  <tabstop>defense_counsel_waived_checkBox</tabstop>
   <tabstop>appearance_reason_box</tabstop>
+  <tabstop>offense_of_violence_checkBox</tabstop>
+  <tabstop>victim_statements_checkBox</tabstop>
+  <tabstop>add_charge_Button</tabstop>
+  <tabstop>court_costs_box</tabstop>
+  <tabstop>ability_to_pay_box</tabstop>
+  <tabstop>balance_due_date</tabstop>
+  <tabstop>pay_today_box</tabstop>
+  <tabstop>monthly_pay_box</tabstop>
+  <tabstop>distracted_driving_checkBox</tabstop>
   <tabstop>fra_in_file_box</tabstop>
   <tabstop>fra_in_court_box</tabstop>
   <tabstop>community_control_checkBox</tabstop>
+  <tabstop>community_service_checkBox</tabstop>
+  <tabstop>license_suspension_checkBox</tabstop>
+  <tabstop>victim_notification_checkBox</tabstop>
+  <tabstop>impoundment_checkBox</tabstop>
+  <tabstop>other_conditions_checkBox</tabstop>
+  <tabstop>add_conditions_Button</tabstop>
   <tabstop>in_jail_box</tabstop>
   <tabstop>jail_time_credit_box</tabstop>
   <tabstop>jail_time_credit_apply_box</tabstop>
-  <tabstop>add_conditions_Button</tabstop>
-  <tabstop>add_charge_Button</tabstop>
+  <tabstop>add_companion_cases_checkBox</tabstop>
+  <tabstop>companion_cases_box</tabstop>
+  <tabstop>companion_cases_sentence_box</tabstop>
+  <tabstop>jail_checkBox</tabstop>
+  <tabstop>add_jail_report_Button</tabstop>
+  <tabstop>close_dialog_Button</tabstop>
  </tabstops>
  <resources/>
  <connections/>

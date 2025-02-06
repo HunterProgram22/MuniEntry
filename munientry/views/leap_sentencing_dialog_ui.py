@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/LeapSentencingDialog.ui'
+# Form implementation generated from reading ui file './views/ui/LeapSentencingDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -10,7 +10,8 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 
 from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
 from munientry.widgets.custom_widgets import NoScrollDateEdit
-from munientry.widgets.charges_grids import FineOnlyChargeGrid
+from munientry.widgets.charges_grids import JailChargesGrid
+
 
 class Ui_LeapSentencingDialog(object):
     def setupUi(self, LeapSentencingDialog):
@@ -281,7 +282,7 @@ class Ui_LeapSentencingDialog(object):
         self.no_contest_all_Button.setStyleSheet("background-color: rgb(160, 160, 160);")
         self.no_contest_all_Button.setObjectName("no_contest_all_Button")
         self.gridLayout_3.addWidget(self.no_contest_all_Button, 2, 1, 1, 1)
-        self.charges_gridLayout = FineOnlyChargeGrid()
+        self.charges_gridLayout = JailChargesGrid()
         self.charges_gridLayout.setObjectName("charges_gridLayout")
         self.statute_label = QtWidgets.QLabel(self.frame)
         font = QtGui.QFont()
@@ -497,12 +498,27 @@ class Ui_LeapSentencingDialog(object):
         QtCore.QMetaObject.connectSlotsByName(LeapSentencingDialog)
         LeapSentencingDialog.setTabOrder(self.defendant_first_name_lineEdit, self.defendant_last_name_lineEdit)
         LeapSentencingDialog.setTabOrder(self.defendant_last_name_lineEdit, self.case_number_lineEdit)
-        LeapSentencingDialog.setTabOrder(self.case_number_lineEdit, self.license_suspension_checkBox)
+        LeapSentencingDialog.setTabOrder(self.case_number_lineEdit, self.defense_counsel_name_box)
+        LeapSentencingDialog.setTabOrder(self.defense_counsel_name_box, self.defense_counsel_type_box)
+        LeapSentencingDialog.setTabOrder(self.defense_counsel_type_box, self.defense_counsel_waived_checkBox)
+        LeapSentencingDialog.setTabOrder(self.defense_counsel_waived_checkBox, self.appearance_reason_box)
+        LeapSentencingDialog.setTabOrder(self.appearance_reason_box, self.leap_plea_date)
+        LeapSentencingDialog.setTabOrder(self.leap_plea_date, self.add_charge_Button)
+        LeapSentencingDialog.setTabOrder(self.add_charge_Button, self.court_costs_box)
+        LeapSentencingDialog.setTabOrder(self.court_costs_box, self.ability_to_pay_box)
+        LeapSentencingDialog.setTabOrder(self.ability_to_pay_box, self.balance_due_date)
+        LeapSentencingDialog.setTabOrder(self.balance_due_date, self.pay_today_box)
+        LeapSentencingDialog.setTabOrder(self.pay_today_box, self.monthly_pay_box)
+        LeapSentencingDialog.setTabOrder(self.monthly_pay_box, self.credit_for_jail_checkBox)
+        LeapSentencingDialog.setTabOrder(self.credit_for_jail_checkBox, self.jail_time_credit_box)
+        LeapSentencingDialog.setTabOrder(self.jail_time_credit_box, self.fra_in_file_box)
+        LeapSentencingDialog.setTabOrder(self.fra_in_file_box, self.fra_in_court_box)
+        LeapSentencingDialog.setTabOrder(self.fra_in_court_box, self.license_suspension_checkBox)
         LeapSentencingDialog.setTabOrder(self.license_suspension_checkBox, self.community_service_checkBox)
         LeapSentencingDialog.setTabOrder(self.community_service_checkBox, self.other_conditions_checkBox)
         LeapSentencingDialog.setTabOrder(self.other_conditions_checkBox, self.add_conditions_Button)
         LeapSentencingDialog.setTabOrder(self.add_conditions_Button, self.create_entry_Button)
-        LeapSentencingDialog.setTabOrder(self.create_entry_Button, self.close_dialog_Button)
+        LeapSentencingDialog.setTabOrder(self.create_entry_Button, self.scrollArea)
 
     def retranslateUi(self, LeapSentencingDialog):
         _translate = QtCore.QCoreApplication.translate
