@@ -61,27 +61,74 @@ class CrimTrafficViewModifier(base.BaseDialogViewModifier):
 
 
 class FineCostsMixin(object):
-    """Mixin methods for dialogs that calculate fines and costs."""
+    """Mixin methods for dialogs that calculate fines and costs.
 
-    def set_fines_costs_pay_date(self, days_to_add: str) -> None:
-        """Sets the fines/costs pay date.
+    This mixin is updated as of February 2025 to account for change in fines and costs.
 
-        Date is set to the Tuesday after the number of days added, unless forthwith or a special
-        docket is selected.
+    The old version offered payment in 30, 60 or 90 days. New version offers options to pay
+    forthwith, a monthly pay plan, a forthwith partial pay and monthly pay plan, and for
+    the Jail CC entry retains the specialized docket option to pay by while on the specialized
+    docket.
+
+    Ideally this mixin should be completely redone, but keeping it for now to reduce code changes.
+
+    """
+
+    def set_fines_costs_pay_date(self) -> None:
+        """Setup function that sets labels and boxes based on type of payment selected.
+
         """
-        today = QDate.currentDate()
+        days_to_add = self.dialog.ability_to_pay_box.currentText()
         if days_to_add == 'forthwith':
-            self.dialog.balance_due_date.setHidden(False)
-            self.dialog.balance_due_date.setDate(today)
+            self.hide_monthly_pay()
+            self.hide_pay_today()
+            self.show_balance_today()
         elif days_to_add in SPECIAL_DOCKETS_COSTS:
-            self.dialog.balance_due_date.setHidden(True)
-        else:
-            self.dialog.balance_due_date.setHidden(False)
-            days_to_add = self.get_days_to_add(days_to_add)
-            total_days_to_add = set_future_date(days_to_add, 'Tuesday')
-            self.dialog.balance_due_date.setDate(
-                today.addDays(total_days_to_add),
-            )
+            self.hide_monthly_pay()
+            self.hide_pay_today()
+            self.hide_balance_today()
+        elif days_to_add == 'monthly pay':
+            self.hide_balance_today()
+            self.hide_pay_today()
+            self.show_monthly_pay()
+        elif days_to_add == 'partial forthwith then monthly pay':
+            self.hide_balance_today()
+            self.show_monthly_pay()
+            self.show_pay_today()
+
+        # else:
+            # self.dialog.balance_due_date.setHidden(False)
+            # days_to_add = self.get_days_to_add(days_to_add)
+            # total_days_to_add = set_future_date(days_to_add, 'Tuesday')
+            # self.dialog.balance_due_date.setDate(
+            #     today.addDays(total_days_to_add),
+            # )
+
+    def show_balance_today(self) -> None:
+        today = QDate.currentDate()
+        self.dialog.balance_due_date.setHidden(False)
+        self.dialog.balance_due_date_label.setHidden(False)
+        self.dialog.balance_due_date.setDate(today)
+
+    def hide_balance_today(self):
+        self.dialog.balance_due_date.setHidden(True)
+        self.dialog.balance_due_date_label.setHidden(True)
+
+    def show_monthly_pay(self):
+        self.dialog.monthly_pay_label.setHidden(False)
+        self.dialog.monthly_pay_box.setHidden(False)
+
+    def hide_monthly_pay(self):
+        self.dialog.monthly_pay_label.setHidden(True)
+        self.dialog.monthly_pay_box.setHidden(True)
+
+    def show_pay_today(self):
+        self.dialog.pay_today_label.setHidden(False)
+        self.dialog.pay_today_box.setHidden(False)
+
+    def hide_pay_today(self):
+        self.dialog.pay_today_label.setHidden(True)
+        self.dialog.pay_today_box.setHidden(True)
 
     def get_days_to_add(self, days_to_add: str) -> int:
         pay_date_dict = {

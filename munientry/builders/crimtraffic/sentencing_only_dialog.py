@@ -126,3 +126,4 @@ class SentencingOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_SentencingOnlyDialo
             ('impoundment_checkBox', self.entry_case_information.impoundment),
             ('victim_notification_checkBox', self.entry_case_information.victim_notification),
         ]
+        self.functions.set_fines_costs_pay_date()  # Sets the fines and costs pay fields
