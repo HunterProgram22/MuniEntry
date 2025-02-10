@@ -132,5 +132,6 @@ class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
             ('victim_notification_checkBox', self.entry_case_information.victim_notification),
         ]
         self.functions.show_companion_case_fields()
+        self.functions.set_fines_costs_pay_date()  # Sets the fines and costs pay fields
         if self.case_table == 'slated':
             self.in_jail_box.setCurrentText('Yes')

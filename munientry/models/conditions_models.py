@@ -303,6 +303,8 @@ class CourtCosts:
     amount: int = 0
     ability_to_pay_time: str = None
     balance_due_date: str = None
+    pay_today_amount: str = None
+    monthly_pay_amount: str = None
 
 
 @dataclass

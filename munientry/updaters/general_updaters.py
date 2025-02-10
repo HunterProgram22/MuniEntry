@@ -61,6 +61,8 @@ class CourtCostsUpdater(BaseDialogUpdater):
         self.model.court_costs.ability_to_pay_time = self.dialog.ability_to_pay_box.currentText()
         self.model.court_costs.balance_due_date = self.set_balance_due_date()
         self.model.court_costs.amount = self.calculate_court_costs()
+        self.model.court_costs.pay_today_amount = self.dialog.pay_today_box.text()
+        self.model.court_costs.monthly_pay_amount = self.dialog.monthly_pay_box.text()
 
     def set_balance_due_date(self) -> str:
         """Sets the balance due date to the name of the specialized docket or specific due date."""
