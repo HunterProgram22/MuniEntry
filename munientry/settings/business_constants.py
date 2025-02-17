@@ -47,5 +47,5 @@ costs_dict = dict(config.items('costs'))
 MOVING_COURT_COSTS = int(costs_dict['moving'])
 CRIMINAL_COURT_COSTS = int(costs_dict['criminal'])
 NONMOVING_COURT_COSTS = int(costs_dict['non_moving'])
-TUESDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - A Track'
-THURSDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - B Track'
+TUESDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - B Track'
+THURSDAY_TRIAL_JUDGE = 'Judge Kyle E. Rohrer - A Track'
