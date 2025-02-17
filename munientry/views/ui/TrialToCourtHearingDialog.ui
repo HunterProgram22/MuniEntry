@@ -180,8 +180,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1027</width>
-           <height>802</height>
+           <width>1031</width>
+           <height>805</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
@@ -287,7 +287,7 @@ background-color: rgb(255, 255, 255);</string>
              <item row="1" column="0">
               <widget class="QLabel" name="label_12">
                <property name="text">
-                <string>Arrest or Summons Date:</string>
+                <string>Arrest Date or Date Summons was Served on Defendant:</string>
                </property>
               </widget>
              </item>

@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/SchedulingEntryDialog.ui'
+# Form implementation generated from reading ui file './views/ui/SchedulingEntryDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -459,7 +459,7 @@ class Ui_SchedulingEntryDialog(object):
         self.label_11.setText(_translate("SchedulingEntryDialog", "SPEEDY TRIAL CALCULATOR"))
         self.label_13.setText(_translate("SchedulingEntryDialog", "Defendant must be brought to trial no later than:"))
         self.label_15.setText(_translate("SchedulingEntryDialog", "Continuance Days (increases speedy trial date 1 day per continuance day):"))
-        self.label_12.setText(_translate("SchedulingEntryDialog", "Arrest or Summons Date:"))
+        self.label_12.setText(_translate("SchedulingEntryDialog", "Arrest Date or Date Summons was Served on Defendant:"))
         self.days_in_jail_label.setText(_translate("SchedulingEntryDialog", "Days Spent in Jail Before Release (reduces speedy trial date 3 days per day in jail):"))
         self.label_14.setText(_translate("SchedulingEntryDialog", "Highest Charge Degree of Offense:"))
         self.label_17.setText(_translate("SchedulingEntryDialog", "INSTRUCTIONS: If Defendant is in Jail but an OR Bond is set, select No for Defendant in Jail and enter number of days Defendant was in Jail before relase."))
