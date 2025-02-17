@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/TrialToCourtHearingDialog.ui'
+# Form implementation generated from reading ui file './views/ui/TrialToCourtHearingDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -79,7 +79,7 @@ class Ui_TrialToCourtHearingDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1027, 802))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1031, 805))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -354,7 +354,7 @@ class Ui_TrialToCourtHearingDialog(object):
         self.label_14.setText(_translate("TrialToCourtHearingDialog", "Highest Charge Degree of Offense:"))
         self.speedy_trial_date_label.setText(_translate("TrialToCourtHearingDialog", "Speedy Trial Date"))
         self.label_13.setText(_translate("TrialToCourtHearingDialog", "Defendant must be brought to trial no later than:"))
-        self.label_12.setText(_translate("TrialToCourtHearingDialog", "Arrest or Summons Date:"))
+        self.label_12.setText(_translate("TrialToCourtHearingDialog", "Arrest Date or Date Summons was Served on Defendant:"))
         self.label_11.setText(_translate("TrialToCourtHearingDialog", "SPEEDY TRIAL CALCULATOR"))
         self.label.setText(_translate("TrialToCourtHearingDialog", "Def. First Name:"))
         self.label_26.setText(_translate("TrialToCourtHearingDialog", "Date:"))
