@@ -239,6 +239,7 @@ class Diversion(ConditionsModel):
     restitution_ordered: bool = False
     pay_restitution_to: str = None
     pay_restitution_amount: str = None
+    probation_ordered: bool = False
     other_conditions_ordered: bool = False
     other_conditions_text: str = None
     terms_list = [
@@ -248,6 +249,7 @@ class Diversion(ConditionsModel):
         ('jail_imposed', 'diversion_jail_imposed_check_box'),
         ('diversion_fine_pay_date', 'diversion_fine_pay_date'),
         ('diversion_jail_report_date', 'diversion_jail_report_date'),
+        ('probation_ordered', 'probation_check_box'),
         ('restitution_ordered', 'pay_restitution_check_box'),
         ('pay_restitution_to', 'pay_restitution_to_line'),
         ('pay_restitution_amount', 'pay_restitution_amount_line'),
