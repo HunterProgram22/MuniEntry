@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/DiversionPleaDialog.ui'
+# Form implementation generated from reading ui file './views/ui/DiversionPleaDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -8,9 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from munientry.widgets.charges_grids import JailChargesGrid
 from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
 from munientry.widgets.custom_widgets import NoScrollDateEdit
+from munientry.widgets.charges_grids import JailChargesGrid
 
 
 class Ui_DiversionPleaDialog(object):
@@ -74,7 +74,7 @@ class Ui_DiversionPleaDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 969, 1073))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 973, 1075))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -174,6 +174,9 @@ class Ui_DiversionPleaDialog(object):
         self.pay_restitution_amount_label = QtWidgets.QLabel(self.diversion_frame)
         self.pay_restitution_amount_label.setObjectName("pay_restitution_amount_label")
         self.gridLayout_8.addWidget(self.pay_restitution_amount_label, 9, 2, 1, 1)
+        self.probation_check_box = QtWidgets.QCheckBox(self.diversion_frame)
+        self.probation_check_box.setObjectName("probation_check_box")
+        self.gridLayout_8.addWidget(self.probation_check_box, 9, 0, 1, 1)
         self.gridLayout_8.setRowStretch(0, 1)
         self.gridLayout_8.setRowStretch(1, 1)
         self.gridLayout_8.setRowStretch(2, 1)
@@ -500,6 +503,7 @@ class Ui_DiversionPleaDialog(object):
         self.diversion_jail_imposed_check_box.setText(_translate("DiversionPleaDialog", "Jail Time Imposed"))
         self.pay_restitution_to_label.setText(_translate("DiversionPleaDialog", "Pay Restitution To:"))
         self.pay_restitution_amount_label.setText(_translate("DiversionPleaDialog", "Pay Restitution in Amount of:"))
+        self.probation_check_box.setText(_translate("DiversionPleaDialog", "General Probation Conditions"))
         self.no_contest_all_Button.setText(_translate("DiversionPleaDialog", "No Contest All"))
         self.guilty_all_Button.setText(_translate("DiversionPleaDialog", "Guilty All"))
         self.add_charge_Button.setText(_translate("DiversionPleaDialog", "Add Charge"))

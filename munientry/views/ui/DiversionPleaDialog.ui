@@ -162,8 +162,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>969</width>
-        <height>1073</height>
+        <width>973</width>
+        <height>1075</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2" rowstretch="2,1,4,1">
@@ -355,6 +355,13 @@ background-color: rgb(255, 255, 255);</string>
            <widget class="QLabel" name="pay_restitution_amount_label">
             <property name="text">
              <string>Pay Restitution in Amount of:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QCheckBox" name="probation_check_box">
+            <property name="text">
+             <string>General Probation Conditions</string>
             </property>
            </widget>
           </item>
