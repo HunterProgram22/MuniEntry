@@ -10,7 +10,7 @@ from loguru import logger
 from munientry.settings.business_constants import TUESDAY_TRIAL_JUDGE, THURSDAY_TRIAL_JUDGE
 
 
-def set_future_date(days_to_add: int, weekday_due_date: str) -> int:
+def set_future_date(days_to_add: int, weekday_due_date: str = None) -> int:
     """Adds days to a date and sets a future weekday date.
 
     Accepts the number of days to add and a day of the week that will be added on to the
@@ -18,7 +18,8 @@ def set_future_date(days_to_add: int, weekday_due_date: str) -> int:
     """
     today = date.today()
     future_date = today + timedelta(days_to_add)
-    future_date = next_court_day(future_date, weekday_due_date)
+    if weekday_due_date is not None:
+        future_date = next_court_day(future_date, weekday_due_date)
     return (future_date - today).days
 
 
