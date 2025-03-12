@@ -41,7 +41,7 @@ def next_court_day(future_date: date, weekday_due_date: str) -> date:
 
 def set_random_judge() -> tuple[str, str]:
     """Returns a random judge and the time the judge was assigned."""
-    judge_list = ['Future Judge - A Track', 'Judge Rohrer - B Track']
+    judge_list = ['Judge Fowler', 'Judge Rohrer']
     assigned_judge = random.choice(judge_list)
     now = datetime.now()
     time_now = now.strftime('%B %d, %Y at %H:%M:%S %p')

@@ -881,7 +881,7 @@ font-weight: bold;</string>
                  <item row="1" column="0">
                   <widget class="QRadioButton" name="judge_1_radio_btn">
                    <property name="text">
-                    <string>Judge Hemmeter</string>
+                    <string>Judge Fowler</string>
                    </property>
                   </widget>
                  </item>

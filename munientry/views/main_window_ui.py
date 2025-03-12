@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file './views/ui/MainWindow.ui'
+# Form implementation generated from reading ui file 'munientry/views/ui/MainWindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -1151,7 +1151,7 @@ class Ui_MainWindow(object):
         self.notice_comm_control_violation_btn.setText(_translate("MainWindow", "Notice of Community Control Violation"))
         self.entries_tab_widget.setTabText(self.entries_tab_widget.indexOf(self.probation_tab), _translate("MainWindow", "Probation"))
         self.label_10.setText(_translate("MainWindow", "ENTRIES"))
-        self.judge_1_radio_btn.setText(_translate("MainWindow", "Judge Hemmeter"))
+        self.judge_1_radio_btn.setText(_translate("MainWindow", "Judge Fowler"))
         self.judge_2_radio_btn.setText(_translate("MainWindow", "Judge Rohrer"))
         self.visiting_judge_radio_btn.setText(_translate("MainWindow", "Visiting Judge"))
         self.mag_1_radio_btn.setText(_translate("MainWindow", "Magistrate Bunner"))
