@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1010</width>
-    <height>782</height>
+    <width>1301</width>
+    <height>823</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -161,9 +161,9 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>973</width>
-        <height>1075</height>
+        <y>-25</y>
+        <width>1264</width>
+        <height>1071</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2" rowstretch="2,1,4,1">
@@ -184,159 +184,7 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_8" rowstretch="1,1,1,1,1,0,0,0,0,0,0">
-          <item row="1" column="3">
-           <widget class="NoScrollDateEdit" name="diversion_fine_pay_date">
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QRadioButton" name="theft_diversion_radio_btn">
-            <property name="text">
-             <string>Theft Diversion Program</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">buttonGroup</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="5" column="2" colspan="2">
-           <widget class="QLabel" name="jail_report_date_note_label">
-            <property name="text">
-             <string>Jail report date is set to first Friday after 97 days from today.</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="2" colspan="2">
-           <widget class="QTextEdit" name="other_conditions_text">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="0">
-           <widget class="QCheckBox" name="other_conditions_check_box">
-            <property name="text">
-             <string>Add Other Conditions</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1" rowspan="5">
-           <widget class="Line" name="line_7">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QRadioButton" name="other_diversion_radio_btn">
-            <property name="text">
-             <string>Other Diversion Program</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">buttonGroup</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="4">
-           <widget class="QLabel" name="label_9">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>10</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="text">
-             <string>DIVERSION DETAILS</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_23">
-            <property name="text">
-             <string>Fine Pay Date:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="3">
-           <widget class="NoScrollDateEdit" name="diversion_jail_report_date">
-            <property name="styleSheet">
-             <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QLabel" name="diversion_jail_report_date_label">
-            <property name="text">
-             <string>Jail Report Date:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QCheckBox" name="pay_restitution_check_box">
-            <property name="text">
-             <string>Restitution Ordered</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QRadioButton" name="marijuana_diversion_radio_btn">
-            <property name="text">
-             <string>Marijuana Diversion Program</string>
-            </property>
-            <attribute name="buttonGroup">
-             <string notr="true">buttonGroup</string>
-            </attribute>
-           </widget>
-          </item>
-          <item row="2" column="2" colspan="2">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Fine pay date is set to first Tuesday after 97 days from today.</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0" colspan="4">
-           <widget class="Line" name="line_2">
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QCheckBox" name="diversion_jail_imposed_check_box">
-            <property name="text">
-             <string>Jail Time Imposed</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="3">
-           <widget class="QLineEdit" name="pay_restitution_to_line">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
+         <layout class="QGridLayout" name="gridLayout_8" rowstretch="1,0,0,0,0,0,0,0,0,0,0">
           <item row="9" column="3">
            <widget class="QLineEdit" name="pay_restitution_amount_line">
             <property name="styleSheet">
@@ -361,7 +209,156 @@ background-color: rgb(255, 255, 255);</string>
           <item row="9" column="0">
            <widget class="QCheckBox" name="probation_check_box">
             <property name="text">
-             <string>General Probation Conditions</string>
+             <string> Add General Probation Conditions - 1 Year Term</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QCheckBox" name="other_conditions_check_box">
+            <property name="text">
+             <string>Add Other Conditions</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="2" colspan="2">
+           <widget class="QTextEdit" name="other_conditions_text">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" rowspan="5">
+           <widget class="Line" name="line_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="4">
+           <widget class="QLabel" name="label_9">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>DIVERSION DETAILS</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QRadioButton" name="marijuana_diversion_radio_btn">
+            <property name="text">
+             <string>Marijuana Diversion Program</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QCheckBox" name="pay_restitution_check_box">
+            <property name="text">
+             <string>Restitution Ordered</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="3">
+           <widget class="QLineEdit" name="pay_restitution_to_line">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2" colspan="2">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Diversion Completion date is set to 90 days from today.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="4">
+           <widget class="Line" name="line_2">
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QRadioButton" name="theft_diversion_radio_btn">
+            <property name="text">
+             <string>Theft Diversion Program</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLabel" name="label_23">
+            <property name="text">
+             <string>Fine Due Date</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Diversion Completion Date:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="NoScrollDateEdit" name="diversion_fine_pay_date">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="NoScrollDateEdit" name="diversion_completion_date">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2" colspan="2">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Fine Due Date is set to first Tuesday after 120 days from today. Fines only due if Defendant fails Diversion.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QRadioButton" name="other_diversion_radio_btn">
+            <property name="text">
+             <string>Other Diversion Program</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">buttonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item row="5" column="2" colspan="2">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>If any Jail Days are imposed for failure to complete Diversion, the entry will order they be set through Community Control.</string>
             </property>
            </widget>
           </item>

@@ -1,4 +1,6 @@
 """Builder module for the Plea Only - Future Sentencing Dialog."""
+from datetime import date, datetime, timedelta
+
 from loguru import logger
 from PyQt6.QtCore import QDate
 
@@ -13,7 +15,7 @@ from munientry.updaters.grid_case_updaters import DiversionDialogUpdater
 from munientry.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from munientry.widgets.message_boxes import PASS, RequiredBox, FAIL
 
-DIVERSION_ADD_DAYS = 97
+DIVERSION_FINE_ADD_DAYS = 120
 
 
 class DiversionDialogViewModifier(crim.CrimTrafficViewModifier):
@@ -23,29 +25,25 @@ class DiversionDialogViewModifier(crim.CrimTrafficViewModifier):
         """Diversion uses the JailCharges Grid because all aspects of the grid are the same."""
         super().__init__(dialog)
         self.set_appearance_reason()
+        self.set_diversion_completion_date()
         self.set_diversion_fine_pay_date()
-        self.set_diversion_jail_report_date()
 
-    def set_diversion_fine_pay_date(self):
-        """Diversion pay date is set to the first Tuesday after 97 days.
-
-        90 days to comply, plus 7 days to process paperwork (per Judge Hemmeter).
-        """
+    def set_diversion_completion_date(self):
+        """Diversion completion date is set to 90 days from current date."""
         today = QDate.currentDate()
-        diversion_pay_days_to_add = set_future_date(DIVERSION_ADD_DAYS, 'Tuesday')
-        self.dialog.diversion_fine_pay_date.setDate(
-            today.addDays(diversion_pay_days_to_add),
+        diversion_completion_days_to_add = set_future_date(90)
+        self.dialog.diversion_completion_date.setDate(
+            today.addDays(diversion_completion_days_to_add),
         )
 
-    def set_diversion_jail_report_date(self):
-        """Diversion jail report date is set to the first Friday after 97 days.
+    def set_diversion_fine_pay_date(self):
+        """Diversion pay date is set to the first Tuesday after 120 days.
 
-        90 days to comply, plus 7 days to process paperwork (per Judge Hemmeter).
         """
         today = QDate.currentDate()
-        jail_report_days_to_add = set_future_date(DIVERSION_ADD_DAYS, 'Friday')
-        self.dialog.diversion_jail_report_date.setDate(
-            today.addDays(jail_report_days_to_add),
+        diversion_pay_days_to_add = set_future_date(DIVERSION_FINE_ADD_DAYS, 'Tuesday')
+        self.dialog.diversion_fine_pay_date.setDate(
+            today.addDays(diversion_pay_days_to_add),
         )
 
 
@@ -92,9 +90,6 @@ class DiversionDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_main_dialog_common_signals()
         self.connect_plea_all_button_signals()
         self.connect_fra_signals()
-        self.dialog.diversion_jail_imposed_check_box.toggled.connect(
-            self.dialog.functions.show_jail_report_date,
-        )
         self.dialog.pay_restitution_check_box.toggled.connect(
             self.dialog.functions.show_restitution_boxes,
         )
@@ -129,6 +124,6 @@ class DiversionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_DiversionPleaDialog)
 
     def additional_setup(self):
         self.functions.show_restitution_boxes()
-        self.functions.show_jail_report_date()
+        # self.functions.show_jail_report_date()
         self.functions.show_other_conditions_box()
         self.entry_case_information.diversion.ordered = True
