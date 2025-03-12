@@ -62,13 +62,13 @@ DIALOG_BUTTON_DICT = {
     'CivFreeformEntryButton': civ_freeform_dialog.CivFreeformDialog,
 
     # Scheduling
-    'hemmeter_schedulingEntryButton': sched_entry_dialogs.SchedulingEntryDialog,
+    'fowler_schedulingEntryButton': sched_entry_dialogs.SchedulingEntryDialog,
     'rohrer_schedulingEntryButton': sched_entry_dialogs.SchedulingEntryDialog,
-    'hemmeter_final_jury_hearingButton': final_jury_hearing_notice_dialog.FinalJuryNoticeHearingDialog,
+    'fowler_final_jury_hearingButton': final_jury_hearing_notice_dialog.FinalJuryNoticeHearingDialog,
     'rohrer_final_jury_hearingButton': final_jury_hearing_notice_dialog.FinalJuryNoticeHearingDialog,
-    'hemmeter_general_hearingButton': general_hearing_notice_dialog.GeneralNoticeOfHearingDialog,
+    'fowler_general_hearingButton': general_hearing_notice_dialog.GeneralNoticeOfHearingDialog,
     'rohrer_general_hearingButton': general_hearing_notice_dialog.GeneralNoticeOfHearingDialog,
-    'hemmeter_trial_court_hearingButton': trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
+    'fowler_trial_court_hearingButton': trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
     'rohrer_trial_court_hearingButton': trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
 
     # Probation

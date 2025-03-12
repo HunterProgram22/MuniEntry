@@ -57,7 +57,7 @@ TEMPLATE_LIST = (
     Template('Bond Hearing Entry', 'Bond_Hearing_Template.docx'),
     Template('Plea Only Entry', 'Plea_Only_Template.docx'),
     Template('Rohrer Scheduling Entry', 'Scheduling_Entry_Template_Rohrer.docx'),
-    Template('Hemmeter Scheduling Entry', 'Scheduling_Entry_Template_Hemmeter.docx'),
+    Template('Fowler Scheduling Entry', 'Scheduling_Entry_Template_Fowler.docx'),
     Template('Final And Jury Notice Hearing Entry', 'Final_Jury_Notice_Of_Hearing_Template.docx'),
     Template('General Notice Of Hearing Entry', 'General_Notice_Of_Hearing_Template.docx'),
     Template('Trial To Court Notice Hearing Entry', 'Trial_To_Court_Hearing_Notice_Template.docx'),

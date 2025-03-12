@@ -29,10 +29,10 @@ ROHRER_SCHEDULING_ENTRY = 'Rohrer Scheduling Entry'
 ROHRER_TRIAL_DAY = 'Tuesday'
 ROHRER_FINAL_PRETRIAL_DAY = 'Thursday'
 ROHRER_PRETRIAL_DAY = 'Monday'
-HEMMETER_SCHEDULING_ENTRY = 'Hemmeter Scheduling Entry'
-HEMMETER_TRIAL_DAY = 'Thursday'
-HEMMETER_FINAL_PRETRIAL_DAY = 'Tuesday'
-HEMMETER_PRETRIAL_DAY = 'Wednesday'
+FOWLER_SCHEDULING_ENTRY = 'Fowler Scheduling Entry'
+FOWLER_TRIAL_DAY = 'Thursday'
+FOWLER_FINAL_PRETRIAL_DAY = 'Tuesday'
+FOWLER_PRETRIAL_DAY = 'Wednesday'
 TRIAL = 'Trial'
 PRETRIAL = 'Pretrial'
 FINAL_PRETRIAL = 'Final Pretrial'
@@ -43,8 +43,8 @@ def set_scheduling_dialog_name(sender) -> str:
     """Returns a string of the dialog name based on the button that is pressed."""
     if sender.objectName() == 'rohrer_schedulingEntryButton':
         return ROHRER_SCHEDULING_ENTRY
-    if sender.objectName() == 'hemmeter_schedulingEntryButton':
-        return HEMMETER_SCHEDULING_ENTRY
+    if sender.objectName() == 'fowler_schedulingEntryButton':
+        return FOWLER_SCHEDULING_ENTRY
     return 'None'
 
 
@@ -128,8 +128,8 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
             trial_date = self.set_trial_date(ROHRER_TRIAL_DAY)
             self.dialog.trial_date.setDate(trial_date)
             self.update_final_pretrial_and_pretrial_only()
-        elif self.dialog.dialog_name == HEMMETER_SCHEDULING_ENTRY:
-            trial_date = self.set_trial_date(HEMMETER_TRIAL_DAY)
+        elif self.dialog.dialog_name == FOWLER_SCHEDULING_ENTRY:
+            trial_date = self.set_trial_date(FOWLER_TRIAL_DAY)
             self.dialog.trial_date.setDate(trial_date)
             self.update_final_pretrial_and_pretrial_only()
 
@@ -139,19 +139,19 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
             self.dialog.trial_date.setDate(trial_date)
             pretrial_date = self.set_event_date(ROHRER_PRETRIAL_DAY, PRETRIAL)
             self.dialog.pretrial_date.setDate(pretrial_date)
-        elif self.dialog.dialog_name == HEMMETER_SCHEDULING_ENTRY:
-            trial_date = self.set_trial_date(HEMMETER_TRIAL_DAY)
+        elif self.dialog.dialog_name == FOWLER_SCHEDULING_ENTRY:
+            trial_date = self.set_trial_date(FOWLER_TRIAL_DAY)
             self.dialog.trial_date.setDate(trial_date)
-            pretrial_date = self.set_event_date(HEMMETER_PRETRIAL_DAY, PRETRIAL)
+            pretrial_date = self.set_event_date(FOWLER_PRETRIAL_DAY, PRETRIAL)
             self.dialog.pretrial_date.setDate(pretrial_date)
 
     def update_final_pretrial_and_pretrial_only(self):
         if self.dialog.dialog_name == ROHRER_SCHEDULING_ENTRY:
             final_pretrial_date = self.set_event_date(ROHRER_FINAL_PRETRIAL_DAY, FINAL_PRETRIAL)
             pretrial_date = self.set_event_date(ROHRER_PRETRIAL_DAY, PRETRIAL)
-        elif self.dialog.dialog_name == HEMMETER_SCHEDULING_ENTRY:
-            final_pretrial_date = self.set_event_date(HEMMETER_FINAL_PRETRIAL_DAY, FINAL_PRETRIAL)
-            pretrial_date = self.set_event_date(HEMMETER_PRETRIAL_DAY, PRETRIAL)
+        elif self.dialog.dialog_name == FOWLER_SCHEDULING_ENTRY and self:
+            final_pretrial_date = self.set_event_date(FOWLER_FINAL_PRETRIAL_DAY, FINAL_PRETRIAL)
+            pretrial_date = self.set_event_date(FOWLER_PRETRIAL_DAY, PRETRIAL)
         self.dialog.final_pretrial_date.setDate(final_pretrial_date)
         self.dialog.pretrial_date.setDate(pretrial_date)
 
@@ -259,9 +259,9 @@ class SchedulingEntryModelUpdater(SchedulingModelUpdater):
         entry because it is used in saving the scheduling data to the database.
         """
         if self.dialog.dialog_name == 'Rohrer Scheduling Entry':
-            return 'Courtroom A'
-        if self.dialog.dialog_name == 'Hemmeter Scheduling Entry':
             return 'Courtroom B'
+        if self.dialog.dialog_name == 'Fowler Scheduling Entry':
+            return 'Courtroom A'
         return 'Unknown'
 
 

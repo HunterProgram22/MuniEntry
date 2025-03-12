@@ -54,9 +54,9 @@ def set_assigned_judge(sender: 'QPushButton') -> str:
         'rohrer_final_jury_hearingButton': TUESDAY_TRIAL_JUDGE,
         'rohrer_general_hearingButton': TUESDAY_TRIAL_JUDGE,
         'rohrer_trial_court_hearingButton': TUESDAY_TRIAL_JUDGE,
-        'hemmeter_final_jury_hearingButton': THURSDAY_TRIAL_JUDGE,
-        'hemmeter_general_hearingButton': THURSDAY_TRIAL_JUDGE,
-        'hemmeter_trial_court_hearingButton': THURSDAY_TRIAL_JUDGE,
+        'fowler_final_jury_hearingButton': THURSDAY_TRIAL_JUDGE,
+        'fowler_general_hearingButton': THURSDAY_TRIAL_JUDGE,
+        'fowler_trial_court_hearingButton': THURSDAY_TRIAL_JUDGE,
     }
     return assigned_judge_dict.get(sender.objectName(), '')
 
@@ -71,9 +71,9 @@ def set_courtroom(sender: 'QPushButton') -> str:
         'rohrer_final_jury_hearingButton': 'Courtroom B',
         'rohrer_general_hearingButton': 'Courtroom B',
         'rohrer_trial_court_hearingButton': 'Courtroom C',
-        'hemmeter_final_jury_hearingButton': 'Courtroom A',
-        'hemmeter_general_hearingButton': 'Courtroom B',
-        'hemmeter_trial_court_hearingButton': 'Courtroom C',
+        'fowler_final_jury_hearingButton': 'Courtroom A',
+        'fowler_general_hearingButton': 'Courtroom A',
+        'fowler_trial_court_hearingButton': 'Courtroom C',
     }
     return courtroom_dict.get(sender.objectName(), '')
 
