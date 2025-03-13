@@ -10,7 +10,7 @@ from loguru import logger
 from munientry.settings.business_constants import TUESDAY_TRIAL_JUDGE, THURSDAY_TRIAL_JUDGE
 
 
-def set_future_date(days_to_add: int, weekday_due_date: str) -> int:
+def set_future_date(days_to_add: int, weekday_due_date: str = None) -> int:
     """Adds days to a date and sets a future weekday date.
 
     Accepts the number of days to add and a day of the week that will be added on to the
@@ -18,7 +18,8 @@ def set_future_date(days_to_add: int, weekday_due_date: str) -> int:
     """
     today = date.today()
     future_date = today + timedelta(days_to_add)
-    future_date = next_court_day(future_date, weekday_due_date)
+    if weekday_due_date is not None:
+        future_date = next_court_day(future_date, weekday_due_date)
     return (future_date - today).days
 
 
@@ -40,7 +41,7 @@ def next_court_day(future_date: date, weekday_due_date: str) -> date:
 
 def set_random_judge() -> tuple[str, str]:
     """Returns a random judge and the time the judge was assigned."""
-    judge_list = ['Future Judge - A Track', 'Judge Rohrer - B Track']
+    judge_list = ['Judge Fowler', 'Judge Rohrer']
     assigned_judge = random.choice(judge_list)
     now = datetime.now()
     time_now = now.strftime('%B %d, %Y at %H:%M:%S %p')
@@ -53,9 +54,9 @@ def set_assigned_judge(sender: 'QPushButton') -> str:
         'rohrer_final_jury_hearingButton': TUESDAY_TRIAL_JUDGE,
         'rohrer_general_hearingButton': TUESDAY_TRIAL_JUDGE,
         'rohrer_trial_court_hearingButton': TUESDAY_TRIAL_JUDGE,
-        'hemmeter_final_jury_hearingButton': THURSDAY_TRIAL_JUDGE,
-        'hemmeter_general_hearingButton': THURSDAY_TRIAL_JUDGE,
-        'hemmeter_trial_court_hearingButton': THURSDAY_TRIAL_JUDGE,
+        'fowler_final_jury_hearingButton': THURSDAY_TRIAL_JUDGE,
+        'fowler_general_hearingButton': THURSDAY_TRIAL_JUDGE,
+        'fowler_trial_court_hearingButton': THURSDAY_TRIAL_JUDGE,
     }
     return assigned_judge_dict.get(sender.objectName(), '')
 
@@ -70,9 +71,9 @@ def set_courtroom(sender: 'QPushButton') -> str:
         'rohrer_final_jury_hearingButton': 'Courtroom B',
         'rohrer_general_hearingButton': 'Courtroom B',
         'rohrer_trial_court_hearingButton': 'Courtroom C',
-        'hemmeter_final_jury_hearingButton': 'Courtroom A',
-        'hemmeter_general_hearingButton': 'Courtroom B',
-        'hemmeter_trial_court_hearingButton': 'Courtroom C',
+        'fowler_final_jury_hearingButton': 'Courtroom A',
+        'fowler_general_hearingButton': 'Courtroom A',
+        'fowler_trial_court_hearingButton': 'Courtroom C',
     }
     return courtroom_dict.get(sender.objectName(), '')
 

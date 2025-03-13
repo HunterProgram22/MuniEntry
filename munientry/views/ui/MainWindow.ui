@@ -516,7 +516,7 @@ font-weight: bold;</string>
                    </widget>
                   </item>
                   <item row="0" column="0">
-                   <widget class="SchedDialogButton" name="hemmeter_schedulingEntryButton">
+                   <widget class="SchedDialogButton" name="fowler_schedulingEntryButton">
                     <property name="minimumSize">
                      <size>
                       <width>120</width>
@@ -527,7 +527,7 @@ font-weight: bold;</string>
                      <string notr="true">background-color: rgb(85, 170, 255);</string>
                     </property>
                     <property name="text">
-                     <string>Future Judge - Scheduling Entry</string>
+                     <string>Fowler - Scheduling Entry</string>
                     </property>
                    </widget>
                   </item>
@@ -548,7 +548,7 @@ font-weight: bold;</string>
                    </widget>
                   </item>
                   <item row="1" column="0">
-                   <widget class="SchedDialogButton" name="hemmeter_final_jury_hearingButton">
+                   <widget class="SchedDialogButton" name="fowler_final_jury_hearingButton">
                     <property name="minimumSize">
                      <size>
                       <width>120</width>
@@ -559,7 +559,7 @@ font-weight: bold;</string>
                      <string notr="true">background-color: rgb(85, 170, 255);</string>
                     </property>
                     <property name="text">
-                     <string>Future Judge - Final/Jury Notice of Hearing</string>
+                     <string>Fowler - Final/Jury Notice of Hearing</string>
                     </property>
                    </widget>
                   </item>
@@ -654,7 +654,7 @@ font-weight: bold;</string>
                    </widget>
                   </item>
                   <item row="2" column="0">
-                   <widget class="SchedDialogButton" name="hemmeter_trial_court_hearingButton">
+                   <widget class="SchedDialogButton" name="fowler_trial_court_hearingButton">
                     <property name="minimumSize">
                      <size>
                       <width>120</width>
@@ -665,12 +665,12 @@ font-weight: bold;</string>
                      <string notr="true">background-color: rgb(85, 170, 255);</string>
                     </property>
                     <property name="text">
-                     <string>Future Judge - Trial To Court Notice of Hearing</string>
+                     <string>Fowler - Trial To Court Notice of Hearing</string>
                     </property>
                    </widget>
                   </item>
                   <item row="3" column="0">
-                   <widget class="SchedDialogButton" name="hemmeter_general_hearingButton">
+                   <widget class="SchedDialogButton" name="fowler_general_hearingButton">
                     <property name="minimumSize">
                      <size>
                       <width>120</width>
@@ -681,7 +681,7 @@ font-weight: bold;</string>
                      <string notr="true">background-color: rgb(85, 170, 255);</string>
                     </property>
                     <property name="text">
-                     <string>Future Judge - General Notice of Hearing</string>
+                     <string>Fowler - General Notice of Hearing</string>
                     </property>
                    </widget>
                   </item>
@@ -881,7 +881,7 @@ font-weight: bold;</string>
                  <item row="1" column="0">
                   <widget class="QRadioButton" name="judge_1_radio_btn">
                    <property name="text">
-                    <string>Judge Hemmeter</string>
+                    <string>Judge Fowler</string>
                    </property>
                   </widget>
                  </item>
@@ -2330,14 +2330,14 @@ font-weight: bold;</string>
   <tabstop>LeapSentencingButton</tabstop>
   <tabstop>LeapAdmissionValidButton</tabstop>
   <tabstop>rohrer_general_hearingButton</tabstop>
-  <tabstop>hemmeter_schedulingEntryButton</tabstop>
+  <tabstop>fowler_schedulingEntryButton</tabstop>
   <tabstop>rohrer_schedulingEntryButton</tabstop>
-  <tabstop>hemmeter_final_jury_hearingButton</tabstop>
+  <tabstop>fowler_final_jury_hearingButton</tabstop>
   <tabstop>rohrer_final_jury_hearingButton</tabstop>
   <tabstop>random_judge_Button</tabstop>
   <tabstop>rohrer_trial_court_hearingButton</tabstop>
-  <tabstop>hemmeter_trial_court_hearingButton</tabstop>
-  <tabstop>hemmeter_general_hearingButton</tabstop>
+  <tabstop>fowler_trial_court_hearingButton</tabstop>
+  <tabstop>fowler_general_hearingButton</tabstop>
   <tabstop>mag_2_radio_btn</tabstop>
   <tabstop>judge_1_radio_btn</tabstop>
   <tabstop>mag_3_radio_btn</tabstop>

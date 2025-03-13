@@ -142,7 +142,7 @@ Please choose whether to apply Jail Time Credit to Sentence or Costs and Fines."
 
 OVI_ONE_TITLE = 'OVI 1st - Set Minimums?'
 OVI_ONE_MSG = """You have found the defendant guilty of a 1st OVI. Do you want to set the minimums?
-\nFine: $375\nFine Suspended: $0
+\nFine: $600 (minimum is $565)\nFine Suspended: $0
 \nJail Days: 180\nJail Days Suspended: 177
 \nCommunity Control: Basic Supervision for 1 year\nDIP Option: Yes
 \nCourt Suspension: One Year from {0}\nTerminate ALS.
@@ -152,7 +152,7 @@ OVI_ONE_MSG = """You have found the defendant guilty of a 1st OVI. Do you want t
 FINAL_DAY_TITLE = 'Final Pretrial Day May Be Incorrect'
 FINAL_DAY_MSG = """You are setting the day of the Final Pretrial to {0} for Judge {1}. 
 
-Judge Hemmeter Standard Final Pretrial day is Tuesday.
+Judge Fowler Standard Final Pretrial day is Tuesday.
 Judge Rohrer Standard Final Pretrial day is Thursday.
 
 Do you want to proceed?
@@ -161,7 +161,7 @@ Do you want to proceed?
 TRIAL_DAY_TITLE = 'Trial Day May Be Incorrect'
 TRIAL_DAY_MSG = """You are setting the day of the Trial to {0} for Judge {1}.
 
-Judge Hemmeter Standard Trial day is Thursday.
+Judge Fowler Standard Trial day is Thursday.
 Judge Rohrer Standard Trial day is Tuesday.
 
 Do you want to proceed?

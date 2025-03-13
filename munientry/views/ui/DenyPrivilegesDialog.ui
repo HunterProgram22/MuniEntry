@@ -389,20 +389,6 @@ background-color: rgb(255, 255, 255);</string>
              <number>2</number>
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
-             <item row="12" column="0">
-              <widget class="QRadioButton" name="permit_renew_radio_btn">
-               <property name="text">
-                <string>Permit Defendant to Renew upon Expiration</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
-              <widget class="QRadioButton" name="permit_test_radio_btn">
-               <property name="text">
-                <string>Permit Defendant to Test and/or Renew</string>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="0">
               <widget class="QRadioButton" name="deny_privileges_radio_btn">
                <property name="text">
@@ -410,10 +396,80 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="0">
-              <widget class="QCheckBox" name="petition_incomplete_check_box">
+             <item row="8" column="0">
+              <widget class="QRadioButton" name="permit_test_radio_btn">
                <property name="text">
-                <string>Petition is Incomplete and/or Illegible</string>
+                <string>Permit Defendant to Test and/or Renew</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="0">
+              <widget class="QRadioButton" name="permit_renew_radio_btn">
+               <property name="text">
+                <string>Permit Defendant to Renew upon Expiration</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QCheckBox" name="no_employer_info_check_box">
+               <property name="text">
+                <string>Court could not verify employer information</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QLabel" name="license_exp_date_label">
+               <property name="text">
+                <string>Defendant Driver License Expiration Date:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="0">
+              <widget class="NoScrollDateEdit" name="license_exp_date_field">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="0" colspan="2">
+              <widget class="Line" name="line_2">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0" colspan="2">
+              <widget class="Line" name="line">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QCheckBox" name="out_of_state_license_check_box">
+               <property name="text">
+                <string>Out of State License - Needs Certified Abstract</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0">
+              <widget class="QCheckBox" name="permanent_id_check_box">
+               <property name="text">
+                <string>Check if defendant has permanent ID card instead of expired license</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="hard_time_check_box">
+               <property name="text">
+                <string>Not Eligible - Hard Time has not passed</string>
                </property>
               </widget>
              </item>
@@ -443,24 +499,10 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QCheckBox" name="hard_time_check_box">
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="petition_incomplete_check_box">
                <property name="text">
-                <string>Not Eligible - Hard Time has not passed</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QCheckBox" name="no_jurisdiction_check_box">
-               <property name="text">
-                <string>License not subject to suspension for which this court may grant privileges</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QCheckBox" name="prohibited_activities_check_box">
-               <property name="text">
-                <string>Petition requests privileges for activities not permitted by this Court</string>
+                <string>Petition is Incomplete and/or Illegible</string>
                </property>
               </widget>
              </item>
@@ -471,59 +513,24 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="1">
-              <widget class="QCheckBox" name="no_employer_info_check_box">
+             <item row="4" column="1">
+              <widget class="QCheckBox" name="prohibited_activities_check_box">
                <property name="text">
-                <string>Court could not verify employer information</string>
+                <string>Petition requests privileges for activities not permitted by this Court</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="0">
-              <widget class="NoScrollDateEdit" name="license_exp_date_field">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="0">
-              <widget class="QLabel" name="license_exp_date_label">
+             <item row="2" column="1">
+              <widget class="QCheckBox" name="no_pay_plan_check_box">
                <property name="text">
-                <string>Defendant Driver License Expiration Date:</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                <string>Defendant not on or current with fines and costs pay plan</string>
                </property>
               </widget>
              </item>
-             <item row="11" column="0" colspan="2">
-              <widget class="Line" name="line_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0" colspan="2">
-              <widget class="Line" name="line">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QCheckBox" name="out_of_state_license_check_box">
+             <item row="5" column="1">
+              <widget class="QCheckBox" name="no_jurisdiction_check_box">
                <property name="text">
-                <string>Out of State License - Needs Certified Abstract</string>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0">
-              <widget class="QCheckBox" name="permanent_id_check_box">
-               <property name="text">
-                <string>Check if defendant has permanent ID card instead of expired license</string>
+                <string>License not subject to suspension for which this court may grant privileges</string>
                </property>
               </widget>
              </item>

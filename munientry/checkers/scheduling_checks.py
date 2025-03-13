@@ -20,7 +20,7 @@ from munientry.checkers.check_messages import (
 DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 JUDGE_DAYS = {
-    'Hemmeter': {'final_pretrial': 'Tuesday', 'trial': 'Thursday'},
+    'Fowler': {'final_pretrial': 'Tuesday', 'trial': 'Thursday'},
     'Rohrer': {'final_pretrial': 'Thursday', 'trial': 'Tuesday'}
 }
 
@@ -53,7 +53,7 @@ class SchedulingChecks(BaseChecks):
     def check_day_of_final_pretrial(self, msg_response: int = None) -> bool:
         """Check if the day of the final pretrial based on Judge.
 
-        Judge Hemmeter is Tuesday, Judge Rohrer is Thursday.
+        Judge Fowler is Tuesday, Judge Rohrer is Thursday.
 
         Returns:
             bool: True if the final pretrial day matches Judge day, False otherwise.
@@ -67,7 +67,7 @@ class SchedulingChecks(BaseChecks):
     def check_day_of_trial(self, msg_response: int = None) -> bool:
         """Check if the day of the final pretrial based on Judge.
 
-        Judge Hemmeter is Thursday, Judge Rohrer is Tuesday.
+        Judge Fowler is Thursday, Judge Rohrer is Tuesday.
 
         Returns:
             bool: True if the trial day matches Judge day, False otherwise.
@@ -90,13 +90,13 @@ class SchedulingChecks(BaseChecks):
     def get_judge(self):
         dialog_name_map = {
             'Rohrer Scheduling Entry': 'Rohrer',
-            'Hemmeter Scheduling Entry': 'Hemmeter'
+            'Fowler Scheduling Entry': 'Fowler'
         }
         judge = dialog_name_map.get(self.dialog.dialog_name)
         if judge:
             return judge
         assigned_judge_map = {
-            'Judge Marianne T. Hemmeter': 'Hemmeter',
+            'Judge Mark W. Fowler': 'Fowler',
             'Judge Kyle E. Rohrer': 'Rohrer'
         }
         return assigned_judge_map.get(self.dialog.assigned_judge, 'Unknown')

@@ -232,22 +232,22 @@ class Diversion(ConditionsModel):
     marijuana_diversion: bool = False
     theft_diversion: bool = False
     other_diversion: bool = False
-    jail_imposed: bool = False
     program_name: str = None
     diversion_fine_pay_date: str = None
-    diversion_jail_report_date: str = None
+    diversion_completion_date: str = None
     restitution_ordered: bool = False
     pay_restitution_to: str = None
     pay_restitution_amount: str = None
+    probation_ordered: bool = False
     other_conditions_ordered: bool = False
     other_conditions_text: str = None
     terms_list = [
         ('marijuana_diversion', 'marijuana_diversion_radio_btn'),
         ('theft_diversion', 'theft_diversion_radio_btn'),
         ('other_diversion', 'other_diversion_radio_btn'),
-        ('jail_imposed', 'diversion_jail_imposed_check_box'),
         ('diversion_fine_pay_date', 'diversion_fine_pay_date'),
-        ('diversion_jail_report_date', 'diversion_jail_report_date'),
+        ('diversion_completion_date', 'diversion_completion_date'),
+        ('probation_ordered', 'probation_check_box'),
         ('restitution_ordered', 'pay_restitution_check_box'),
         ('pay_restitution_to', 'pay_restitution_to_line'),
         ('pay_restitution_amount', 'pay_restitution_amount_line'),
