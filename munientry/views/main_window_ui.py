@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/MainWindow.ui'
+# Form implementation generated from reading ui file '.\views\ui\MainWindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -1047,7 +1047,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.main_TabWidget.setCurrentIndex(0)
         self.entries_tab_widget.setCurrentIndex(0)
-        self.court_staff_widget.setCurrentIndex(0)
+        self.court_staff_widget.setCurrentIndex(3)
         self.cases_tab_widget.setCurrentIndex(0)
         self.workflows_person_tab.setCurrentIndex(1)
         self.crim_case_search_box.returnPressed.connect(self.crim_get_case_btn.click) # type: ignore
@@ -1159,7 +1159,7 @@ class Ui_MainWindow(object):
         self.mag_3_radio_btn.setText(_translate("MainWindow", "Magistrate Kudela"))
         self.label_9.setText(_translate("MainWindow", "JUDICIAL OFFICER"))
         self.assn_comm_1_radio_btn.setText(_translate("MainWindow", "Pat Dattilo"))
-        self.assn_comm_2_radio_btn.setText(_translate("MainWindow", "Blythe Boger"))
+        self.assn_comm_2_radio_btn.setText(_translate("MainWindow", "Tina Spiers"))
         self.no_assn_comm_radio_btn.setText(_translate("MainWindow", "None"))
         self.label.setText(_translate("MainWindow", "ASSIGNMENT COMMISSIONER"))
         self.prob_officer_1_radio_btn.setText(_translate("MainWindow", "Officer Andrew Conway"))
@@ -1174,11 +1174,11 @@ class Ui_MainWindow(object):
         self.none_admin_radio_btn.setText(_translate("MainWindow", "None"))
         self.label_16.setText(_translate("MainWindow", "ADMINISTRATIVE STAFF PERSON"))
         self.court_admin_admin_radio_btn.setText(_translate("MainWindow", "Court Administrator Kudela"))
-        self.assn_comm_2_admin_radio_btn.setText(_translate("MainWindow", "Assignment Commissioner Boger"))
+        self.assn_comm_2_admin_radio_btn.setText(_translate("MainWindow", "Assignment Commissioner Spiers"))
         self.assn_comm_1_admin_radio_btn.setText(_translate("MainWindow", "Assignment Commissioner Dattilo"))
         self.mag_3_admin_radio_btn.setText(_translate("MainWindow", "Magistrate Kudela"))
         self.mag_2_admin_radio_btn.setText(_translate("MainWindow", "Magistrate Pelanda"))
-        self.jury_comm_1_admin_radio_btn.setText(_translate("MainWindow", "Jury Commissioner Boger"))
+        self.jury_comm_1_admin_radio_btn.setText(_translate("MainWindow", "Jury Commissioner Spiers"))
         self.mag_1_admin_radio_btn.setText(_translate("MainWindow", "Magistrate Bunner"))
         self.trials_to_court_radio_btn.setText(_translate("MainWindow", "Trials to Court and Jury Trials"))
         self.reload_cases_Button.setText(_translate("MainWindow", "Reload Daily Case Lists"))
