@@ -256,7 +256,7 @@ font-weight: bold;</string>
                </item>
                <item>
                 <property name="text">
-                 <string>Smart Start</string>
+                 <string>Remote Breath</string>
                 </property>
                </item>
                <item>
@@ -266,17 +266,7 @@ font-weight: bold;</string>
                </item>
                <item>
                 <property name="text">
-                 <string>GPS and Smart Start</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>SCRAM and Smart Start</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>GPS, SCRAM and Smart Start</string>
+                 <string>GPS and Remote Breath</string>
                 </property>
                </item>
               </widget>
@@ -319,7 +309,7 @@ font-weight: bold;</string>
                 <enum>Qt::LeftToRight</enum>
                </property>
                <property name="text">
-                <string>Monitoring (GPS/Scram/Smart Start):                    </string>
+                <string>Monitoring (GPS/SCRAM/Remote Breath):                    </string>
                </property>
               </widget>
              </item>

@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file './views/ui/NotGuiltyBondDialog.ui'
+# Form implementation generated from reading ui file '.\views\ui\NotGuiltyBondDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -433,8 +433,6 @@ class Ui_NotGuiltyBondDialog(object):
         self.monitoring_type_box.addItem("")
         self.monitoring_type_box.addItem("")
         self.monitoring_type_box.addItem("")
-        self.monitoring_type_box.addItem("")
-        self.monitoring_type_box.addItem("")
         self.gridLayout_2.addWidget(self.monitoring_type_box, 7, 0, 1, 1)
         self.specialized_docket_type_box = NoScrollComboBox(self.bond_conditions_frame)
         self.specialized_docket_type_box.setEnabled(True)
@@ -548,16 +546,14 @@ class Ui_NotGuiltyBondDialog(object):
         self.monitoring_type_box.setItemText(0, _translate("NotGuiltyBondDialog", "SCRAM - Court Pay"))
         self.monitoring_type_box.setItemText(1, _translate("NotGuiltyBondDialog", "SCRAM"))
         self.monitoring_type_box.setItemText(2, _translate("NotGuiltyBondDialog", "GPS"))
-        self.monitoring_type_box.setItemText(3, _translate("NotGuiltyBondDialog", "Smart Start"))
-        self.monitoring_type_box.setItemText(4, _translate("NotGuiltyBondDialog", "GPS and SCRAM"))
-        self.monitoring_type_box.setItemText(5, _translate("NotGuiltyBondDialog", "GPS and Smart Start"))
-        self.monitoring_type_box.setItemText(6, _translate("NotGuiltyBondDialog", "SCRAM and Smart Start"))
-        self.monitoring_type_box.setItemText(7, _translate("NotGuiltyBondDialog", "GPS, SCRAM and Smart Start"))
+        self.monitoring_type_box.setItemText(3, _translate("NotGuiltyBondDialog", "Remote Breath"))
+        self.monitoring_type_box.setItemText(4, _translate("NotGuiltyBondDialog", "GPS and Remote Breath"))
+        self.monitoring_type_box.setItemText(5, _translate("NotGuiltyBondDialog", "GPS and SCRAM"))
         self.specialized_docket_type_box.setItemText(0, _translate("NotGuiltyBondDialog", "OVI Docket"))
         self.specialized_docket_type_box.setItemText(1, _translate("NotGuiltyBondDialog", "Mission (Veteran\'s) Court"))
         self.specialized_docket_type_box.setItemText(2, _translate("NotGuiltyBondDialog", "Mental Health Docket"))
         self.specialized_docket_checkBox.setText(_translate("NotGuiltyBondDialog", "Screen for Specialized Dockets:                           "))
-        self.monitoring_checkBox.setText(_translate("NotGuiltyBondDialog", "Monitoring (GPS/Scram/Smart Start):                    "))
+        self.monitoring_checkBox.setText(_translate("NotGuiltyBondDialog", "Monitoring (GPS/SCRAM/Remote Breath):                    "))
         self.mental_health_assessment_checkBox.setText(_translate("NotGuiltyBondDialog", " Obtain mental health assessment                         "))
         self.fingerprint_in_court_checkBox.setText(_translate("NotGuiltyBondDialog", "Fingerprinted by court staff prior to leaving"))
         self.comply_protection_order_checkBox.setText(_translate("NotGuiltyBondDialog", " Comply with Terms of Protection Order"))

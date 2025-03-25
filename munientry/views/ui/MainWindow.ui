@@ -982,7 +982,7 @@ font-weight: bold;</string>
                  <item row="1" column="1">
                   <widget class="QRadioButton" name="assn_comm_2_radio_btn">
                    <property name="text">
-                    <string>Blythe Boger</string>
+                    <string>Tina Spiers</string>
                    </property>
                   </widget>
                  </item>
@@ -1188,7 +1188,7 @@ font-weight: bold;</string>
                <item row="2" column="1">
                 <widget class="QRadioButton" name="assn_comm_2_admin_radio_btn">
                  <property name="text">
-                  <string>Assignment Commissioner Boger</string>
+                  <string>Assignment Commissioner Spiers</string>
                  </property>
                 </widget>
                </item>
@@ -1216,7 +1216,7 @@ font-weight: bold;</string>
                <item row="3" column="1">
                 <widget class="QRadioButton" name="jury_comm_1_admin_radio_btn">
                  <property name="text">
-                  <string>Jury Commissioner Boger</string>
+                  <string>Jury Commissioner Spiers</string>
                  </property>
                 </widget>
                </item>

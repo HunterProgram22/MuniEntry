@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file './munientry/views/ui/NoPleaBondDialog.ui'
+# Form implementation generated from reading ui file '.\views\ui\NoPleaBondDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -295,8 +295,6 @@ class Ui_NoPleaBondDialog(object):
         self.monitoring_type_box.addItem("")
         self.monitoring_type_box.addItem("")
         self.monitoring_type_box.addItem("")
-        self.monitoring_type_box.addItem("")
-        self.monitoring_type_box.addItem("")
         self.gridLayout_2.addWidget(self.monitoring_type_box, 7, 0, 1, 1)
         self.specialized_docket_type_box = NoScrollComboBox(self.frame_7)
         self.specialized_docket_type_box.setEnabled(True)
@@ -438,16 +436,14 @@ class Ui_NoPleaBondDialog(object):
         self.monitoring_type_box.setItemText(0, _translate("NoPleaBondDialog", "SCRAM - Court Pay"))
         self.monitoring_type_box.setItemText(1, _translate("NoPleaBondDialog", "SCRAM"))
         self.monitoring_type_box.setItemText(2, _translate("NoPleaBondDialog", "GPS"))
-        self.monitoring_type_box.setItemText(3, _translate("NoPleaBondDialog", "Smart Start"))
+        self.monitoring_type_box.setItemText(3, _translate("NoPleaBondDialog", "Remote Breath"))
         self.monitoring_type_box.setItemText(4, _translate("NoPleaBondDialog", "GPS and SCRAM"))
-        self.monitoring_type_box.setItemText(5, _translate("NoPleaBondDialog", "GPS and Smart Start"))
-        self.monitoring_type_box.setItemText(6, _translate("NoPleaBondDialog", "SCRAM and Smart Start"))
-        self.monitoring_type_box.setItemText(7, _translate("NoPleaBondDialog", "GPS, SCRAM and Smart Start"))
+        self.monitoring_type_box.setItemText(5, _translate("NoPleaBondDialog", "GPS and Remote Breath"))
         self.specialized_docket_type_box.setItemText(0, _translate("NoPleaBondDialog", "OVI Docket"))
         self.specialized_docket_type_box.setItemText(1, _translate("NoPleaBondDialog", "Mission (Veteran\'s) Court"))
         self.specialized_docket_type_box.setItemText(2, _translate("NoPleaBondDialog", "Mental Health Docket"))
         self.specialized_docket_checkBox.setText(_translate("NoPleaBondDialog", "Screen for Specialized Dockets:                           "))
-        self.monitoring_checkBox.setText(_translate("NoPleaBondDialog", "Monitoring (GPS/Scram/Smart Start):                    "))
+        self.monitoring_checkBox.setText(_translate("NoPleaBondDialog", "Monitoring (GPS/SCRAM/Remote Breath):                    "))
         self.mental_health_assessment_checkBox.setText(_translate("NoPleaBondDialog", " Obtain mental health assessment                         "))
         self.fingerprint_in_court_checkBox.setText(_translate("NoPleaBondDialog", "Fingerprinted by court staff prior to leaving"))
         self.comply_protection_order_checkBox.setText(_translate("NoPleaBondDialog", " Comply with Terms of Protection Order"))
