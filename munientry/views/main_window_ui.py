@@ -1047,7 +1047,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.main_TabWidget.setCurrentIndex(0)
         self.entries_tab_widget.setCurrentIndex(0)
-        self.court_staff_widget.setCurrentIndex(3)
+        self.court_staff_widget.setCurrentIndex(0)
         self.cases_tab_widget.setCurrentIndex(0)
         self.workflows_person_tab.setCurrentIndex(1)
         self.crim_case_search_box.returnPressed.connect(self.crim_get_case_btn.click) # type: ignore

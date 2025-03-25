@@ -860,7 +860,7 @@ font-weight: bold;</string>
         <item row="0" column="0">
          <widget class="QStackedWidget" name="court_staff_widget">
           <property name="currentIndex">
-           <number>3</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="judicial_officers_stack">
            <layout class="QGridLayout" name="gridLayout_13">

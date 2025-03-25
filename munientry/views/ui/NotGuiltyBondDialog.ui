@@ -965,7 +965,7 @@ font-weight: bold;</string>
                 <enum>Qt::LeftToRight</enum>
                </property>
                <property name="text">
-                <string>Monitoring (GPS/Scram/Smart Start):                    </string>
+                <string>Monitoring (GPS/SCRAM/Remote Breath):                    </string>
                </property>
               </widget>
              </item>
