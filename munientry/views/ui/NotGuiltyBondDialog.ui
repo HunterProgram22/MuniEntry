@@ -902,27 +902,17 @@ font-weight: bold;</string>
                </item>
                <item>
                 <property name="text">
-                 <string>Smart Start</string>
+                 <string>Remote Breath</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>GPS and Remote Breath</string>
                 </property>
                </item>
                <item>
                 <property name="text">
                  <string>GPS and SCRAM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>GPS and Smart Start</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>SCRAM and Smart Start</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>GPS, SCRAM and Smart Start</string>
                 </property>
                </item>
               </widget>

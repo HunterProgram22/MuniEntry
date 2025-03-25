@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file './views/ui/BondHearingDialog.ui'
+# Form implementation generated from reading ui file '.\views\ui\BondHearingDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -112,8 +112,6 @@ class Ui_BondHearingDialog(object):
         self.monitoring_type_box.setEnabled(True)
         self.monitoring_type_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.monitoring_type_box.setObjectName("monitoring_type_box")
-        self.monitoring_type_box.addItem("")
-        self.monitoring_type_box.addItem("")
         self.monitoring_type_box.addItem("")
         self.monitoring_type_box.addItem("")
         self.monitoring_type_box.addItem("")
@@ -424,16 +422,14 @@ class Ui_BondHearingDialog(object):
         self.monitoring_type_box.setItemText(0, _translate("BondHearingDialog", "SCRAM - Court Pay"))
         self.monitoring_type_box.setItemText(1, _translate("BondHearingDialog", "SCRAM"))
         self.monitoring_type_box.setItemText(2, _translate("BondHearingDialog", "GPS"))
-        self.monitoring_type_box.setItemText(3, _translate("BondHearingDialog", "Smart Start"))
+        self.monitoring_type_box.setItemText(3, _translate("BondHearingDialog", "Remote Breath"))
         self.monitoring_type_box.setItemText(4, _translate("BondHearingDialog", "GPS and SCRAM"))
-        self.monitoring_type_box.setItemText(5, _translate("BondHearingDialog", "GPS and Smart Start"))
-        self.monitoring_type_box.setItemText(6, _translate("BondHearingDialog", "SCRAM and Smart Start"))
-        self.monitoring_type_box.setItemText(7, _translate("BondHearingDialog", "GPS, SCRAM and Smart Start"))
+        self.monitoring_type_box.setItemText(5, _translate("BondHearingDialog", "GPS and Remote Breath"))
         self.specialized_docket_type_box.setItemText(0, _translate("BondHearingDialog", "OVI Docket"))
         self.specialized_docket_type_box.setItemText(1, _translate("BondHearingDialog", "Mission (Veteran\'s) Court"))
         self.specialized_docket_type_box.setItemText(2, _translate("BondHearingDialog", "Mental Health Docket"))
         self.specialized_docket_checkBox.setText(_translate("BondHearingDialog", "Screen for Specialized Dockets:                           "))
-        self.monitoring_checkBox.setText(_translate("BondHearingDialog", "Monitoring (GPS/Scram/Smart Start):                    "))
+        self.monitoring_checkBox.setText(_translate("BondHearingDialog", "Monitoring (GPS/SCRAM/Remote Breath):                    "))
         self.mental_health_assessment_checkBox.setText(_translate("BondHearingDialog", " Obtain mental health assessment                         "))
         self.fingerprint_in_court_checkBox.setText(_translate("BondHearingDialog", "Fingerprinted by court staff prior to leaving                          "))
         self.comply_protection_order_checkBox.setText(_translate("BondHearingDialog", " Comply with Terms of Protection Order"))
