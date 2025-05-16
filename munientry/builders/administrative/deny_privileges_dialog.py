@@ -106,8 +106,8 @@ class DenyPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         options for staff on the Administrative entries tab. This is not ideal.
         """
         judicial_officer = self.dialog.judicial_officer
-        if judicial_officer.last_name == 'Boger':
-            return JudicialOfficer('Marianne', 'Hemmeter', 'Judge')
+        if judicial_officer.last_name == 'Spiers':
+            return JudicialOfficer('Mark', 'Fowler', 'Judge')
         elif judicial_officer.last_name == 'Dattilo':
             return JudicialOfficer('Kyle', 'Rohrer', 'Judge')
         else:

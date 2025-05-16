@@ -1087,7 +1087,7 @@ font-weight: bold;</string>
                  <item row="1" column="3">
                   <widget class="QRadioButton" name="prob_officer_2_radio_btn">
                    <property name="text">
-                    <string>Officer Elliot Lagendyk</string>
+                    <string>Officer Sheryl Titus</string>
                    </property>
                   </widget>
                  </item>
@@ -1120,7 +1120,7 @@ font-weight: bold;</string>
                  <item row="2" column="3">
                   <widget class="QRadioButton" name="bond_intake_officer_radio_btn">
                    <property name="text">
-                    <string>Pretrial Officer Sheryl Titus</string>
+                    <string>Pretrial Officer Nicole Bond</string>
                    </property>
                   </widget>
                  </item>
