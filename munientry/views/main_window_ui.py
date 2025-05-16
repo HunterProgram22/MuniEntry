@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file '.\views\ui\MainWindow.ui'
+# Form implementation generated from reading ui file './munientry/views/ui/MainWindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -1168,9 +1168,9 @@ class Ui_MainWindow(object):
         self.prob_officer_5_radio_btn.setText(_translate("MainWindow", "Officer Kara Moore"))
         self.chief_prob_officer_radio_btn.setText(_translate("MainWindow", "Chief Lindsey Blue"))
         self.dep_chief_prob_officer_radio_btn.setText(_translate("MainWindow", "Deputy Chief Kurt Olson"))
-        self.prob_officer_2_radio_btn.setText(_translate("MainWindow", "Officer Elliot Lagendyk"))
+        self.prob_officer_2_radio_btn.setText(_translate("MainWindow", "Officer Sheryl Titus"))
         self.label_32.setText(_translate("MainWindow", "COMMUNITY CONTROL OFFICER"))
-        self.bond_intake_officer_radio_btn.setText(_translate("MainWindow", "Pretrial Officer Sheryl Titus"))
+        self.bond_intake_officer_radio_btn.setText(_translate("MainWindow", "Pretrial Officer Nicole Bond"))
         self.none_admin_radio_btn.setText(_translate("MainWindow", "None"))
         self.label_16.setText(_translate("MainWindow", "ADMINISTRATIVE STAFF PERSON"))
         self.court_admin_admin_radio_btn.setText(_translate("MainWindow", "Court Administrator Kudela"))
