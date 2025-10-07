@@ -3,6 +3,7 @@ from loguru import logger
 from PyQt6.QtWidgets import QInputDialog
 
 from munientry.models.party_types import JudicialOfficer
+from munientry.settings.config_settings import load_config
 
 ADMIN = 'Admin Staff Person'
 ASSN_COMM = 'Assignment Commissioner'
@@ -26,6 +27,7 @@ class CourtStaffManager(object):
 
     def __init__(self, mainwindow):
         self.mw = mainwindow
+        self.config = load_config()
         self.judicial_officer_buttons: list = [
             self.mw.judge_1_radio_btn,
             self.mw.judge_2_radio_btn,
@@ -92,34 +94,55 @@ class CourtStaffManager(object):
                 self.court_staff_buttons_dict.update(updated_data)
                 self.mw.visiting_judge_radio_btn.setText(f'Judge {last_name}')
 
+    def _get_staff_member(self, prefix: str, role: str) -> JudicialOfficer:
+        """Helper method to retrieve staff member from config."""
+        staff = self.config['staff']
+        first_name = staff.get(f'{prefix}_first', 'Unknown')
+        last_name = staff.get(f'{prefix}_last', 'Unknown')
+        return JudicialOfficer(first_name, last_name, role)
+
     def create_court_staff_buttons_dict(self) -> dict:
         return {
-            self.mw.judge_1_radio_btn: JudicialOfficer('Mark', 'Fowler', JUDGE),
-            self.mw.judge_2_radio_btn: JudicialOfficer('Kyle', 'Rohrer', JUDGE),
+            # Judges
+            self.mw.judge_1_radio_btn: self._get_staff_member('judge_1', JUDGE),
+            self.mw.judge_2_radio_btn: self._get_staff_member('judge_2', JUDGE),
             self.mw.visiting_judge_radio_btn: JudicialOfficer('None', 'Assigned', JUDGE),
-            self.mw.mag_1_radio_btn: JudicialOfficer('Amanda', 'Bunner', MAGISTRATE),
-            self.mw.mag_2_radio_btn: JudicialOfficer('Kevin', 'Pelanda', MAGISTRATE),
-            self.mw.mag_3_radio_btn: JudicialOfficer('Justin', 'Kudela', MAGISTRATE),
 
-            self.mw.assn_comm_1_radio_btn: JudicialOfficer('Pat', 'Dattilo', ASSN_COMM),
-            self.mw.assn_comm_2_radio_btn: JudicialOfficer('Tina', 'Spiers', ASSN_COMM),
+            # Magistrates
+            self.mw.mag_1_radio_btn: self._get_staff_member('magistrate_1', MAGISTRATE),
+            self.mw.mag_2_radio_btn: self._get_staff_member('magistrate_2', MAGISTRATE),
+            self.mw.mag_3_radio_btn: self._get_staff_member('magistrate_3', MAGISTRATE),
+
+            # Assignment Commissioners
+            self.mw.assn_comm_1_radio_btn: self._get_staff_member('assignment_comm_1', ASSN_COMM),
+            self.mw.assn_comm_2_radio_btn: self._get_staff_member('assignment_comm_2', ASSN_COMM),
             self.mw.no_assn_comm_radio_btn: JudicialOfficer('None', 'Assigned', ASSN_COMM),
 
-            self.mw.assn_comm_1_admin_radio_btn: JudicialOfficer('Pat', 'Dattilo', ASSN_COMM),
-            self.mw.assn_comm_2_admin_radio_btn: JudicialOfficer('Tina', 'Spiers', ASSN_COMM),
-            self.mw.court_admin_admin_radio_btn: JudicialOfficer('Justin', 'Kudela', CT_ADMIN),
-            self.mw.jury_comm_1_admin_radio_btn: JudicialOfficer('Tina', 'Spiers', JURY),
-            self.mw.none_admin_radio_btn: JudicialOfficer('None', 'Assigned', ADMIN),
-            self.mw.mag_1_admin_radio_btn: JudicialOfficer('Amanda', 'Bunner', MAGISTRATE),
-            self.mw.mag_2_admin_radio_btn: JudicialOfficer('Kevin', 'Pelanda', MAGISTRATE),
-            self.mw.mag_3_admin_radio_btn: JudicialOfficer('Justin', 'Kudela', MAGISTRATE),
+            # Administrative Staff (Assignment Commissioners)
+            self.mw.assn_comm_1_admin_radio_btn: self._get_staff_member('assignment_comm_1',
+                                                                        ASSN_COMM),
+            self.mw.assn_comm_2_admin_radio_btn: self._get_staff_member('assignment_comm_2',
+                                                                        ASSN_COMM),
 
-            self.mw.chief_prob_officer_radio_btn: JudicialOfficer('Lindsey', 'Blue', CHIEF_CCO),
-            self.mw.dep_chief_prob_officer_radio_btn: JudicialOfficer('Kurt', 'Olson', DEP_CCCO),
-            self.mw.prob_officer_1_radio_btn: JudicialOfficer('Andrew', 'Conway', CCO),
-            self.mw.prob_officer_2_radio_btn: JudicialOfficer('Elliot', 'Lagendyk', CCO),
-            self.mw.prob_officer_3_radio_btn: JudicialOfficer('Jessica', 'Scholz', CCO),
-            self.mw.prob_officer_4_radio_btn: JudicialOfficer('Adam', 'Garloch', CCO),
-            self.mw.prob_officer_5_radio_btn: JudicialOfficer('Kara', 'Moore', CCO),
-            self.mw.bond_intake_officer_radio_btn: JudicialOfficer('Sheryl', 'Titus', BOND_CCO),
+            # Administrative Staff (Other)
+            self.mw.court_admin_admin_radio_btn: self._get_staff_member('court_admin', CT_ADMIN),
+            self.mw.jury_comm_1_admin_radio_btn: self._get_staff_member('jury_comm', JURY),
+            self.mw.none_admin_radio_btn: JudicialOfficer('None', 'Assigned', ADMIN),
+
+            # Administrative Staff (Magistrates)
+            self.mw.mag_1_admin_radio_btn: self._get_staff_member('magistrate_1', MAGISTRATE),
+            self.mw.mag_2_admin_radio_btn: self._get_staff_member('magistrate_2', MAGISTRATE),
+            self.mw.mag_3_admin_radio_btn: self._get_staff_member('magistrate_3', MAGISTRATE),
+
+            # Probation Staff
+            self.mw.chief_prob_officer_radio_btn: self._get_staff_member('chief_cco', CHIEF_CCO),
+            self.mw.dep_chief_prob_officer_radio_btn: self._get_staff_member('deputy_chief_cco',
+                                                                             DEP_CCCO),
+            self.mw.prob_officer_1_radio_btn: self._get_staff_member('cco_1', CCO),
+            self.mw.prob_officer_2_radio_btn: self._get_staff_member('cco_2', CCO),
+            self.mw.prob_officer_3_radio_btn: self._get_staff_member('cco_3', CCO),
+            self.mw.prob_officer_4_radio_btn: self._get_staff_member('cco_4', CCO),
+            self.mw.prob_officer_5_radio_btn: self._get_staff_member('cco_5', CCO),
+            self.mw.bond_intake_officer_radio_btn: self._get_staff_member('bond_intake_officer',
+                                                                          BOND_CCO),
         }
