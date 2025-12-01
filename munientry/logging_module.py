@@ -95,7 +95,10 @@ def show_exception_box(log_msg):
     if QApplication.instance() is not None:
         errorbox = CriticalErrorBox()
         errorbox.setText(
-            'An unexpected error occured. Please alert Justin as soon as possible.'
+            'An unexpected error occured. Please alert IT as soon as possible. If you are seeing'
+            + ' message and it is after April 2026, then you should be using MuniEntry 2.0 which'
+            + ' is the .Net version of the application that City IT built starting in November 2025'
+            + ' and that was scheduled for completion no later than April 2026.'
             + ' Depending on the error, you may continue to use the application by clicking'
             + ' OK, but must choose an option other than the one the caused this error message.'
             + f' The error is:\n\n\n{log_msg}',
