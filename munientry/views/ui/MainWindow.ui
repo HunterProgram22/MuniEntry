@@ -881,14 +881,14 @@ font-weight: bold;</string>
                  <item row="1" column="0">
                   <widget class="QRadioButton" name="judge_1_radio_btn">
                    <property name="text">
-                    <string>Judge Fowler</string>
+                    <string>Judge One</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="1">
                   <widget class="QRadioButton" name="judge_2_radio_btn">
                    <property name="text">
-                    <string>Judge Rohrer</string>
+                    <string>Judge Two</string>
                    </property>
                   </widget>
                  </item>
@@ -902,21 +902,21 @@ font-weight: bold;</string>
                  <item row="2" column="0">
                   <widget class="QRadioButton" name="mag_1_radio_btn">
                    <property name="text">
-                    <string>Magistrate Bunner</string>
+                    <string>Magistrate One</string>
                    </property>
                   </widget>
                  </item>
                  <item row="2" column="1">
                   <widget class="QRadioButton" name="mag_2_radio_btn">
                    <property name="text">
-                    <string>Magistrate Pelanda</string>
+                    <string>Magistrate Two</string>
                    </property>
                   </widget>
                  </item>
                  <item row="2" column="2">
                   <widget class="QRadioButton" name="mag_3_radio_btn">
                    <property name="text">
-                    <string>Magistrate Kudela</string>
+                    <string>Magistrate Three</string>
                    </property>
                   </widget>
                  </item>
@@ -975,14 +975,14 @@ font-weight: bold;</string>
                  <item row="1" column="0">
                   <widget class="QRadioButton" name="assn_comm_1_radio_btn">
                    <property name="text">
-                    <string>Pat Dattilo</string>
+                    <string>Assignment Commissioner One</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="1">
                   <widget class="QRadioButton" name="assn_comm_2_radio_btn">
                    <property name="text">
-                    <string>Tina Spiers</string>
+                    <string>Assignment Commissioner Two</string>
                    </property>
                   </widget>
                  </item>
@@ -1045,49 +1045,49 @@ font-weight: bold;</string>
                  <item row="1" column="2">
                   <widget class="QRadioButton" name="prob_officer_1_radio_btn">
                    <property name="text">
-                    <string>Officer Andrew Conway</string>
+                    <string>Officer One</string>
                    </property>
                   </widget>
                  </item>
                  <item row="2" column="1">
                   <widget class="QRadioButton" name="prob_officer_4_radio_btn">
                    <property name="text">
-                    <string>Officer Adam Garloch</string>
+                    <string>Officer Four</string>
                    </property>
                   </widget>
                  </item>
                  <item row="2" column="0">
                   <widget class="QRadioButton" name="prob_officer_3_radio_btn">
                    <property name="text">
-                    <string>Officer Jessica Scholz</string>
+                    <string>Officer Three</string>
                    </property>
                   </widget>
                  </item>
                  <item row="2" column="2">
                   <widget class="QRadioButton" name="prob_officer_5_radio_btn">
                    <property name="text">
-                    <string>Officer Kara Moore</string>
+                    <string>Officer Five</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="0">
                   <widget class="QRadioButton" name="chief_prob_officer_radio_btn">
                    <property name="text">
-                    <string>Chief Lindsey Blue</string>
+                    <string>Chief Officer</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="1">
                   <widget class="QRadioButton" name="dep_chief_prob_officer_radio_btn">
                    <property name="text">
-                    <string>Deputy Chief Kurt Olson</string>
+                    <string>Deputy Chief Officer</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="3">
                   <widget class="QRadioButton" name="prob_officer_2_radio_btn">
                    <property name="text">
-                    <string>Officer Sheryl Titus</string>
+                    <string>Officer Two</string>
                    </property>
                   </widget>
                  </item>
@@ -1120,7 +1120,7 @@ font-weight: bold;</string>
                  <item row="2" column="3">
                   <widget class="QRadioButton" name="bond_intake_officer_radio_btn">
                    <property name="text">
-                    <string>Pretrial Officer Nicole Bond</string>
+                    <string>Pretrial Officer One</string>
                    </property>
                   </widget>
                  </item>
@@ -1181,49 +1181,49 @@ font-weight: bold;</string>
                <item row="2" column="2">
                 <widget class="QRadioButton" name="court_admin_admin_radio_btn">
                  <property name="text">
-                  <string>Court Administrator Kudela</string>
+                  <string>Court Administrator One</string>
                  </property>
                 </widget>
                </item>
                <item row="2" column="1">
                 <widget class="QRadioButton" name="assn_comm_2_admin_radio_btn">
                  <property name="text">
-                  <string>Assignment Commissioner Spiers</string>
+                  <string>Assignment Commissioner Two</string>
                  </property>
                 </widget>
                </item>
                <item row="2" column="0">
                 <widget class="QRadioButton" name="assn_comm_1_admin_radio_btn">
                  <property name="text">
-                  <string>Assignment Commissioner Dattilo</string>
+                  <string>Assignment Commissioner One</string>
                  </property>
                 </widget>
                </item>
                <item row="3" column="2">
                 <widget class="QRadioButton" name="mag_3_admin_radio_btn">
                  <property name="text">
-                  <string>Magistrate Kudela</string>
+                  <string>Magistrate Three</string>
                  </property>
                 </widget>
                </item>
                <item row="3" column="3">
                 <widget class="QRadioButton" name="mag_2_admin_radio_btn">
                  <property name="text">
-                  <string>Magistrate Pelanda</string>
+                  <string>Magistrate Two</string>
                  </property>
                 </widget>
                </item>
                <item row="3" column="1">
                 <widget class="QRadioButton" name="jury_comm_1_admin_radio_btn">
                  <property name="text">
-                  <string>Jury Commissioner Spiers</string>
+                  <string>Jury Commissioner One</string>
                  </property>
                 </widget>
                </item>
                <item row="3" column="0">
                 <widget class="QRadioButton" name="mag_1_admin_radio_btn">
                  <property name="text">
-                  <string>Magistrate Bunner</string>
+                  <string>Magistrate One</string>
                  </property>
                 </widget>
                </item>
