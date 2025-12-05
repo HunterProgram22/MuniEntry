@@ -259,18 +259,18 @@ class Ui_DenyPrivilegesDialog(object):
         self.label_5 = QtWidgets.QLabel(self.frame)
         self.label_5.setObjectName("label_5")
         self.gridLayout_3.addWidget(self.label_5, 16, 0, 1, 1)
-        self.dateEdit_2 = NoScrollDateEdit(self.frame)
-        self.dateEdit_2.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.nufc_date = NoScrollDateEdit(self.frame)
+        self.nufc_date.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);")
-        self.dateEdit_2.setCalendarPopup(True)
-        self.dateEdit_2.setObjectName("dateEdit_2")
-        self.gridLayout_3.addWidget(self.dateEdit_2, 17, 1, 1, 1)
-        self.dateEdit = NoScrollDateEdit(self.frame)
-        self.dateEdit.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+        self.nufc_date.setCalendarPopup(True)
+        self.nufc_date.setObjectName("nufc_date")
+        self.gridLayout_3.addWidget(self.nufc_date, 17, 1, 1, 1)
+        self.driving_privileges_date = NoScrollDateEdit(self.frame)
+        self.driving_privileges_date.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(0, 0, 0);")
-        self.dateEdit.setCalendarPopup(True)
-        self.dateEdit.setObjectName("dateEdit")
-        self.gridLayout_3.addWidget(self.dateEdit, 16, 1, 1, 1)
+        self.driving_privileges_date.setCalendarPopup(True)
+        self.driving_privileges_date.setObjectName("driving_privileges_date")
+        self.gridLayout_3.addWidget(self.driving_privileges_date, 16, 1, 1, 1)
         self.label_7 = QtWidgets.QLabel(self.frame)
         self.label_7.setObjectName("label_7")
         self.gridLayout_3.addWidget(self.label_7, 17, 0, 1, 1)
