@@ -142,6 +142,9 @@ class DenyPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.model.license_expiration_date = self.dialog.license_exp_date_field.get_date_as_string()
         self.model.permanent_id = self.dialog.permanent_id_check_box.isChecked()
         self.model.no_pay_plan = self.dialog.no_pay_plan_check_box.isChecked()
+        self.model.terminate_privileges = self.dialog.terminate_radio_btn.isChecked()
+        self.model.privileges_grant_date = self.dialog.driving_privileges_date.get_date_as_string()
+        self.model.nufc_date = self.dialog.nufc_date.get_date_as_string()
 
 
 class DenyPrivilegesDialogInfoChecks(BaseChecks):
