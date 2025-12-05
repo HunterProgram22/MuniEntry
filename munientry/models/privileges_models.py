@@ -52,6 +52,9 @@ class DenyPrivilegesInformation(DrivingPrivilegesInformation):
     permanent_id: bool = False
     license_expiration_date: str = None
     no_pay_plan: bool = False
+    terminate_privileges: bool = False
+    privileges_grant_date: str = None
+    nufc_date: str = None
 
 
 @dataclass
