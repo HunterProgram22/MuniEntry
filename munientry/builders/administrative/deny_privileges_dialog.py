@@ -38,6 +38,9 @@ class DenyPrivilegesSignalConnector(admin.AdminSignalConnector):
         self.dialog.permit_test_radio_btn.toggled.connect(
             self.dialog.functions.show_hide_test_reasons_fields,
         )
+        self.dialog.terminate_radio_btn.toggled.connect(
+            self.dialog.functions.show_hide_terminate_reasons_fields,
+        )
 
 
 class DenyPrivilegesSlotFunctions(admin.AdminSlotFunctions):
@@ -60,6 +63,12 @@ class DenyPrivilegesSlotFunctions(admin.AdminSlotFunctions):
             self.dialog.license_exp_date_field,
             self.dialog.permanent_id_check_box,
         ]
+        self.terminate_reasons_fields = [
+            self.dialog.driving_privileges_date,
+            self.dialog.nufc_date,
+            self.dialog.nufc_date_label,
+            self.dialog.privileges_grant_label,
+        ]
 
     def show_hide_test_reasons_fields(self):
         if self.dialog.permit_test_radio_btn.isChecked():
@@ -72,6 +81,12 @@ class DenyPrivilegesSlotFunctions(admin.AdminSlotFunctions):
             self.show_fields(self.deny_reasons_checkboxes)
         else:
             self.hide_fields(self.deny_reasons_checkboxes)
+
+    def show_hide_terminate_reasons_fields(self):
+        if self.dialog.terminate_radio_btn.isChecked():
+            self.show_fields(self.terminate_reasons_fields)
+        else:
+            self.hide_fields(self.terminate_reasons_fields)
 
     def show_fields(self, field_list):
         for element in field_list:
@@ -158,3 +173,4 @@ class DenyPrivilegesDialog(admin.AdminDialogBuilder, Ui_DenyPrivilegesDialog):
         self.setWindowTitle(f'{self.dialog_name} Case Information')
         self.functions.show_hide_deny_reasons_checkboxes()
         self.functions.show_hide_test_reasons_fields()
+        self.functions.show_hide_terminate_reasons_fields()

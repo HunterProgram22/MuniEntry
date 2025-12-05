@@ -55,6 +55,15 @@ class DenyPrivilegesInformation(DrivingPrivilegesInformation):
 
 
 @dataclass
+class TerminatePrivilegesInformation(DrivingPrivilegesInformation):
+    """Stores information used for terminating driving privileges."""
+
+    terminate_privileges: bool = False
+    privileges_grant_date: str = None
+    nufc_date: str = None
+
+
+@dataclass
 class EmployerSchoolInformation:
     """Stores employer or school information used for driving privileges."""
 

@@ -549,7 +549,7 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="16" column="0">
-              <widget class="QLabel" name="label_5">
+              <widget class="QLabel" name="privileges_grant_label">
                <property name="text">
                 <string>Date Privileges were Granted on:</string>
                </property>
@@ -578,7 +578,7 @@ color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="17" column="0">
-              <widget class="QLabel" name="label_7">
+              <widget class="QLabel" name="nufc_date_label">
                <property name="text">
                 <string>Notice of Unpaid Fines and Costs (NUFC) Letter Date:</string>
                </property>
